@@ -5,14 +5,13 @@
     this.$$validator = config.validator;
   }
 
-  Rule.$build = function(ruleName, newRuleConfig){
-    var existingRule = window.valkyr.predefinedRules[ruleName];
+  Rule.$retrieve = function(ruleName){
+    var rule = window.valkyr.predefinedRules[ruleName]
+           || window.valkyr.customRules[ruleName];
 
-    if (existingRule) {
-      return existingRule;
-    } else {
-      return new window.valkyr.CustomRule(newRuleConfig);
-    }
+    if (!rule) { throw "Rule " + ruleName + " does not exist!" }
+
+    return rule;
   };
 
   Rule.prototype.$check = function(fieldName, value){

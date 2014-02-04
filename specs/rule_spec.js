@@ -1,25 +1,15 @@
 describe("Rule", function(){
-  describe(".$build", function(){
+  describe(".$retrieve", function(){
     it("should return a predefined rule", function(){
-      var rule = valkyr.Rule.$build("presence");
+      var rule = valkyr.Rule.$retrieve("required");
 
       expect(rule.constructor.name).toEqual("Rule");
-    });
-
-    it("should build a custom rule", function(){
-      var rule = valkyr.Rule.$build("myCustomRule", {
-        name: "myCustomRule",
-        message: "myCustomRule is rocking your form",
-        validator: function(value){}
-      });
-
-      expect(rule.constructor.name).toEqual("CustomRule");
     });
   });
 
   describe("#$check", function(){
     it("when not ok", function(){
-      var rule = valkyr.Rule.$build("presence");
+      var rule = valkyr.Rule.$retrieve("required");
 
       expect(
         rule.$check("username", undefined)
@@ -30,7 +20,7 @@ describe("Rule", function(){
     });
 
     it("when ok", function(){
-      var rule = valkyr.Rule.$build("presence");
+      var rule = valkyr.Rule.$retrieve("required");
 
       expect(
         rule.$check("username", "some user name")

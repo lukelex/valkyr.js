@@ -17,7 +17,7 @@
     i = rulesNames.length;
     while (i--) {
       rules.push(
-        window.valkyr.Rule.$build(rulesNames[i])
+        window.valkyr.Rule.$retrieve(rulesNames[i])
       );
     }
 

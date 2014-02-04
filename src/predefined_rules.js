@@ -1,8 +1,8 @@
 (function(){
   var predefinedRules = {};
 
-  predefinedRules["presence"] = new window.valkyr.Rule({
-    name: "presence",
+  predefinedRules["required"] = new window.valkyr.Rule({
+    name: "required",
     message: "The %s field can't be empty.",
     validator: function(value){
       if (!value) { return false; }

@@ -26,14 +26,28 @@ describe("Validator", function(){
 
       loginForm = new valkyr.Validator(form, [{
           name: "username",
-          rules: "presence"
+          rules: "required"
         }, {
           name: "password",
-          rules: "presence"
+          rules: "required"
         }]
       );
 
       expect(loginForm.$$constraints.length).toEqual(2);
+    });
+
+    it("with an absent rule", function(){
+      var form;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
+
+      expect(function(){
+        new valkyr.Validator(form, [{
+          name: "username",
+          rules: "fakeRules"
+        }]);
+      }).toThrow("Rule fakeRules does not exist!");
     });
   });
 
@@ -46,10 +60,10 @@ describe("Validator", function(){
 
       loginForm = new valkyr.Validator(form, [{
           name: "username",
-          rules: "presence"
+          rules: "required"
         }, {
           name: "password",
-          rules: "presence"
+          rules: "required"
         }]
       );
 

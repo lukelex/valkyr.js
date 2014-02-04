@@ -7,7 +7,9 @@
 
 // Version: 0.1.0 | From: 05-02-2014
 
-window.valkyr = {};
+window.valkyr = {
+  customRules: {}
+};
 
 (function(){
   function Rule(config){
@@ -16,14 +18,13 @@ window.valkyr = {};
     this.$$validator = config.validator;
   }
 
-  Rule.$build = function(ruleName, newRuleConfig){
-    var existingRule = window.valkyr.predefinedRules[ruleName];
+  Rule.$retrieve = function(ruleName){
+    var rule = window.valkyr.predefinedRules[ruleName]
+           || window.valkyr.customRules[ruleName];
 
-    if (existingRule) {
-      return existingRule;
-    } else {
-      return new window.valkyr.CustomRule(newRuleConfig);
-    }
+    if (!rule) { throw "Rule " + ruleName + " does not exist!" }
+
+    return rule;
   };
 
   Rule.prototype.$check = function(fieldName, value){
@@ -84,10 +85,8 @@ window.valkyr = {};
     this.$$form.onsubmit = (function(that) {
       return function(event) {
         if (that.isValid()) {
-          console.log("submiting")
           return (that.$$originalSubmit === undefined || that.$$originalSubmit(event));
         } else {
-          console.log("prevented submission")
           preventSubmission(event)
         }
       };
@@ -162,7 +161,7 @@ window.valkyr = {};
     i = rulesNames.length;
     while (i--) {
       rules.push(
-        window.valkyr.Rule.$build(rulesNames[i])
+        window.valkyr.Rule.$retrieve(rulesNames[i])
       );
     }
 
@@ -215,8 +214,8 @@ window.valkyr = {};
 (function(){
   var predefinedRules = {};
 
-  predefinedRules["presence"] = new window.valkyr.Rule({
-    name: "presence",
+  predefinedRules["required"] = new window.valkyr.Rule({
+    name: "required",
     message: "The %s field can't be empty.",
     validator: function(value){
       if (!value) { return false; }

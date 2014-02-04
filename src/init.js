@@ -1,1 +1,3 @@
-window.valkyr = {};
+window.valkyr = {
+  customRules: {}
+};

@@ -1,7 +1,7 @@
 describe("predefinedRules", function(){
-  describe("presence", function(){
+  describe("required", function(){
     it("with a value", function(){
-      var rule = valkyr.predefinedRules["presence"];
+      var rule = valkyr.predefinedRules["required"];
 
       expect(
         rule.$check("username", "with some value")
@@ -11,7 +11,7 @@ describe("predefinedRules", function(){
     });
 
     it("with an empty value", function(){
-      var rule = valkyr.predefinedRules["presence"];
+      var rule = valkyr.predefinedRules["required"];
 
       expect(
         rule.$check("username", "")
@@ -22,7 +22,7 @@ describe("predefinedRules", function(){
     });
 
     it("with an undefined value", function(){
-      var rule = valkyr.predefinedRules["presence"];
+      var rule = valkyr.predefinedRules["required"];
 
       expect(
         rule.$check("username", undefined)
