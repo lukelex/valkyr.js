@@ -11,7 +11,7 @@
 
     this.errors = {};
 
-    this.$$setupSubmission();
+    this.$setupSubmission();
   }
 
   function buildConstraints(form, constraints){
@@ -38,26 +38,42 @@
     );
   }
 
-  Validator.prototype.$$setupSubmission = function(){
+  Validator.prototype.$setupSubmission = function(){
     this.$$originalSubmit = this.$$form.onsubmit;
-    this.$$form.addEventListener("submit", function(){
-      if (this.$$validate()) {
-        this.$$originalSubmit();
-      }
-    });
+
+    this.$$form.onsubmit = (function(that) {
+      return function(event) {
+        if (that.isValid()) {
+          return (that.$$originalSubmit === undefined || that.$$originalSubmit(event));
+        } else {
+          preventSubmission(event)
+        }
+      };
+    })(this);
   };
+
+  function preventSubmission(event) {
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    } else if (window.event) {
+      // IE uses the global event variable
+      window.event.returnValue = false;
+    };
+  }
 
   Validator.prototype.validate = function(){
     var i, result;
+
+    this.errors = {};
 
     i = this.$$constraints.length;
 
     while (i--) {
       result = this.$$constraints[i].$validate();
-      this.errors[result.name] = result.errors;
+      if (result.errors.length > 0) {
+        this.errors[result.name] = result.errors;
+      }
     }
-
-    return true;
   };
 
   Validator.prototype.isValid = function(){

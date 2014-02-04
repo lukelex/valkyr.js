@@ -93,4 +93,22 @@ describe("Validator", function(){
       expect(loginForm.isValid()).toBeFalsy();
     });
   });
+
+  describe("#$setupSubmission", function(){
+    it("should trigger a previous submission when valid", function(){
+      var form, previousSubmission, loginForm;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
+
+      previousSubmission = jasmine.createSpy("previousSubmission");
+
+      form.onsubmit = previousSubmission;
+
+      loginForm = new valkyr.Validator(form, []);
+      loginForm.submit();
+
+      expect(previousSubmission).toHaveBeenCalled();
+    });
+  });
 });
