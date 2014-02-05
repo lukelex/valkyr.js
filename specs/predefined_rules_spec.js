@@ -175,7 +175,7 @@ describe("predefinedRules", function(){
       })
     });
 
-    it("with a nig negative integer", function(){
+    it("with a big negative integer", function(){
       var rule = valkyr.predefinedRules["integer"];
 
       expect(
@@ -215,6 +215,81 @@ describe("predefinedRules", function(){
       ).toEqual({
         isOk: false,
         message: "The age field must contain an integer."
+      })
+    });
+  });
+
+  describe("decimal", function(){
+    it("with a decimal", function(){
+      var rule = valkyr.predefinedRules["decimal"];
+
+      expect(
+        rule.$check("weight", "70.6")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with a big decimal", function(){
+      var rule = valkyr.predefinedRules["decimal"];
+
+      expect(
+        rule.$check("weight", "189.713")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with a negative decimal", function(){
+      var rule = valkyr.predefinedRules["decimal"];
+
+      expect(
+        rule.$check("weight", "-8.25")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with a big negative decimal", function(){
+      var rule = valkyr.predefinedRules["decimal"];
+
+      expect(
+        rule.$check("weigth", "-881.27")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with an integer", function(){
+      var rule = valkyr.predefinedRules["decimal"];
+
+      expect(
+        rule.$check("weigth", "1")
+      ).toEqual({
+        isOk: false,
+        message: "The weigth field must contain a decimal number."
+      })
+    });
+
+    it("with an empty value", function(){
+      var rule = valkyr.predefinedRules["decimal"];
+
+      expect(
+        rule.$check("weigth", "")
+      ).toEqual({
+        isOk: false,
+        message: "The weigth field must contain a decimal number."
+      })
+    });
+
+    it("with an undefined value", function(){
+      var rule = valkyr.predefinedRules["decimal"];
+
+      expect(
+        rule.$check("weigth", undefined)
+      ).toEqual({
+        isOk: false,
+        message: "The weigth field must contain a decimal number."
       })
     });
   });

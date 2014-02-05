@@ -41,5 +41,14 @@
     }
   });
 
+  predefinedRules["decimal"] = new window.valkyr.Rule({
+    name: "decimal",
+    message: "The %s field must contain a decimal number.",
+    validator: function(value){
+      if (!value) { return false; }
+      return !!value.match(/^\-?[0-9]*\.[0-9]+$/);
+    }
+  });
+
   window.valkyr.predefinedRules = predefinedRules;
 })();
