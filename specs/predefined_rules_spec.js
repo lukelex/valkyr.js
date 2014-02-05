@@ -338,4 +338,60 @@ describe("predefinedRules", function(){
       });
     });
   });
+
+  describe("alphabetical", function(){
+    it("a positive number", function(){
+      var rule = valkyr.predefinedRules["alphabetical"];
+
+      expect(
+        rule.$check("username", "lukelex")
+      ).toEqual({
+        isOk: true
+      });
+    });
+
+    it("a number", function(){
+      var rule = valkyr.predefinedRules["alphabetical"];
+
+      expect(
+        rule.$check("username", "102839")
+      ).toEqual({
+        isOk: false,
+        message: "The username field must only contain alphabetical characters."
+      });
+    });
+
+    it("with spaces", function(){
+      var rule = valkyr.predefinedRules["alphabetical"];
+
+      expect(
+        rule.$check("username", "luke lex")
+      ).toEqual({
+        isOk: false,
+        message: "The username field must only contain alphabetical characters."
+      });
+    });
+
+    it("an empty value", function(){
+      var rule = valkyr.predefinedRules["alphabetical"];
+
+      expect(
+        rule.$check("username", "")
+      ).toEqual({
+        isOk: false,
+        message: "The username field must only contain alphabetical characters."
+      });
+    });
+
+    it("an undefined value", function(){
+      var rule = valkyr.predefinedRules["alphabetical"];
+
+      expect(
+        rule.$check("username", undefined)
+      ).toEqual({
+        isOk: false,
+        message: "The username field must only contain alphabetical characters."
+      });
+    });
+  });
 });

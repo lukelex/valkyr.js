@@ -59,5 +59,14 @@
     }
   });
 
+  predefinedRules["alphabetical"] = new window.valkyr.Rule({
+    name: "alphabetical",
+    message: "The %s field must only contain alphabetical characters.",
+    validator: function(value){
+      if (!value) { return false; }
+      return !!value.match(/^[a-z]+$/i);
+    }
+  });
+
   window.valkyr.predefinedRules = predefinedRules;
 })();
