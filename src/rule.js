@@ -7,7 +7,7 @@
 
   Rule.$retrieve = function(ruleName){
     var rule = window.valkyr.predefinedRules[ruleName]
-           || window.valkyr.customRules[ruleName];
+                || window.valkyr.customRules[ruleName];
 
     if (!rule) { throw "Rule " + ruleName + " does not exist!" }
 

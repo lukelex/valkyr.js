@@ -32,4 +32,70 @@ describe("predefinedRules", function(){
       });
     });
   });
+
+  describe("email", function(){
+    it("simple extension email", function(){
+      var rule = valkyr.predefinedRules["email"];
+
+      expect(
+        rule.$check("email", "valkyr@nordic.eu")
+      ).toEqual({
+        isOk: true
+      });
+    });
+
+    it("double extension email", function(){
+      var rule = valkyr.predefinedRules["email"];
+
+      expect(
+        rule.$check("email", "valkyr@nordic.eu.org")
+      ).toEqual({
+        isOk: true
+      });
+    });
+
+    it("no @ email", function(){
+      var rule = valkyr.predefinedRules["email"];
+
+      expect(
+        rule.$check("email", "valkyr_nordic.eu.org")
+      ).toEqual({
+        isOk: false,
+        message: "The email field must contain a valid email address."
+      });
+    });
+
+    it("no extension email", function(){
+      var rule = valkyr.predefinedRules["email"];
+
+      expect(
+        rule.$check("email", "valkyr@nordic")
+      ).toEqual({
+        isOk: false,
+        message: "The email field must contain a valid email address."
+      });
+    });
+
+    it("an empty email", function(){
+      var rule = valkyr.predefinedRules["email"];
+
+      expect(
+        rule.$check("email", "")
+      ).toEqual({
+        isOk: false,
+        message: "The email field must contain a valid email address."
+      });
+    });
+
+    it("an undefined email", function(){
+      var rule = valkyr.predefinedRules["email"];
+
+      expect(
+        rule.$check("email", undefined)
+      ).toEqual({
+        isOk: false,
+        message: "The email field must contain a valid email address."
+      });
+    });
+  });
 });

@@ -14,8 +14,9 @@
     name: "emailFormat",
     message: "The %s field must contain a valid email address.",
     validator: function(value){
-      return searchText.match(
-        /^[a-zA-Z0-9.!#$%&amp;'*+\-\/=?\^_`{|}~\-]+@[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*$/
+      if (!value) { return false; }
+      return !!value.match(
+        /^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/
       );
     }
   });
