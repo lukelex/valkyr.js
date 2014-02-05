@@ -32,5 +32,14 @@
     }
   });
 
+  predefinedRules["integer"] = new window.valkyr.Rule({
+    name: "integer",
+    message: "The %s field must contain an integer.",
+    validator: function(value){
+      if (!value) { return false; }
+      return !!value.match(/^\-?[0-9]+$/);
+    }
+  });
+
   window.valkyr.predefinedRules = predefinedRules;
 })();

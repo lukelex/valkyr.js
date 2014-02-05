@@ -143,4 +143,79 @@ describe("predefinedRules", function(){
       });
     });
   });
+
+  describe("integer", function(){
+    it("with an integer", function(){
+      var rule = valkyr.predefinedRules["integer"];
+
+      expect(
+        rule.$check("age", "1")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with a big integer", function(){
+      var rule = valkyr.predefinedRules["integer"];
+
+      expect(
+        rule.$check("age", "189713")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with a negative integer", function(){
+      var rule = valkyr.predefinedRules["integer"];
+
+      expect(
+        rule.$check("age", "-8")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with a nig negative integer", function(){
+      var rule = valkyr.predefinedRules["integer"];
+
+      expect(
+        rule.$check("age", "-88127")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("with a double", function(){
+      var rule = valkyr.predefinedRules["integer"];
+
+      expect(
+        rule.$check("age", "1.0")
+      ).toEqual({
+        isOk: false,
+        message: "The age field must contain an integer."
+      })
+    });
+
+    it("with an empty value", function(){
+      var rule = valkyr.predefinedRules["integer"];
+
+      expect(
+        rule.$check("age", "")
+      ).toEqual({
+        isOk: false,
+        message: "The age field must contain an integer."
+      })
+    });
+
+    it("with an undefined value", function(){
+      var rule = valkyr.predefinedRules["integer"];
+
+      expect(
+        rule.$check("age", undefined)
+      ).toEqual({
+        isOk: false,
+        message: "The age field must contain an integer."
+      })
+    });
+  });
 });
