@@ -10,19 +10,6 @@
     "type": "git",
     "url": "git@github.com:lukelex/valkyr.js.git"
   },
-  "testling": {
-    "files": [
-      "specs/*_spec.js",
-      "src/*.js"
-    ],
-    "browsers": {
-      "ie": [ 6, 7, 8, 9, 10, 11 ],
-      "firefox": [ 13, 26, "nightly" ],
-      "chrome": [ 20, 30, "canary" ],
-      "safari": [ 5.1, 7.1 ],
-      "opera": [ 12, 17 ]
-    }
-  },
   "keywords": [
     "forms",
     "validation",
