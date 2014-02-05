@@ -21,5 +21,16 @@
     }
   });
 
+  predefinedRules["url"] = new window.valkyr.Rule({
+    name: "url",
+    message: "The %s field must contain a valid URL.",
+    validator: function(value){
+      if (!value) { return false; }
+      return !!value.match(
+        /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/
+      );
+    }
+  });
+
   window.valkyr.predefinedRules = predefinedRules;
 })();

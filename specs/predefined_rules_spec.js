@@ -98,4 +98,49 @@ describe("predefinedRules", function(){
       });
     });
   });
+
+  describe("url", function(){
+    var rule = valkyr.predefinedRules["url"];
+
+    it("valid url", function(){
+      expect(
+        rule.$check("youtube_link", "https://youtu.be/v/2jbna9f")
+      ).toEqual({
+        isOk: true
+      })
+    });
+
+    it("an empty url", function(){
+      var rule = valkyr.predefinedRules["url"];
+
+      expect(
+        rule.$check("youtube_link", "")
+      ).toEqual({
+        isOk: false,
+        message: "The youtube_link field must contain a valid URL."
+      });
+    });
+
+    it("an undefined url", function(){
+      var rule = valkyr.predefinedRules["url"];
+
+      expect(
+        rule.$check("youtube_link", undefined)
+      ).toEqual({
+        isOk: false,
+        message: "The youtube_link field must contain a valid URL."
+      });
+    });
+
+    it("an invalid url", function(){
+      var rule = valkyr.predefinedRules["url"];
+
+      expect(
+        rule.$check("youtube_link", "ww.valkyr")
+      ).toEqual({
+        isOk: false,
+        message: "The youtube_link field must contain a valid URL."
+      });
+    });
+  });
 });
