@@ -118,8 +118,17 @@ window.valkyr = {
   };
 
   Validator.prototype.isValid = function(){
+    var isValid = false;
+
     this.validate();
-    return Object.keys(this.errors).length === 0;
+
+    isValid = Object.keys(this.errors).length === 0;
+
+    if (!isValid && this.$$onError) {
+      this.$$onError(this.errors);
+    }
+
+    return isValid;
   };
 
   Validator.prototype.submit = function(options){
@@ -132,6 +141,10 @@ window.valkyr = {
     if (this.$$originalSubmit) {
       this.$$originalSubmit();
     }
+  };
+
+  Validator.prototype.onError = function(callback){
+    this.$$onError = callback;
   };
 
   Validator.prototype.whenValid = function(){};
