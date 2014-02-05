@@ -214,6 +214,14 @@ window.valkyr = {
 (function(){
   var predefinedRules = {};
 
+  predefinedRules["numeric"] = new window.valkyr.Rule({
+    name: "number",
+    message: "The %s field must be a number.",
+    validator: function (value) {
+      return !isNaN(parseFloat(value)) && isFinite(value);
+    }
+  });
+
   predefinedRules["required"] = new window.valkyr.Rule({
     name: "required",
     message: "The %s field can't be empty.",
