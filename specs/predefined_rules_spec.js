@@ -107,7 +107,7 @@ describe("predefinedRules", function(){
         rule.$check("youtube_link", "https://youtu.be/v/2jbna9f")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("an empty url", function(){
@@ -152,7 +152,7 @@ describe("predefinedRules", function(){
         rule.$check("age", "1")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with a big integer", function(){
@@ -162,7 +162,7 @@ describe("predefinedRules", function(){
         rule.$check("age", "189713")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with a negative integer", function(){
@@ -172,7 +172,7 @@ describe("predefinedRules", function(){
         rule.$check("age", "-8")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with a big negative integer", function(){
@@ -182,7 +182,7 @@ describe("predefinedRules", function(){
         rule.$check("age", "-88127")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with a double", function(){
@@ -193,7 +193,7 @@ describe("predefinedRules", function(){
       ).toEqual({
         isOk: false,
         message: "The age field must contain an integer."
-      })
+      });
     });
 
     it("with an empty value", function(){
@@ -204,7 +204,7 @@ describe("predefinedRules", function(){
       ).toEqual({
         isOk: false,
         message: "The age field must contain an integer."
-      })
+      });
     });
 
     it("with an undefined value", function(){
@@ -215,7 +215,7 @@ describe("predefinedRules", function(){
       ).toEqual({
         isOk: false,
         message: "The age field must contain an integer."
-      })
+      });
     });
   });
 
@@ -227,7 +227,7 @@ describe("predefinedRules", function(){
         rule.$check("weight", "70.6")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with a big decimal", function(){
@@ -237,7 +237,7 @@ describe("predefinedRules", function(){
         rule.$check("weight", "189.713")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with a negative decimal", function(){
@@ -247,7 +247,7 @@ describe("predefinedRules", function(){
         rule.$check("weight", "-8.25")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with a big negative decimal", function(){
@@ -257,7 +257,7 @@ describe("predefinedRules", function(){
         rule.$check("weigth", "-881.27")
       ).toEqual({
         isOk: true
-      })
+      });
     });
 
     it("with an integer", function(){
@@ -268,7 +268,7 @@ describe("predefinedRules", function(){
       ).toEqual({
         isOk: false,
         message: "The weigth field must contain a decimal number."
-      })
+      });
     });
 
     it("with an empty value", function(){
@@ -279,7 +279,7 @@ describe("predefinedRules", function(){
       ).toEqual({
         isOk: false,
         message: "The weigth field must contain a decimal number."
-      })
+      });
     });
 
     it("with an undefined value", function(){
@@ -290,7 +290,52 @@ describe("predefinedRules", function(){
       ).toEqual({
         isOk: false,
         message: "The weigth field must contain a decimal number."
-      })
+      });
+    });
+  });
+
+  describe("natural", function(){
+    it("a positive number", function(){
+      var rule = valkyr.predefinedRules["natural"];
+
+      expect(
+        rule.$check("age", "25")
+      ).toEqual({
+        isOk: true
+      });
+    });
+
+    it("a negative number", function(){
+      var rule = valkyr.predefinedRules["natural"];
+
+      expect(
+        rule.$check("age", "-25")
+      ).toEqual({
+        isOk: false,
+        message: "The age field must contain only positive numbers."
+      });
+    });
+
+    it("an empty value", function(){
+      var rule = valkyr.predefinedRules["natural"];
+
+      expect(
+        rule.$check("age", "")
+      ).toEqual({
+        isOk: false,
+        message: "The age field must contain only positive numbers."
+      });
+    });
+
+    it("an undefined value", function(){
+      var rule = valkyr.predefinedRules["natural"];
+
+      expect(
+        rule.$check("age", undefined)
+      ).toEqual({
+        isOk: false,
+        message: "The age field must contain only positive numbers."
+      });
     });
   });
 });

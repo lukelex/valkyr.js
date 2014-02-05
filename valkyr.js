@@ -263,5 +263,14 @@ window.valkyr = {
     }
   });
 
+  predefinedRules["natural"] = new window.valkyr.Rule({
+    name: "natural",
+    message: "The %s field must contain only positive numbers.",
+    validator: function(value){
+      if (!value) { return false; }
+      return !!value.match(/^[0-9]+$/i);
+    }
+  });
+
   window.valkyr.predefinedRules = predefinedRules;
 })();
