@@ -1,4 +1,28 @@
 describe("predefinedRules", function(){
+
+  describe("credit-card", function() {
+    it("with a non-valid credit card number", function() {
+      var rule = valkyr.predefinedRules.$find("credit-card");
+
+      expect(
+        rule.$check("CC", "1")
+      ).toEqual({
+        isOk: false,
+        message: "The CC field doesn't have a valid credit-card number."
+      });
+    });
+
+    it("with a valid credit card number", function() {
+      var rule = valkyr.predefinedRules.$find("credit-card");
+
+      expect(
+        rule.$check("CC", "4984421209470251")
+      ).toEqual({
+        isOk: true
+      });
+    });
+  });
+
   describe("equals", function(){
     it("with equal values", function(){
       var form, rule;
