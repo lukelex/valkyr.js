@@ -1,7 +1,7 @@
 {
   "name": "valkyr.js",
   "version": "0.1.0",
-  "description": "The ultimate JS library to validate your forms",
+  "description": "The power of judgment over your forms!",
   "main": "valkyr.js",
   "scripts": {
     "test": "grunt test"
@@ -30,7 +30,7 @@
   },
   "banner": {
     "divider": "// ==========================================================================\n",
-    "project": "// Project:   Valkyr.js - The ultimate JS library to validate your forms\n",
+    "project": "// Project:   Valkyr.js - The power of judgment over your forms!\n",
     "copyright": "// Copyright: Copyright 2014 Lukas Alexandre\n",
     "license": "// License:   Licensed under MIT license\n",
     "licenseLink": "//            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE\n"
