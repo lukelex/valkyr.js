@@ -27,7 +27,7 @@ describe("predefinedRules", function(){
         rule.$check("password_confirmation", "99999999")
       ).toEqual({
         isOk: false,
-        message: "The password_confirmation field to be equal to password field."
+        message: "The password_confirmation field needs to be equal to password field."
       });
     });
   });

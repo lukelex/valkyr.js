@@ -27,7 +27,7 @@
 
   rules["equals"] = new window.valkyr.ComparisonRule({
     name: "equals",
-    message: "The %s field to be equal to %s field.",
+    message: "The %s field needs to be equal to %s field.",
     validator: function(value, comparedTo){
       return value === comparedTo;
     }
