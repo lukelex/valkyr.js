@@ -51,4 +51,24 @@ describe("Constraints", function(){
       expect(constraint.$$rules.length).toEqual(3);
     });
   });
+
+  it("should use the display name instead", function(){
+    var form, constraint;
+
+    form = document.createElement("form");
+    form.innerHTML = "<input name=\"first_name\"/>";
+
+    constraint = new valkyr.Constraint(form, {
+      as: "First Name",
+      name: "first_name",
+      rules: "required"
+    });
+
+    expect(
+      constraint.$validate()
+    ).toEqual({
+      name: "first_name",
+      errors: ["The First Name field can't be empty."]
+    });
+  });
 });

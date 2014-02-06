@@ -4,6 +4,7 @@
   function Constraint(form, config){
     checkForDuplicateRules(config["rules"].split(rulesSeparator));
 
+    this.$$as      = config["as"];
     this.$$name    = config["name"];
     this.$$display = config["display"];
 
@@ -56,7 +57,7 @@
     i = this.$$rules.length;
     while (i--) {
       verification = this.$$rules[i].$check(
-        this.$$name, this.$$field.value
+        this.$$as || this.$$name, this.$$field.value
       );
 
       if (!verification.isOk) {

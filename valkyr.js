@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Valkyr.js - The ultimate JS library to validate your forms
+// Project:   Valkyr.js - The power of judgment over your forms!
 // Copyright: Copyright 2014 Lukas Alexandre
 // License:   Licensed under MIT license
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
@@ -232,6 +232,7 @@ window.valkyr = {
   function Constraint(form, config){
     checkForDuplicateRules(config["rules"].split(rulesSeparator));
 
+    this.$$as      = config["as"];
     this.$$name    = config["name"];
     this.$$display = config["display"];
 
@@ -284,7 +285,7 @@ window.valkyr = {
     i = this.$$rules.length;
     while (i--) {
       verification = this.$$rules[i].$check(
-        this.$$name, this.$$field.value
+        this.$$as || this.$$name, this.$$field.value
       );
 
       if (!verification.isOk) {
