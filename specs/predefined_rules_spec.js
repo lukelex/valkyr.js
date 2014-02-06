@@ -1,61 +1,4 @@
 describe("predefinedRules", function(){
-
-  describe("credit-card", function() {
-    it("with a non-valid credit card number", function() {
-      var rule = valkyr.predefinedRules.$find("credit-card");
-
-      expect(
-        rule.$check("CC", "1")
-      ).toEqual({
-        isOk: false,
-        message: "The CC field doesn't have a valid credit-card number."
-      });
-    });
-
-    it("with a valid credit card number", function() {
-      var rule = valkyr.predefinedRules.$find("credit-card");
-
-      expect(
-        rule.$check("CC", "4984421209470251")
-      ).toEqual({
-        isOk: true
-      });
-    });
-  });
-
-  describe("equals", function(){
-    it("with equal values", function(){
-      var form, rule;
-
-      form = document.createElement("form");
-      form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
-
-      rule = valkyr.predefinedRules.$find("equals[password]").$getExtraInfo(form);
-
-      expect(
-        rule.$check("password_confirmation", "1029384756")
-      ).toEqual({
-        isOk: true
-      });
-    });
-
-    it("with different values", function(){
-      var form, rule;
-
-      form = document.createElement("form");
-      form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
-
-      rule = valkyr.predefinedRules.$find("equals[password]").$getExtraInfo(form);
-
-      expect(
-        rule.$check("password_confirmation", "99999999")
-      ).toEqual({
-        isOk: false,
-        message: "The password_confirmation field needs to be equal to password field."
-      });
-    });
-  });
-
   describe("numeric", function(){
     describe("integers", function(){
       it("with a negative number string", function() {
@@ -454,6 +397,17 @@ describe("predefinedRules", function(){
         message: "The username field can't be empty."
       });
     });
+
+    it("with a null value", function(){
+      var rule = valkyr.predefinedRules.$find("required");
+
+      expect(
+        rule.$check("username", null)
+      ).toEqual({
+        isOk: false,
+        message: "The username field can't be empty."
+      });
+    });
   });
 
   describe("email", function(){
@@ -509,17 +463,6 @@ describe("predefinedRules", function(){
         message: "The email field must contain a valid email address."
       });
     });
-
-    it("an undefined email", function(){
-      var rule = valkyr.predefinedRules.$find("email");
-
-      expect(
-        rule.$check("email", undefined)
-      ).toEqual({
-        isOk: false,
-        message: "The email field must contain a valid email address."
-      });
-    });
   });
 
   describe("url", function(){
@@ -538,17 +481,6 @@ describe("predefinedRules", function(){
 
       expect(
         rule.$check("youtube_link", "")
-      ).toEqual({
-        isOk: false,
-        message: "The youtube_link field must contain a valid URL."
-      });
-    });
-
-    it("an undefined url", function(){
-      var rule = valkyr.predefinedRules.$find("url");
-
-      expect(
-        rule.$check("youtube_link", undefined)
       ).toEqual({
         isOk: false,
         message: "The youtube_link field must contain a valid URL."
@@ -629,17 +561,6 @@ describe("predefinedRules", function(){
         message: "The age field must contain an integer."
       });
     });
-
-    it("with an undefined value", function(){
-      var rule = valkyr.predefinedRules.$find("integer");
-
-      expect(
-        rule.$check("age", undefined)
-      ).toEqual({
-        isOk: false,
-        message: "The age field must contain an integer."
-      });
-    });
   });
 
   describe("decimal", function(){
@@ -704,17 +625,6 @@ describe("predefinedRules", function(){
         message: "The weigth field must contain a decimal number."
       });
     });
-
-    it("with an undefined value", function(){
-      var rule = valkyr.predefinedRules.$find("decimal");
-
-      expect(
-        rule.$check("weigth", undefined)
-      ).toEqual({
-        isOk: false,
-        message: "The weigth field must contain a decimal number."
-      });
-    });
   });
 
   describe("natural", function(){
@@ -749,21 +659,10 @@ describe("predefinedRules", function(){
         message: "The age field must contain only positive numbers."
       });
     });
-
-    it("an undefined value", function(){
-      var rule = valkyr.predefinedRules.$find("natural");
-
-      expect(
-        rule.$check("age", undefined)
-      ).toEqual({
-        isOk: false,
-        message: "The age field must contain only positive numbers."
-      });
-    });
   });
 
   describe("alphabetical", function(){
-    it("a positive number", function(){
+    it("a correct word", function(){
       var rule = valkyr.predefinedRules.$find("alphabetical");
 
       expect(
@@ -805,15 +704,60 @@ describe("predefinedRules", function(){
         message: "The username field must only contain alphabetical characters."
       });
     });
+  });
 
-    it("an undefined value", function(){
-      var rule = valkyr.predefinedRules.$find("alphabetical");
+  describe("equals", function(){
+    it("with equal values", function(){
+      var form, rule;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
+
+      rule = valkyr.predefinedRules.$find("equals[password]").$getExtraInfo(form);
 
       expect(
-        rule.$check("username", undefined)
+        rule.$check("password_confirmation", "1029384756")
+      ).toEqual({
+        isOk: true
+      });
+    });
+
+    it("with different values", function(){
+      var form, rule;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
+
+      rule = valkyr.predefinedRules.$find("equals[password]").$getExtraInfo(form);
+
+      expect(
+        rule.$check("password_confirmation", "99999999")
       ).toEqual({
         isOk: false,
-        message: "The username field must only contain alphabetical characters."
+        message: "The password_confirmation field needs to be equal to password field."
+      });
+    });
+  });
+
+  describe("credit-card", function() {
+    it("with a non-valid credit card number", function() {
+      var rule = valkyr.predefinedRules.$find("credit-card");
+
+      expect(
+        rule.$check("CC", "1")
+      ).toEqual({
+        isOk: false,
+        message: "The CC field doesn't have a valid credit-card number."
+      });
+    });
+
+    it("with a valid credit card number", function() {
+      var rule = valkyr.predefinedRules.$find("credit-card");
+
+      expect(
+        rule.$check("CC", "4984421209470251")
+      ).toEqual({
+        isOk: true
       });
     });
   });

@@ -310,22 +310,6 @@ window.valkyr = {
 
   window.valkyr.predefinedRules = predefinedRules;
 
-  rules["equals"] = new window.valkyr.ComparisonRule({
-    name: "equals",
-    message: "The %s field needs to be equal to %s field.",
-    validator: function(value, comparedTo){
-      return value === comparedTo;
-    }
-  });
-
-  rules["numeric"] = new window.valkyr.Rule({
-    name: "number",
-    message: "The %s field must be a number.",
-    validator: function(value){
-      return !isNaN(parseFloat(value)) && isFinite(value);
-    }
-  });
-
   rules["required"] = new window.valkyr.Rule({
     name: "required",
     message: "The %s field can't be empty.",
@@ -337,9 +321,9 @@ window.valkyr = {
 
   rules["email"] = new window.valkyr.Rule({
     name: "emailFormat",
+    inherits: "required",
     message: "The %s field must contain a valid email address.",
     validator: function(value){
-      if (!value) { return false; }
       return !!value.match(
         /^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/
       );
@@ -348,48 +332,84 @@ window.valkyr = {
 
   rules["url"] = new window.valkyr.Rule({
     name: "url",
+    inherits: "required",
     message: "The %s field must contain a valid URL.",
     validator: function(value){
-      if (!value) { return false; }
       return !!value.match(
         /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/
       );
     }
   });
 
+  rules["numeric"] = new window.valkyr.Rule({
+    name: "number",
+    message: "The %s field must be a number.",
+    validator: function(value){
+      return !isNaN(parseFloat(value)) && isFinite(value);
+    }
+  });
+
   rules["integer"] = new window.valkyr.Rule({
     name: "integer",
+    inherits: "numeric",
     message: "The %s field must contain an integer.",
     validator: function(value){
-      if (!value) { return false; }
       return !!value.match(/^\-?[0-9]+$/);
     }
   });
 
   rules["decimal"] = new window.valkyr.Rule({
     name: "decimal",
+    inherits: "numeric",
     message: "The %s field must contain a decimal number.",
     validator: function(value){
-      if (!value) { return false; }
       return !!value.match(/^\-?[0-9]*\.[0-9]+$/);
     }
   });
 
   rules["natural"] = new window.valkyr.Rule({
     name: "natural",
+    inherits: "numeric",
     message: "The %s field must contain only positive numbers.",
     validator: function(value){
-      if (!value) { return false; }
       return !!value.match(/^[0-9]+$/i);
     }
   });
 
   rules["alphabetical"] = new window.valkyr.Rule({
     name: "alphabetical",
+    inherits: "required",
     message: "The %s field must only contain alphabetical characters.",
     validator: function(value){
-      if (!value) { return false; }
       return !!value.match(/^[a-z]+$/i);
+    }
+  });
+
+  rules["equals"] = new window.valkyr.ComparisonRule({
+    name: "equals",
+    inherits: "required",
+    message: "The %s field needs to be equal to %s field.",
+    validator: function(value, comparedTo){
+      return value === comparedTo;
+    }
+  });
+
+  rules["credit-card"] = new window.valkyr.Rule({
+    name: "creditCardNumber",
+    inherits: "required",
+    message: "The %s field doesn't have a valid credit-card number.",
+    validator: function(number){
+      var len = number.length,
+        mul = 0,
+        prodArr = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 2, 4, 6, 8, 1, 3, 5, 7, 9]],
+        sum = 0;
+
+        while (len--) {
+          sum += prodArr[mul][parseInt(number.charAt(len), 10)];
+          mul ^= 1;
+        }
+
+        return sum % 10 === 0 && sum > 0;
     }
   });
 })();
