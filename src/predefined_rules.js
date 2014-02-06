@@ -69,7 +69,7 @@
       return value.length > 0;
     }
   });
-  console.warn(rules["required"]);
+
   rules["email"] = new window.valkyr.Rule({
     name: "emailFormat",
     message: "The %s field must contain a valid email address.",

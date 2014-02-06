@@ -69,10 +69,15 @@ window.valkyr = {
 
 (function(){
   function Rule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    this.$$name            = config.name;
+    this.$$message         = config.message;
+    this.$$validator       = config.validator;
+    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
+
+  Rule.build = function(config){
+    return window.valkyr.customRules[config.name] = new Rule(config);
+  };
 
   Rule.prototype.$params = function(params){
     this.$$params = params;
@@ -80,7 +85,10 @@ window.valkyr = {
   };
 
   Rule.prototype.$check = function(fieldName, value){
-    var result = { isOk: this.$$validator(value) };
+    var result = {
+      isOk: this.$checkWithHierarchy(fieldName, value)
+    };
+
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
     }
@@ -88,9 +96,23 @@ window.valkyr = {
     return result;
   };
 
+  Rule.prototype.$checkWithHierarchy = function(fieldName, value){
+    return this.$$inheritanceRule.$check(
+      fieldName, value
+    ).isOk && this.$$validator(value);
+  };
+
   Rule.prototype.$getExtraInfo = function(form){
     return this;
   };
+
+  function buildInheritanceRule(inherits){
+    if (inherits) {
+      return window.valkyr.BaseRule.$retrieve(inherits);
+    } else {
+      return { $check: function(){ return {isOk: true}; } }
+    }
+  }
 
   window.valkyr.Rule = Rule;
 })();
@@ -260,27 +282,6 @@ window.valkyr = {
 })();
 
 (function(){
-  function CustomRule(config){
-    if (!config) { throw "Rule configuration can't be empty"; }
-
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
-  }
-
-  CustomRule.prototype.$check = function(value){
-    var result = { isOk: this.$$validator(value) };
-    if (!result.isOk) {
-      result.message = this.$$message.replace(/\%s/, fieldName);
-    }
-
-    return result;
-  };
-
-  window.valkyr.CustomRule = CustomRule;
-})();
-
-(function(){
   var rules = {};
 
   var predefinedRules = {
@@ -306,6 +307,8 @@ window.valkyr = {
       params: params
     };
   }
+
+  window.valkyr.predefinedRules = predefinedRules;
 
   rules["equals"] = new window.valkyr.ComparisonRule({
     name: "equals",
@@ -389,6 +392,9 @@ window.valkyr = {
       return !!value.match(/^[a-z]+$/i);
     }
   });
+})();
 
-  window.valkyr.predefinedRules = predefinedRules;
+(function(){
+  window.Validator = window.valkyr.Validator;
+  window.CustomRule = window.valkyr.CustomRule;
 })();
