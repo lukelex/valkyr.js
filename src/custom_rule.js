@@ -12,7 +12,7 @@
     var result;
 
     if (this.$$inherits) {
-      result = { isOk: beforeValidate(valkyr.Rule.$retrieve(this.$$inherits), value) && this.$$validator(value) };
+      result = { isOk: this.$$inherits(value) && this.$$validator(value) };
     } else{
       result = { isOk: this.$$validator(value) };
     }
@@ -22,10 +22,6 @@
     }
 
     return result;
-  };
-
-  function beforeValidate(rule, value) {
-    return rule(value);
   };
 
   window.valkyr.CustomRule = CustomRule;
