@@ -49,7 +49,7 @@
   }
 
   Constraint.prototype.$validate = function(){
-    var i, result;
+    var i, result, verification;
 
     result = { name: this.$$name, errors: [] };
 

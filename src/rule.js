@@ -7,7 +7,9 @@
   }
 
   Rule.build = function(config){
-    return window.valkyr.customRules[config.name] = new Rule(config);
+    var newRule = new Rule(config);
+    window.valkyr.customRules[config.name] = newRule;
+    return newRule;
   };
 
   Rule.prototype.$params = function(params){
@@ -33,7 +35,7 @@
     ).isOk && this.$$validator(value);
   };
 
-  Rule.prototype.$getExtraInfo = function(form){
+  Rule.prototype.$getExtraInfo = function(_){
     return this;
   };
 
@@ -41,7 +43,7 @@
     if (inherits) {
       return window.valkyr.BaseRule.$retrieve(inherits);
     } else {
-      return { $check: function(){ return {isOk: true}; } }
+      return { $check: function(){ return {isOk: true}; } };
     }
   }
 

@@ -37,7 +37,7 @@
         if (that.isValid()) {
           return (that.$$originalSubmit === undefined || that.$$originalSubmit(event));
         } else {
-          preventSubmission(event)
+          preventSubmission(event);
         }
       };
     })(this);
@@ -49,7 +49,7 @@
     } else if (window.event) {
       // IE uses the global event variable
       window.event.returnValue = false;
-    };
+    }
   }
 
   Validator.prototype.validate = function(){

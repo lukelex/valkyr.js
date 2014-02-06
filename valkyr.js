@@ -20,9 +20,9 @@ window.valkyr = {
 
   BaseRule.$retrieve = function(ruleName){
     var rule = window.valkyr.predefinedRules.$find(ruleName)
-            || window.valkyr.customRules[ruleName]
+            || window.valkyr.customRules[ruleName];
 
-    if (!rule) { throw "Rule " + ruleName + " does not exist!" }
+    if (!rule) { throw "Rule " + ruleName + " does not exist!"; }
 
     return rule;
   };
@@ -76,7 +76,9 @@ window.valkyr = {
   }
 
   Rule.build = function(config){
-    return window.valkyr.customRules[config.name] = new Rule(config);
+    var newRule = new Rule(config);
+    window.valkyr.customRules[config.name] = newRule;
+    return newRule;
   };
 
   Rule.prototype.$params = function(params){
@@ -102,7 +104,7 @@ window.valkyr = {
     ).isOk && this.$$validator(value);
   };
 
-  Rule.prototype.$getExtraInfo = function(form){
+  Rule.prototype.$getExtraInfo = function(_){
     return this;
   };
 
@@ -110,7 +112,7 @@ window.valkyr = {
     if (inherits) {
       return window.valkyr.BaseRule.$retrieve(inherits);
     } else {
-      return { $check: function(){ return {isOk: true}; } }
+      return { $check: function(){ return {isOk: true}; } };
     }
   }
 
@@ -156,7 +158,7 @@ window.valkyr = {
         if (that.isValid()) {
           return (that.$$originalSubmit === undefined || that.$$originalSubmit(event));
         } else {
-          preventSubmission(event)
+          preventSubmission(event);
         }
       };
     })(this);
@@ -168,7 +170,7 @@ window.valkyr = {
     } else if (window.event) {
       // IE uses the global event variable
       window.event.returnValue = false;
-    };
+    }
   }
 
   Validator.prototype.validate = function(){
@@ -275,7 +277,7 @@ window.valkyr = {
   }
 
   Constraint.prototype.$validate = function(){
-    var i, result;
+    var i, result, verification;
 
     result = { name: this.$$name, errors: [] };
 
