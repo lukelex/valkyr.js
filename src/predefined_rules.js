@@ -43,7 +43,6 @@
   predefinedRules["integer"] = new window.valkyr.Rule({
     name: "integer",
     message: "The %s field must contain an integer.",
-    beforeValidations: predefinedRules["numeric"].validator,
     validator: function(value){
       if (!value) { return false; }
       return !!value.match(/^\-?[0-9]+$/);
@@ -53,7 +52,6 @@
   predefinedRules["decimal"] = new window.valkyr.Rule({
     name: "decimal",
     message: "The %s field must contain a decimal number.",
-    beforeValidations: predefinedRules["numeric"].validator,
     validator: function(value){
       if (!value) { return false; }
       return !!value.match(/^\-?[0-9]*\.[0-9]+$/);
@@ -63,7 +61,6 @@
   predefinedRules["natural"] = new window.valkyr.Rule({
     name: "natural",
     message: "The %s field must contain only positive numbers.",
-    beforeValidations: predefinedRules["numeric"].validator,
     validator: function(value){
       if (!value) { return false; }
       return !!value.match(/^[0-9]+$/i);
