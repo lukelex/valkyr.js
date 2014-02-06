@@ -129,4 +129,13 @@
         return sum % 10 === 0 && sum > 0;
     }
   });
+
+  rules["ip"] = new window.valkyr.Rule({
+    name: "IP",
+    inherits: "required",
+    message: "The %s field must contain a valid IP.",
+    validator: function(ip){
+      return !!ip.match(/^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/i);
+    }
+  });
 })();

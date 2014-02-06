@@ -761,4 +761,38 @@ describe("predefinedRules", function(){
       });
     });
   });
+
+  describe("ip", function() {
+    it("valid value", function() {
+      var rule = valkyr.predefinedRules.$find("ip");
+
+      expect(
+        rule.$check("router-ip", "192.168.0.1")
+      ).toEqual({
+        isOk: true
+      });
+    });
+
+    it("invalid value", function() {
+      var rule = valkyr.predefinedRules.$find("ip");
+
+      expect(
+        rule.$check("router-ip", "192.168")
+      ).toEqual({
+        isOk: false,
+        message: "The router-ip field must contain a valid IP."
+      });
+    });
+
+    it("oversized value", function() {
+      var rule = valkyr.predefinedRules.$find("ip");
+
+      expect(
+        rule.$check("router-ip", "192.168.0.351")
+      ).toEqual({
+        isOk: false,
+        message: "The router-ip field must contain a valid IP."
+      });
+    });
+  });
 });
