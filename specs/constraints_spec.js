@@ -28,7 +28,7 @@ describe("Constraints", function(){
       expect(constraint.$$rules.length).toEqual(2);
     });
 
-    it("should build two rules", function(){
+    it("should build three rules", function(){
       var form, constraint;
 
       form = document.createElement("form");
