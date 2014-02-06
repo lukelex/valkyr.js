@@ -82,11 +82,11 @@
   };
 
   Validator.prototype.submit = function(options){
-    // if (options && options.skipValidations !== true) {
+    if (!(options && options.skipValidations === true)) {
       if (!this.isValid()) {
         return false;
       }
-    // }
+    }
 
     if (this.$$originalSubmit) {
       this.$$originalSubmit();

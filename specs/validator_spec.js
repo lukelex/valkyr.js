@@ -125,4 +125,16 @@ describe("Validator", function(){
       expect(previousSubmission).toHaveBeenCalled();
     });
   });
+
+  describe("#submit", function(){
+    it("should skip validations", function(){
+      var login = new window.valkyr.Validator("<form>", []);
+
+      spyOn(login, "isValid");
+
+      login.submit({skipValidations: true});
+
+      expect(login.isValid).not.toHaveBeenCalled();
+    });
+  });
 });
