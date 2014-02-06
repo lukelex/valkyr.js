@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Valkyr.js - JavaScript Separation Of Concerns
+// Project:   Valkyr.js - The ultimate JS library to validate your forms
 // Copyright: Copyright 2014 Lukas Alexandre
 // License:   Licensed under MIT license
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE

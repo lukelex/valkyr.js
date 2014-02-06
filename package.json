@@ -30,7 +30,7 @@
   },
   "banner": {
     "divider": "// ==========================================================================\n",
-    "project": "// Project:   Valkyr.js - JavaScript Separation Of Concerns\n",
+    "project": "// Project:   Valkyr.js - The ultimate JS library to validate your forms\n",
     "copyright": "// Copyright: Copyright 2014 Lukas Alexandre\n",
     "license": "// License:   Licensed under MIT license\n",
     "licenseLink": "//            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE\n"
