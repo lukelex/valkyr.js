@@ -6,6 +6,10 @@
     this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
+  Rule.build = function(config){
+    return window.valkyr.customRules[config.name] = new Rule(config);
+  };
+
   Rule.prototype.$params = function(params){
     this.$$params = params;
     return this;
@@ -26,7 +30,7 @@
   Rule.prototype.$checkWithHierarchy = function(fieldName, value){
     return this.$$inheritanceRule.$check(
       fieldName, value
-    ) && this.$$validator(value);
+    ).isOk && this.$$validator(value);
   };
 
   Rule.prototype.$getExtraInfo = function(form){
@@ -37,7 +41,7 @@
     if (inherits) {
       return window.valkyr.BaseRule.$retrieve(inherits);
     } else {
-      return { $check: function(){ return true; } }
+      return { $check: function(){ return {isOk: true}; } }
     }
   }
 
