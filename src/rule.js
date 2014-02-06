@@ -12,6 +12,7 @@
 
   Rule.prototype.$check = function(fieldName, value){
     var result = { isOk: this.$$validator(value) };
+
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
     }

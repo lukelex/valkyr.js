@@ -5,15 +5,19 @@
     this.$$name      = config.name;
     this.$$message   = config.message;
     this.$$validator = config.validator;
-    this.$$inheritanceRule  = valkyr.Rule.$retrieve(config.inherits);
+    this.$$inheritanceRule  = window.valkyr.BaseRule.$retrieve(config.inherits);
   }
 
   CustomRule.prototype.$check = function(fieldName, value){
     var result, inheritanceResult;
 
     if (this.$$inheritanceRule) {
-      inheritanceResult = beforeValidates(this.$$inheritanceRule, fieldName, value);
-      result = { isOk: inheritanceResult.isOk && this.$$validator(value) };
+      inheritanceResult = this.$$inheritanceRule.$check(
+        fieldName, value
+      );
+      result = {
+        isOk: inheritanceResult.isOk && this.$$validator(value)
+      };
     } else{
       result = { isOk: this.$$validator(value) };
     }
@@ -27,10 +31,6 @@
     }
 
     return result;
-  };
-
-  function beforeValidates(rule, fieldName, value) {
-    return rule.$check(fieldName, value);
   };
 
   window.valkyr.CustomRule = CustomRule;
