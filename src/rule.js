@@ -5,13 +5,9 @@
     this.$$validator = config.validator;
   }
 
-  Rule.$retrieve = function(ruleName){
-    var rule = window.valkyr.predefinedRules[ruleName]
-                || window.valkyr.customRules[ruleName];
-
-    if (!rule) { throw "Rule " + ruleName + " does not exist!" }
-
-    return rule;
+  Rule.prototype.$params = function(params){
+    this.$$params = params;
+    return this;
   };
 
   Rule.prototype.$check = function(fieldName, value){
@@ -21,6 +17,10 @@
     }
 
     return result;
+  };
+
+  Rule.prototype.$getExtraInfo = function(form){
+    return this;
   };
 
   window.valkyr.Rule = Rule;

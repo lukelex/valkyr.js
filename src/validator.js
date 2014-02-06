@@ -22,20 +22,11 @@
     i = constraints.length;
     while (i--) {
       newConstraints.push(
-        new window.valkyr.Constraint(
-          selectField(form, constraints[i].name),
-          constraints[i]
-        )
+        new window.valkyr.Constraint(form, constraints[i])
       );
     }
 
     return newConstraints;
-  }
-
-  function selectField(form, fieldName){
-    return form.querySelector(
-      "input[name=\"" + fieldName + "\"]"
-    );
   }
 
   Validator.prototype.$setupSubmission = function(){

@@ -1,13 +1,20 @@
 (function(){
-  function Constraint(field, config){
-    this.$$field   = field;
+  function Constraint(form, config){
     this.$$name    = config["name"];
     this.$$display = config["display"];
 
-    this.$$rules   = buildRules(config["rules"]);
+    this.$$field   = selectField(form, this.$$name);
+
+    this.$$rules   = buildRules(config["rules"], form);
   }
 
-  function buildRules(rulesDeclaration){
+  function selectField(form, fieldName){
+    return form.querySelector(
+      "input[name=\"" + fieldName + "\"]"
+    );
+  }
+
+  function buildRules(rulesDeclaration, form){
     var i, rulesNames, rules;
 
     rulesNames = rulesDeclaration.split("|");
@@ -17,7 +24,9 @@
     i = rulesNames.length;
     while (i--) {
       rules.push(
-        window.valkyr.Rule.$retrieve(rulesNames[i])
+        window.valkyr.BaseRule.$retrieve(
+          rulesNames[i]
+        ).$getExtraInfo(form)
       );
     }
 
