@@ -1,5 +1,14 @@
 describe("Constraints", function(){
   describe("#initialize", function(){
+    it("should not allow duplicate rules", function(){
+      expect(function(){
+        new valkyr.Constraint("", {
+          name: "username",
+          rules: "required|required"
+        }).toThow("Duplicate rule declaration!");
+      });
+    });
+
     it("should build one rule", function(){
       var form, constraint;
 

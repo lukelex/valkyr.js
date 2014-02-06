@@ -1,11 +1,26 @@
 (function(){
+  var rulesSeparator = "|";
+
   function Constraint(form, config){
+    checkForDuplicateRules(config["rules"].split(rulesSeparator));
+
     this.$$name    = config["name"];
     this.$$display = config["display"];
 
     this.$$field   = selectField(form, this.$$name);
 
     this.$$rules   = buildRules(config["rules"], form);
+  }
+
+  function checkForDuplicateRules(rules){
+    var valuesSoFar = {};
+    for (var i = 0; i < rules.length; ++i) {
+      var value = rules[i];
+      if (Object.prototype.hasOwnProperty.call(valuesSoFar, value)) {
+        throw "Duplicate rule declaration!";
+      }
+      valuesSoFar[value] = true;
+    }
   }
 
   function selectField(form, fieldName){
@@ -17,7 +32,7 @@
   function buildRules(rulesDeclaration, form){
     var i, rulesNames, rules;
 
-    rulesNames = rulesDeclaration.split("|");
+    rulesNames = rulesDeclaration.split(rulesSeparator);
 
     rules = [];
 
