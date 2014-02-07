@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.1.0 | From: 06-02-2014
+// Version: 0.1.0 | From: 07-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -443,5 +443,4 @@ window.valkyr = {
 
 (function(){
   window.Validator = window.valkyr.Validator;
-  window.CustomRule = window.valkyr.CustomRule;
 })();
