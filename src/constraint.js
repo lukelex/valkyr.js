@@ -26,9 +26,7 @@
   }
 
   function selectField(form, fieldName){
-    return form.querySelector(
-      "input[name=\"" + fieldName + "\"]"
-    );
+    return form[fieldName];
   }
 
   function buildRules(rulesDeclaration, form){
