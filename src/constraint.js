@@ -14,8 +14,9 @@
   }
 
   function checkForDuplicateRules(rules){
-    var valuesSoFar = {};
-    for (var i = 0; i < rules.length; ++i) {
+    var i, valuesSoFar = {};
+    i = rules.length;
+    while (i--) {
       var value = rules[i];
       if (Object.prototype.hasOwnProperty.call(valuesSoFar, value)) {
         throw "Duplicate rule declaration!";
