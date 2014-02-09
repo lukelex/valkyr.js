@@ -147,4 +147,48 @@ describe("Constraints", function(){
       });
     });
   });
+
+  describe("select", function(){
+    it("should fail if it's required and default is selected", function(){
+      var form, singup;
+
+      form = document.createElement("form");
+      form.innerHTML = "<select name=\"gender\">" +
+      "<option value=\"\">Select your gender</option>" +
+      "<option value=\"male\">Male</option>" +
+      "<option value=\"female\">Female</option>" +
+      "</select>";
+
+      singup = new valkyr.Constraint(form, {
+        name: "gender",
+        rules: "required"
+      });
+
+      expect(singup.$validate()).toEqual({
+        name: "gender",
+        errors: ["The gender field can't be empty."]
+      });
+    });
+
+    it("should pass if required and a non-empty option is selected", function(){
+      var form, singup;
+
+      form = document.createElement("form");
+      form.innerHTML = "<select name=\"gender\">" +
+      "<option value=\"\">Select your gender</option>" +
+      "<option value=\"male\">Male</option>" +
+      "<option value=\"female\" selected=\"selected\">Female</option>" +
+      "</select>";
+
+      singup = new valkyr.Constraint(form, {
+        name: "gender",
+        rules: "required"
+      });
+
+      expect(singup.$validate()).toEqual({
+        name: "gender",
+        errors: []
+      });
+    });
+  });
 });
