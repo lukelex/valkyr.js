@@ -107,4 +107,44 @@ describe("Constraints", function(){
       });
     });
   });
+
+  describe("radio", function(){
+    it("should fail if it's required and not checked", function(){
+      var form, singup;
+
+      form = document.createElement("form");
+      form.innerHTML = "" +
+      "<input name=\"age_range\" type=\"radio\" value=\"0~12\"/>" +
+      "<input name=\"age_range\" type=\"radio\" value=\"13~18\"/>";
+
+      singup = new valkyr.Constraint(form, {
+        name: "age_range",
+        rules: "required"
+      });
+
+      expect(singup.$validate()).toEqual({
+        name: "age_range",
+        errors: ["The age_range field can't be empty."]
+      });
+    });
+
+    it("should pass if required and is checked", function(){
+      var form, singup;
+
+      form = document.createElement("form");
+      form.innerHTML = "" +
+      "<input name=\"age_range\" type=\"radio\" value=\"0~12\" checked=\"checked\"/>" +
+      "<input name=\"age_range\" type=\"radio\" value=\"13~18\"/>";
+
+      singup = new valkyr.Constraint(form, {
+        name: "age_range",
+        rules: "required"
+      });
+
+      expect(singup.$validate()).toEqual({
+        name: "age_range",
+        errors: []
+      });
+    });
+  });
 });
