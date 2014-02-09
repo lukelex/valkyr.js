@@ -71,4 +71,40 @@ describe("Constraints", function(){
       errors: ["The First Name field can't be empty."]
     });
   });
+
+  describe("checkbox", function(){
+    it("should fail if it's required and not checked", function(){
+      var form, singup;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"terms\" type=\"checkbox\"/>";
+
+      singup = new valkyr.Constraint(form, {
+        name: "terms",
+        rules: "required"
+      });
+
+      expect(singup.$validate()).toEqual({
+        name: "terms",
+        errors: ["The terms field can't be empty."]
+      });
+    });
+
+    it("should pass if required and is checked", function(){
+      var form, singup;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"terms\" type=\"checkbox\" checked=\"checked\"/>";
+
+      singup = new valkyr.Constraint(form, {
+        name: "terms",
+        rules: "required"
+      });
+
+      expect(singup.$validate()).toEqual({
+        name: "terms",
+        errors: []
+      });
+    });
+  });
 });

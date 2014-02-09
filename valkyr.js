@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.1.0 | From: 08-02-2014
+// Version: 0.1.0 | From: 09-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -140,6 +140,7 @@ window.valkyr = {
 
     newConstraints = [];
 
+    constraints = constraints.reverse();
     i = constraints.length;
     while (i--) {
       newConstraints.push(
