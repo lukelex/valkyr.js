@@ -70,13 +70,27 @@
   Constraint.prototype.$value = function(){
     if (isCheckbox(this.$$field)) {
       return this.$$field.checked;
+    } else if (isRadio(this.$$field)) {
+      var i = this.$$field.length;
+      while(i--) {
+        if (this.$$field[i].checked) {
+          return this.$$field[i].value;
+        }
+      }
     };
 
     return this.$$field.value;
   };
 
   function isCheckbox(elm){
-    return elm.nodeName === "INPUT" && elm.getAttribute("type") === "checkbox"
+    return elm.nodeName === "INPUT" && elm.getAttribute("type") === "checkbox";
+  }
+
+  function isRadio(elm){
+    if (elm instanceof NodeList) {
+      return elm[0].nodeName === "INPUT" && elm[0].getAttribute("type") === "radio";
+    }
+    return false;
   }
 
   window.valkyr.Constraint = Constraint;
