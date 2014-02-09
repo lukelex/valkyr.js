@@ -285,7 +285,7 @@ window.valkyr = {
     i = this.$$rules.length;
     while (i--) {
       verification = this.$$rules[i].$check(
-        this.$$as || this.$$name, this.$$field.value
+        this.$$as || this.$$name, this.$value()
       );
 
       if (!verification.isOk) {
@@ -295,6 +295,18 @@ window.valkyr = {
 
     return result;
   };
+
+  Constraint.prototype.$value = function(){
+    if (isCheckbox(this.$$field)) {
+      return this.$$field.checked;
+    };
+
+    return this.$$field.value;
+  };
+
+  function isCheckbox(elm){
+    return elm.nodeName === "INPUT" && elm.getAttribute("type") === "checkbox"
+  }
 
   window.valkyr.Constraint = Constraint;
 })();
@@ -332,7 +344,8 @@ window.valkyr = {
     name: "required",
     message: "The %s field can't be empty.",
     validator: function(value){
-      if (!value) { return false; }
+      if (!value || value === false) { return false; }
+      if (value === true) { return true; }
       return value.length > 0;
     }
   });

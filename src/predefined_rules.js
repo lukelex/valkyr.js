@@ -31,7 +31,8 @@
     name: "required",
     message: "The %s field can't be empty.",
     validator: function(value){
-      if (!value) { return false; }
+      if (!value || value === false) { return false; }
+      if (value === true) { return true; }
       return value.length > 0;
     }
   });
