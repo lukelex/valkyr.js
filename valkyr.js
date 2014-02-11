@@ -378,6 +378,14 @@ window.valkyr = {
     }
   });
 
+  rules["minLength"] = new window.valkyr.ParameterRule({
+    name: "minLength",
+    message: "The %s field must not exceed %s characters in length.",
+    validator: function(value, length){
+      return value.length <= length;
+    }
+  });
+
   rules["required"] = new window.valkyr.Rule({
     name: "required",
     message: "The %s field can't be empty.",
