@@ -378,9 +378,17 @@ window.valkyr = {
     }
   });
 
-  rules["minLength"] = new window.valkyr.ParameterRule({
-    name: "minLength",
+  rules["maxLength"] = new window.valkyr.ParameterRule({
+    name: "maxLength",
     message: "The %s field must not exceed %s characters in length.",
+    validator: function(value, length){
+      return value.length <= length;
+    }
+  });
+
+  rules["exactLength"] = new window.valkyr.ParameterRule({
+    name: "exactLength",
+    message: "The %s field must be exactly %s characters in length.",
     validator: function(value, length){
       return value.length <= length;
     }
