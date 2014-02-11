@@ -21,9 +21,7 @@
   };
 
   ComparisonRule.prototype.$getExtraInfo = function(form){
-    this.$$comparedTo = form.querySelector(
-      "input[name=\"" + this.$$params + "\"]"
-    );
+    this.$$comparedTo = form[this.$$params];
     return this;
   };
 

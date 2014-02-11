@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.1.0 | From: 09-02-2014
+// Version: 0.1.0 | From: 11-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -58,9 +58,7 @@ window.valkyr = {
   };
 
   ComparisonRule.prototype.$getExtraInfo = function(form){
-    this.$$comparedTo = form.querySelector(
-      "input[name=\"" + this.$$params + "\"]"
-    );
+    this.$$comparedTo = form[this.$$params];
     return this;
   };
 
@@ -235,7 +233,6 @@ window.valkyr = {
 
     this.$$as      = config["as"];
     this.$$name    = config["name"];
-    this.$$display = config["display"];
 
     this.$$field   = selectField(form, this.$$name);
 
