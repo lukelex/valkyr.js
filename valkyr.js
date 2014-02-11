@@ -13,9 +13,10 @@ window.valkyr = {
 
 (function(){
   function BaseRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    this.$$name            = config.name;
+    this.$$message         = config.message;
+    this.$$validator       = config.validator;
+    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
   BaseRule.$retrieve = function(ruleName){
@@ -35,6 +36,14 @@ window.valkyr = {
   BaseRule.prototype.$getExtraInfo = function(_){
     return this;
   };
+
+  function buildInheritanceRule(inherits){
+    if (inherits) {
+      return window.valkyr.BaseRule.$retrieve(inherits);
+    } else {
+      return { $check: function(){ return {isOk: true}; } };
+    }
+  }
 
   window.valkyr.BaseRule = BaseRule;
 })();
@@ -68,7 +77,6 @@ window.valkyr = {
 (function(){
   function Rule(config){
     window.valkyr.BaseRule.call(this, config);
-    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
   Rule.prototype = Object.create(window.valkyr.BaseRule.prototype);
@@ -97,14 +105,6 @@ window.valkyr = {
       fieldName, value
     ).isOk && this.$$validator(value);
   };
-
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return window.valkyr.BaseRule.$retrieve(inherits);
-    } else {
-      return { $check: function(){ return {isOk: true}; } };
-    }
-  }
 
   window.valkyr.Rule = Rule;
 })();

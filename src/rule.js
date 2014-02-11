@@ -1,7 +1,6 @@
 (function(){
   function Rule(config){
     window.valkyr.BaseRule.call(this, config);
-    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
   Rule.prototype = Object.create(window.valkyr.BaseRule.prototype);
@@ -30,14 +29,6 @@
       fieldName, value
     ).isOk && this.$$validator(value);
   };
-
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return window.valkyr.BaseRule.$retrieve(inherits);
-    } else {
-      return { $check: function(){ return {isOk: true}; } };
-    }
-  }
 
   window.valkyr.Rule = Rule;
 })();
