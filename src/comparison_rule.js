@@ -3,10 +3,8 @@
     window.valkyr.BaseRule.call(this, config);
   }
 
-  ComparisonRule.prototype.$params = function(params){
-    this.$$params = params;
-    return this;
-  };
+  ComparisonRule.prototype = Object.create(window.valkyr.BaseRule.prototype);
+  ComparisonRule.prototype.constructor = ComparisonRule;
 
   ComparisonRule.prototype.$check = function(fieldName, value){
     var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };

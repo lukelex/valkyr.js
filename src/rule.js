@@ -4,15 +4,13 @@
     this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
+  Rule.prototype = Object.create(window.valkyr.BaseRule.prototype);
+  Rule.prototype.constructor = Rule;
+
   Rule.build = function(config){
     var newRule = new Rule(config);
     window.valkyr.customRules[config.name] = newRule;
     return newRule;
-  };
-
-  Rule.prototype.$params = function(params){
-    this.$$params = params;
-    return this;
   };
 
   Rule.prototype.$check = function(fieldName, value){
@@ -31,10 +29,6 @@
     return this.$$inheritanceRule.$check(
       fieldName, value
     ).isOk && this.$$validator(value);
-  };
-
-  Rule.prototype.$getExtraInfo = function(_){
-    return this;
   };
 
   function buildInheritanceRule(inherits){

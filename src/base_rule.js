@@ -19,5 +19,9 @@
     return this;
   };
 
+  BaseRule.prototype.$getExtraInfo = function(_){
+    return this;
+  };
+
   window.valkyr.BaseRule = BaseRule;
 })();
