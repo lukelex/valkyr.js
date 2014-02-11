@@ -4,6 +4,7 @@ module.exports = function(grunt){
     'src/base_rule.js',
     'src/comparison_rule.js',
     'src/rule.js',
+    'src/parameter_rule.js',
     'src/validator.js',
     'src/constraint.js',
     'src/custom_rule.js',

@@ -27,6 +27,14 @@
 
   window.valkyr.predefinedRules = predefinedRules;
 
+  rules["minLength"] = new window.valkyr.ParameterRule({
+    name: "minLength",
+    message: "aaaaa.",
+    validator: function(value, length){
+      return value.length >= length;
+    }
+  });
+
   rules["required"] = new window.valkyr.Rule({
     name: "required",
     message: "The %s field can't be empty.",

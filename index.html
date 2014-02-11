@@ -13,6 +13,12 @@
     </p>
     <p>
       <label>
+        address:
+        <input type="text" name="address">
+      </label>
+    </p>
+    <p>
+      <label>
         age:
         <input type="text" name="age">
       </label>
@@ -75,6 +81,9 @@
     new valkyr.Validator(form, [{
       name: "username",
       rules: "required"
+    },{
+      name: "address",
+      rules: "minLength[4]"
     },{
       name: "age",
       rules: "numeric"

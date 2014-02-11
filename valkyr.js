@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.1.0 | From: 09-02-2014
+// Version: 0.1.0 | From: 10-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -119,6 +119,33 @@ window.valkyr = {
   window.valkyr.Rule = Rule;
 })();
 
+(function(){
+  function ParameterRule(config){
+    this.$$name      = config.name;
+    this.$$message   = config.message;
+    this.$$validator = config.validator;
+  }
+
+  ParameterRule.prototype.$params = function(params){
+    this.$$params = params;
+    return this;
+  };
+
+  ParameterRule.prototype.$check = function(fieldName, value){
+    var result = { isOk: this.$$validator(value, this.$$params) };
+    if (!result.isOk) {
+      result.message = this.$$message.replace(/\%s/, fieldName);
+    }
+
+    return result;
+  };
+
+  ParameterRule.prototype.$getExtraInfo = function(_){
+    return this;
+  };
+
+  window.valkyr.ParameterRule = ParameterRule;
+})();
 (function(){
   function Validator(form, constraints){
     if (!form)        { throw "Missing form"; }
@@ -353,6 +380,14 @@ window.valkyr = {
   }
 
   window.valkyr.predefinedRules = predefinedRules;
+
+  rules["minLength"] = new window.valkyr.ParameterRule({
+    name: "minLength",
+    message: "aaaaa.",
+    validator: function(value, length){
+      return value.length >= length;
+    }
+  });
 
   rules["required"] = new window.valkyr.Rule({
     name: "required",
