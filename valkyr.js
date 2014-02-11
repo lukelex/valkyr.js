@@ -245,12 +245,12 @@ window.valkyr = {
   function Constraint(form, config){
     checkForDuplicateRules(config["rules"].split(rulesSeparator));
 
-    this.$$as      = config["as"];
-    this.$$name    = config["name"];
+    this.$$as    = config["as"];
+    this.$$name  = config["name"];
 
-    this.$$field   = selectField(form, this.$$name);
+    this.$$field = selectField(form, this.$$name);
 
-    this.$$rules   = buildRules(config["rules"], form);
+    this.$$rules = buildRules(config["rules"], form);
   }
 
   function checkForDuplicateRules(rules){
