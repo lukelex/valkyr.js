@@ -1,8 +1,6 @@
 (function(){
   function Rule(config){
-    this.$$name            = config.name;
-    this.$$message         = config.message;
-    this.$$validator       = config.validator;
+    window.valkyr.BaseRule.call(this, config);
     this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 

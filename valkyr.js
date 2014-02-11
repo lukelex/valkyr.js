@@ -37,9 +37,7 @@ window.valkyr = {
 
 (function(){
   function ComparisonRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    window.valkyr.BaseRule.call(this, config);
   }
 
   ComparisonRule.prototype.$params = function(params){
@@ -67,9 +65,7 @@ window.valkyr = {
 
 (function(){
   function Rule(config){
-    this.$$name            = config.name;
-    this.$$message         = config.message;
-    this.$$validator       = config.validator;
+    window.valkyr.BaseRule.call(this, config);
     this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 

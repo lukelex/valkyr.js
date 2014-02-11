@@ -1,8 +1,6 @@
 (function(){
   function ComparisonRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    window.valkyr.BaseRule.call(this, config);
   }
 
   ComparisonRule.prototype.$params = function(params){
