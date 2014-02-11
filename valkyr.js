@@ -13,9 +13,10 @@ window.valkyr = {
 
 (function(){
   function BaseRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    this.$$name            = config.name;
+    this.$$message         = config.message;
+    this.$$validator       = config.validator;
+    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
   BaseRule.$retrieve = function(ruleName){
@@ -32,20 +33,28 @@ window.valkyr = {
     return this;
   };
 
+  BaseRule.prototype.$getExtraInfo = function(_){
+    return this;
+  };
+
+  function buildInheritanceRule(inherits){
+    if (inherits) {
+      return window.valkyr.BaseRule.$retrieve(inherits);
+    } else {
+      return { $check: function(){ return {isOk: true}; } };
+    }
+  }
+
   window.valkyr.BaseRule = BaseRule;
 })();
 
 (function(){
   function ComparisonRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    window.valkyr.BaseRule.call(this, config);
   }
 
-  ComparisonRule.prototype.$params = function(params){
-    this.$$params = params;
-    return this;
-  };
+  ComparisonRule.prototype = Object.create(window.valkyr.BaseRule.prototype);
+  ComparisonRule.prototype.constructor = ComparisonRule;
 
   ComparisonRule.prototype.$check = function(fieldName, value){
     var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };
@@ -58,9 +67,7 @@ window.valkyr = {
   };
 
   ComparisonRule.prototype.$getExtraInfo = function(form){
-    this.$$comparedTo = form.querySelector(
-      "input[name=\"" + this.$$params + "\"]"
-    );
+    this.$$comparedTo = form[this.$$params];
     return this;
   };
 
@@ -69,21 +76,16 @@ window.valkyr = {
 
 (function(){
   function Rule(config){
-    this.$$name            = config.name;
-    this.$$message         = config.message;
-    this.$$validator       = config.validator;
-    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
+    window.valkyr.BaseRule.call(this, config);
   }
+
+  Rule.prototype = Object.create(window.valkyr.BaseRule.prototype);
+  Rule.prototype.constructor = Rule;
 
   Rule.build = function(config){
     var newRule = new Rule(config);
     window.valkyr.customRules[config.name] = newRule;
     return newRule;
-  };
-
-  Rule.prototype.$params = function(params){
-    this.$$params = params;
-    return this;
   };
 
   Rule.prototype.$check = function(fieldName, value){
@@ -103,18 +105,6 @@ window.valkyr = {
       fieldName, value
     ).isOk && this.$$validator(value);
   };
-
-  Rule.prototype.$getExtraInfo = function(_){
-    return this;
-  };
-
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return window.valkyr.BaseRule.$retrieve(inherits);
-    } else {
-      return { $check: function(){ return {isOk: true}; } };
-    }
-  }
 
   window.valkyr.Rule = Rule;
 })();
@@ -262,7 +252,6 @@ window.valkyr = {
 
     this.$$as      = config["as"];
     this.$$name    = config["name"];
-    this.$$display = config["display"];
 
     this.$$field   = selectField(form, this.$$name);
 

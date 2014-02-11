@@ -1,14 +1,10 @@
 (function(){
   function ComparisonRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    window.valkyr.BaseRule.call(this, config);
   }
 
-  ComparisonRule.prototype.$params = function(params){
-    this.$$params = params;
-    return this;
-  };
+  ComparisonRule.prototype = Object.create(window.valkyr.BaseRule.prototype);
+  ComparisonRule.prototype.constructor = ComparisonRule;
 
   ComparisonRule.prototype.$check = function(fieldName, value){
     var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };
@@ -21,9 +17,7 @@
   };
 
   ComparisonRule.prototype.$getExtraInfo = function(form){
-    this.$$comparedTo = form.querySelector(
-      "input[name=\"" + this.$$params + "\"]"
-    );
+    this.$$comparedTo = form[this.$$params];
     return this;
   };
 

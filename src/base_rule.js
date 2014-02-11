@@ -1,8 +1,9 @@
 (function(){
   function BaseRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    this.$$name            = config.name;
+    this.$$message         = config.message;
+    this.$$validator       = config.validator;
+    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
   BaseRule.$retrieve = function(ruleName){
@@ -18,6 +19,18 @@
     this.$$params = params;
     return this;
   };
+
+  BaseRule.prototype.$getExtraInfo = function(_){
+    return this;
+  };
+
+  function buildInheritanceRule(inherits){
+    if (inherits) {
+      return window.valkyr.BaseRule.$retrieve(inherits);
+    } else {
+      return { $check: function(){ return {isOk: true}; } };
+    }
+  }
 
   window.valkyr.BaseRule = BaseRule;
 })();

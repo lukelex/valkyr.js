@@ -1,20 +1,15 @@
 (function(){
   function Rule(config){
-    this.$$name            = config.name;
-    this.$$message         = config.message;
-    this.$$validator       = config.validator;
-    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
+    window.valkyr.BaseRule.call(this, config);
   }
+
+  Rule.prototype = Object.create(window.valkyr.BaseRule.prototype);
+  Rule.prototype.constructor = Rule;
 
   Rule.build = function(config){
     var newRule = new Rule(config);
     window.valkyr.customRules[config.name] = newRule;
     return newRule;
-  };
-
-  Rule.prototype.$params = function(params){
-    this.$$params = params;
-    return this;
   };
 
   Rule.prototype.$check = function(fieldName, value){
@@ -34,18 +29,6 @@
       fieldName, value
     ).isOk && this.$$validator(value);
   };
-
-  Rule.prototype.$getExtraInfo = function(_){
-    return this;
-  };
-
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return window.valkyr.BaseRule.$retrieve(inherits);
-    } else {
-      return { $check: function(){ return {isOk: true}; } };
-    }
-  }
 
   window.valkyr.Rule = Rule;
 })();

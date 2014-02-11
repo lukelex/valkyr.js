@@ -6,7 +6,6 @@
 
     this.$$as      = config["as"];
     this.$$name    = config["name"];
-    this.$$display = config["display"];
 
     this.$$field   = selectField(form, this.$$name);
 
