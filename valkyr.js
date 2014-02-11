@@ -125,6 +125,7 @@ window.valkyr = {
     var result = { isOk: this.$$validator(value, this.$$params) };
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
+      result.message = result.message.replace(/\%s/, this.$$params);
     }
 
     return result;
@@ -136,6 +137,7 @@ window.valkyr = {
 
   window.valkyr.ParameterRule = ParameterRule;
 })();
+
 (function(){
   function Validator(form, constraints){
     if (!form)        { throw "Missing form"; }

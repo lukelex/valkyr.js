@@ -14,6 +14,7 @@
     var result = { isOk: this.$$validator(value, this.$$params) };
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
+      result.message = result.message.replace(/\%s/, this.$$params);
     }
 
     return result;
