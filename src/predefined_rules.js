@@ -29,7 +29,7 @@
 
   rules["minLength"] = new window.valkyr.ParameterRule({
     name: "minLength",
-    message: "aaaaa.",
+    message: "The %s field must be at least %s characters in length.",
     validator: function(value, length){
       return value.length >= length;
     }

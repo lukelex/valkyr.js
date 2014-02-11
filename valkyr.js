@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.1.0 | From: 10-02-2014
+// Version: 0.1.0 | From: 11-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -372,7 +372,7 @@ window.valkyr = {
 
   rules["minLength"] = new window.valkyr.ParameterRule({
     name: "minLength",
-    message: "aaaaa.",
+    message: "The %s field must be at least %s characters in length.",
     validator: function(value, length){
       return value.length >= length;
     }
