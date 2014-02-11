@@ -1,15 +1,40 @@
 (function(){
   function Rule(config){
-    window.valkyr.BaseRule.call(this, config);
+    this.$$name            = config.name;
+    this.$$message         = config.message;
+    this.$$validator       = config.validator;
+    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
-  Rule.prototype = Object.create(window.valkyr.BaseRule.prototype);
-  Rule.prototype.constructor = Rule;
+  function buildInheritanceRule(inherits){
+    if (inherits) {
+      return Rule.$retrieve(inherits);
+    } else {
+      return { $check: function(){ return {isOk: true}; } };
+    }
+  }
+
+  Rule.$retrieve = function(ruleName){
+    var rule = window.valkyr.predefinedRules.$find(ruleName)
+            || window.valkyr.customRules[ruleName];
+
+    if (!rule) { throw "Rule " + ruleName + " does not exist!"; }
+
+    return rule;
+  };
 
   Rule.build = function(config){
     var newRule = new Rule(config);
     window.valkyr.customRules[config.name] = newRule;
     return newRule;
+  };
+
+  Rule.prototype.$params = function(_){
+    return this;
+  };
+
+  Rule.prototype.$getExtraInfo = function(_){
+    return this;
   };
 
   Rule.prototype.$check = function(fieldName, value){

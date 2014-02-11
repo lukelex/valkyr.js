@@ -38,7 +38,7 @@
     i = rulesNames.length;
     while (i--) {
       rules.push(
-        window.valkyr.BaseRule.$retrieve(
+        window.valkyr.Rule.$retrieve(
           rulesNames[i]
         ).$getExtraInfo(form)
       );

@@ -12,14 +12,22 @@ window.valkyr = {
 };
 
 (function(){
-  function BaseRule(config){
+  function Rule(config){
     this.$$name            = config.name;
     this.$$message         = config.message;
     this.$$validator       = config.validator;
     this.$$inheritanceRule = buildInheritanceRule(config.inherits);
   }
 
-  BaseRule.$retrieve = function(ruleName){
+  function buildInheritanceRule(inherits){
+    if (inherits) {
+      return Rule.$retrieve(inherits);
+    } else {
+      return { $check: function(){ return {isOk: true}; } };
+    }
+  }
+
+  Rule.$retrieve = function(ruleName){
     var rule = window.valkyr.predefinedRules.$find(ruleName)
             || window.valkyr.customRules[ruleName];
 
@@ -28,64 +36,18 @@ window.valkyr = {
     return rule;
   };
 
-  BaseRule.prototype.$params = function(params){
-    this.$$params = params;
-    return this;
-  };
-
-  BaseRule.prototype.$getExtraInfo = function(_){
-    return this;
-  };
-
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return window.valkyr.BaseRule.$retrieve(inherits);
-    } else {
-      return { $check: function(){ return {isOk: true}; } };
-    }
-  }
-
-  window.valkyr.BaseRule = BaseRule;
-})();
-
-(function(){
-  function ComparisonRule(config){
-    window.valkyr.BaseRule.call(this, config);
-  }
-
-  ComparisonRule.prototype = Object.create(window.valkyr.BaseRule.prototype);
-  ComparisonRule.prototype.constructor = ComparisonRule;
-
-  ComparisonRule.prototype.$check = function(fieldName, value){
-    var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };
-    if (!result.isOk) {
-      result.message = this.$$message.replace(/\%s/, fieldName);
-      result.message = result.message.replace(/\%s/, this.$$params);
-    }
-
-    return result;
-  };
-
-  ComparisonRule.prototype.$getExtraInfo = function(form){
-    this.$$comparedTo = form[this.$$params];
-    return this;
-  };
-
-  window.valkyr.ComparisonRule = ComparisonRule;
-})();
-
-(function(){
-  function Rule(config){
-    window.valkyr.BaseRule.call(this, config);
-  }
-
-  Rule.prototype = Object.create(window.valkyr.BaseRule.prototype);
-  Rule.prototype.constructor = Rule;
-
   Rule.build = function(config){
     var newRule = new Rule(config);
     window.valkyr.customRules[config.name] = newRule;
     return newRule;
+  };
+
+  Rule.prototype.$params = function(_){
+    return this;
+  };
+
+  Rule.prototype.$getExtraInfo = function(_){
+    return this;
   };
 
   Rule.prototype.$check = function(fieldName, value){
@@ -107,6 +69,37 @@ window.valkyr = {
   };
 
   window.valkyr.Rule = Rule;
+})();
+
+(function(){
+  function ComparisonRule(config){
+    window.valkyr.Rule.call(this, config);
+  }
+
+  ComparisonRule.prototype = Object.create(window.valkyr.Rule.prototype);
+  ComparisonRule.prototype.constructor = ComparisonRule;
+
+  ComparisonRule.prototype.$params = function(params){
+    this.$$params = params;
+    return this;
+  };
+
+  ComparisonRule.prototype.$check = function(fieldName, value){
+    var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };
+    if (!result.isOk) {
+      result.message = this.$$message.replace(/\%s/, fieldName);
+      result.message = result.message.replace(/\%s/, this.$$params);
+    }
+
+    return result;
+  };
+
+  ComparisonRule.prototype.$getExtraInfo = function(form){
+    this.$$comparedTo = form[this.$$params];
+    return this;
+  };
+
+  window.valkyr.ComparisonRule = ComparisonRule;
 })();
 
 (function(){
@@ -286,7 +279,7 @@ window.valkyr = {
     i = rulesNames.length;
     while (i--) {
       rules.push(
-        window.valkyr.BaseRule.$retrieve(
+        window.valkyr.Rule.$retrieve(
           rulesNames[i]
         ).$getExtraInfo(form)
       );

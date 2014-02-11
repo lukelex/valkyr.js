@@ -1,7 +1,15 @@
 describe("Rule", function(){
+  describe(".$retrieve", function(){
+    it("should return a predefined rule", function(){
+      var rule = valkyr.Rule.$retrieve("required");
+
+      expect(rule.constructor.name).toEqual("Rule");
+    });
+  });
+
   describe("#$check", function(){
     it("when not ok", function(){
-      var rule = valkyr.BaseRule.$retrieve("required");
+      var rule = valkyr.Rule.$retrieve("required");
 
       expect(
         rule.$check("username", undefined)
@@ -12,7 +20,7 @@ describe("Rule", function(){
     });
 
     it("when ok", function(){
-      var rule = valkyr.BaseRule.$retrieve("required");
+      var rule = valkyr.Rule.$retrieve("required");
 
       expect(
         rule.$check("username", "some user name")

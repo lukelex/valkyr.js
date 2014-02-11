@@ -1,9 +1,8 @@
 module.exports = function(grunt){
   var srcFiles = [
     'src/init.js',
-    'src/base_rule.js',
-    'src/comparison_rule.js',
     'src/rule.js',
+    'src/comparison_rule.js',
     'src/parameter_rule.js',
     'src/validator.js',
     'src/constraint.js',
