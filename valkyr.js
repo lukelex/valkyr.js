@@ -104,10 +104,11 @@ window.valkyr = {
 
 (function(){
   function ParameterRule(config){
-    this.$$name      = config.name;
-    this.$$message   = config.message;
-    this.$$validator = config.validator;
+    window.valkyr.Rule.call(this, config);
   }
+
+  ParameterRule.prototype = Object.create(window.valkyr.Rule.prototype);
+  ParameterRule.prototype.constructor = ParameterRule;
 
   ParameterRule.prototype.$params = function(params){
     this.$$params = params;
@@ -122,10 +123,6 @@ window.valkyr = {
     }
 
     return result;
-  };
-
-  ParameterRule.prototype.$getExtraInfo = function(_){
-    return this;
   };
 
   window.valkyr.ParameterRule = ParameterRule;
