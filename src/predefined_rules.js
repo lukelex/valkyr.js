@@ -47,7 +47,7 @@
     name: "exactLength",
     message: "The %s field must be exactly %s characters in length.",
     validator: function(value, length){
-      return value.length <= length;
+      return value.length === length;
     }
   });
 
