@@ -124,6 +124,19 @@ describe("Validator", function(){
 
       expect(previousSubmission).toHaveBeenCalled();
     });
+
+    it("should not fail when no onsubmit is predefined", function(){
+      var form, loginForm;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
+
+      loginForm = new valkyr.Validator(form, []);
+
+      expect(function(){
+        loginForm.submit();
+      }).not.toThrow();
+    });
   });
 
   describe("#submit", function(){

@@ -165,7 +165,7 @@ window.valkyr = {
     this.$$form.onsubmit = (function(that) {
       return function(event) {
         if (that.isValid()) {
-          return (that.$$originalSubmit === undefined || that.$$originalSubmit(event));
+          return (!!that.$$originalSubmit && that.$$originalSubmit(event));
         } else {
           preventSubmission(event);
         }
