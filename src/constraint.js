@@ -76,7 +76,7 @@
           return this.$$field[i].value;
         }
       }
-    };
+    }
 
     return this.$$field.value;
   };
@@ -86,7 +86,7 @@
   }
 
   function isRadio(elm){
-    if (elm instanceof NodeList) {
+    if (elm instanceof window.NodeList) {
       return elm[0].nodeName === "INPUT" && elm[0].type === "radio";
     }
     return false;
