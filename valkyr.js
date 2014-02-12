@@ -149,7 +149,6 @@ window.valkyr = {
 
     newConstraints = [];
 
-    constraints = constraints.reverse();
     i = constraints.length;
     while (i--) {
       newConstraints.push(
