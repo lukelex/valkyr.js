@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.1.0 | From: 11-02-2014
+// Version: 0.1.0 | From: 12-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -226,6 +226,7 @@ window.valkyr = {
 
   Validator.prototype.onError = function(callback){
     this.$$onError = callback;
+    return this;
   };
 
   Validator.prototype.whenValid = function(){};
@@ -320,12 +321,12 @@ window.valkyr = {
   };
 
   function isCheckbox(elm){
-    return elm.nodeName === "INPUT" && elm.getAttribute("type") === "checkbox";
+    return elm.nodeName === "INPUT" && elm.type === "checkbox";
   }
 
   function isRadio(elm){
     if (elm instanceof NodeList) {
-      return elm[0].nodeName === "INPUT" && elm[0].getAttribute("type") === "radio";
+      return elm[0].nodeName === "INPUT" && elm[0].type === "radio";
     }
     return false;
   }

@@ -96,6 +96,7 @@
 
   Validator.prototype.onError = function(callback){
     this.$$onError = callback;
+    return this;
   };
 
   Validator.prototype.whenValid = function(){};

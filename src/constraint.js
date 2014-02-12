@@ -82,12 +82,12 @@
   };
 
   function isCheckbox(elm){
-    return elm.nodeName === "INPUT" && elm.getAttribute("type") === "checkbox";
+    return elm.nodeName === "INPUT" && elm.type === "checkbox";
   }
 
   function isRadio(elm){
     if (elm instanceof NodeList) {
-      return elm[0].nodeName === "INPUT" && elm[0].getAttribute("type") === "radio";
+      return elm[0].nodeName === "INPUT" && elm[0].type === "radio";
     }
     return false;
   }
