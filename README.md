@@ -15,7 +15,7 @@ ValkyrJS is the first validation library that has all the following characterist
 
 ##Usage
 
-ValkyrJS needs only two parameters to start of, the form element and a list of constraints to compose the rules. For each constraint you need to pass in the name of the element to be validates, as in `name="username"`, and the rules that should be applyed to it.
+ValkyrJS needs only two parameters to start of, the form element and a list of constraints to compose the rules. For each constraint you need to pass in the name of the element to be validated, as in `name="username"`, and the rules that should be applyed to it.
 
 ```html
 <form action="/signin" method="post">
@@ -90,10 +90,10 @@ new Validator(form, [{
 * **natural**        - checks for a valid natural number;
 * **alphabetical**   - checks if it's composed of only A-Z charactes;
 * **equals[field]**  - checks equality between two fields;
-* **creadit-card**   - checks for a valid credit card number;
+* **credit-card**    - checks for a valid credit card number;
 * **ip**             - checks for a valid IP number;
 
-##Constaint options
+##Constraint options
 While declaring the form constraints you can set some extra options:
 
 ```jacascript
@@ -104,7 +104,7 @@ new Validator(form, [{
 ```
 
 ##On-demand Validation
-Sometimes you will need to check if your form is in a valid state without trigerring the submit. ValkyrJS also helps you with that.
+Sometimes you will need to check if your form is in a valid state without trigering the submit. ValkyrJS also helps you with that.
 
 ```javascript
 var form = document.forms[0];
@@ -130,12 +130,17 @@ valkyr.Rule.build({
     return value < 0;
   }
 });
+
+new Validator(form, [{
+  ...
+  rules: "negative"
+}]);
 ```
 
 ##Rule inheritance
 Rules can be extended and composed based on previously defined rules throught the use of the `inherits` param. This allow rules to have sharable validations.
 
-A VISA credit card validation would check if the credit card number starts with a `4` but would also verify if the overall number is a valid credit card. Since ValkyrJS already has the `credit-card` rule predefined you can just create the VISA rule and inherit from it.
+Example: a VISA credit card validation would check if the credit card number starts with a `4` but would also verify if the overall number is a valid credit card. Since ValkyrJS already has the `credit-card` rule pre-defined you can just create the VISA rule and inherit from it.
 
 ```javascript
 valkyr.Rule.build({
