@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.1.0 | From: 12-02-2014
+// Version: 0.2.0 | From: 17-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -182,7 +182,29 @@ window.valkyr = {
     }
   }
 
-  Validator.prototype.validate = function(){
+  Validator.prototype.validate = function(field){
+    if (field) {
+      this.$validateField(field);
+    } else {
+      this.$validateAllFields();
+    }
+  };
+
+  Validator.prototype.$validateField = function(field, constraint){
+    var result;
+
+    if (!constraint) {
+      constraint = this.$constraintFor(field);
+    }
+
+    result = constraint.$validate();
+
+    if (result.errors.length > 0) {
+      this.errors[result.name] = result.errors;
+    }
+  };
+
+  Validator.prototype.$validateAllFields = function(){
     var i, result;
 
     this.errors = {};
@@ -190,9 +212,15 @@ window.valkyr = {
     i = this.$$constraints.length;
 
     while (i--) {
-      result = this.$$constraints[i].$validate();
-      if (result.errors.length > 0) {
-        this.errors[result.name] = result.errors;
+      this.$validateField(null, this.$$constraints[i]);
+    }
+  };
+
+  Validator.prototype.$constraintFor = function(field){
+    var i = this.$$constraints.length;
+    while (i--) {
+      if (this.$$constraints[i].$$field == field) {
+        return this.$$constraints[i];
       }
     }
   };
