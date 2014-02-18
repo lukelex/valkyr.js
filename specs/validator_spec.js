@@ -100,6 +100,32 @@ describe("Validator", function(){
         username: ["The username field can't be empty."]
       });
     });
+
+    it("should empty a single field", function(){
+      var form, loginForm;
+
+      form = document.createElement("form");
+      form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
+
+      loginForm = new valkyr.Validator(form, [{
+          name: "username",
+          rules: "required"
+        }, {
+          name: "password",
+          rules: "required"
+        }]
+      );
+
+      loginForm.validate();
+      form['username'].value = 'some-name';
+      loginForm.validate(form['username']);
+
+      expect(
+        loginForm.errors
+      ).toEqual({
+        password : [ "The password field can't be empty." ]
+      });
+    });
   });
 
   describe("#isValid", function(){

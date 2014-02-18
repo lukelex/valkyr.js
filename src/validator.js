@@ -71,6 +71,8 @@
 
     if (result.errors.length > 0) {
       this.errors[result.name] = result.errors;
+    } else {
+      this.errors[result.name] = undefined;
     }
   };
 

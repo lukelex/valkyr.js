@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.2.0 | From: 17-02-2014
+// Version: 0.2.0 | From: 18-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -201,6 +201,8 @@ window.valkyr = {
 
     if (result.errors.length > 0) {
       this.errors[result.name] = result.errors;
+    } else {
+      this.errors[result.name] = undefined;
     }
   };
 
