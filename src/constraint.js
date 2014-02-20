@@ -47,7 +47,7 @@
     return rules;
   }
 
-  Constraint.prototype.$validate = function(){
+  Constraint.method("$validate", function(){
     var i, result, verification;
 
     result = { name: this.$$name, errors: [] };
@@ -64,9 +64,9 @@
     }
 
     return result;
-  };
+  });
 
-  Constraint.prototype.$value = function(){
+  Constraint.method("$value", function(){
     if (isCheckbox(this.$$field)) {
       return this.$$field.checked;
     } else if (isRadio(this.$$field)) {
@@ -79,7 +79,7 @@
     }
 
     return this.$$field.value;
-  };
+  });
 
   function isCheckbox(elm){
     return elm.nodeName === "INPUT" && elm.type === "checkbox";

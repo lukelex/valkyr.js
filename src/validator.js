@@ -29,7 +29,7 @@
     return newConstraints;
   }
 
-  Validator.prototype.$setupSubmission = function(){
+  Validator.method("$setupSubmission", function(){
     this.$$originalSubmit = this.$$form.onsubmit;
 
     this.$$form.onsubmit = (function(that) {
@@ -41,7 +41,7 @@
         }
       };
     })(this);
-  };
+  });
 
   function preventSubmission(event) {
     if (event && event.preventDefault) {
@@ -52,15 +52,15 @@
     }
   }
 
-  Validator.prototype.validate = function(field){
+  Validator.method("validate", function(field){
     if (field) {
       this.$validateField(field);
     } else {
       this.$validateAllFields();
     }
-  };
+  });
 
-  Validator.prototype.$validateField = function(field, constraint){
+  Validator.method("$validateField", function(field, constraint){
     var result;
 
     if (!constraint) {
@@ -72,11 +72,11 @@
     if (result.errors.length > 0) {
       this.errors[result.name] = result.errors;
     } else {
-      this.errors[result.name] = undefined;
+      delete this.errors[result.name];
     }
-  };
+  });
 
-  Validator.prototype.$validateAllFields = function(){
+  Validator.method("$validateAllFields", function(){
     var i, result;
 
     this.errors = {};
@@ -86,18 +86,18 @@
     while (i--) {
       this.$validateField(null, this.$$constraints[i]);
     }
-  };
+  });
 
-  Validator.prototype.$constraintFor = function(field){
+  Validator.method("$constraintFor", function(field){
     var i = this.$$constraints.length;
     while (i--) {
       if (this.$$constraints[i].$$field == field) {
         return this.$$constraints[i];
       }
     }
-  };
+  });
 
-  Validator.prototype.isValid = function(){
+  Validator.method("isValid", function(){
     var isValid = false;
 
     this.validate();
@@ -109,9 +109,9 @@
     }
 
     return isValid;
-  };
+  });
 
-  Validator.prototype.submit = function(options){
+  Validator.method("submit", function(options){
     if (!(options && options.skipValidations === true)) {
       if (!this.isValid()) {
         return false;
@@ -121,17 +121,12 @@
     if (this.$$originalSubmit) {
       this.$$originalSubmit();
     }
-  };
+  });
 
-  Validator.prototype.onError = function(callback){
+  Validator.method("onError", function(callback){
     this.$$onError = callback;
     return this;
-  };
-
-  Validator.prototype.whenValid = function(){};
-  Validator.prototype.whenInvalid = function(callback){
-    callback(this.$$errors);
-  };
+  });
 
   window.valkyr.Validator = Validator;
 })();

@@ -6,12 +6,12 @@
   ParameterRule.prototype = Object.create(window.valkyr.Rule.prototype);
   ParameterRule.prototype.constructor = ParameterRule;
 
-  ParameterRule.prototype.$params = function(params){
+  ParameterRule.method("$params", function(params){
     this.$$params = params;
     return this;
-  };
+  });
 
-  ParameterRule.prototype.$check = function(fieldName, value){
+  ParameterRule.method("$check", function(fieldName, value){
     var result = { isOk: this.$$validator(value, this.$$params) };
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
@@ -19,7 +19,7 @@
     }
 
     return result;
-  };
+  });
 
   window.valkyr.ParameterRule = ParameterRule;
 })();

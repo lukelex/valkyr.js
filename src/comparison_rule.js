@@ -6,12 +6,12 @@
   ComparisonRule.prototype = Object.create(window.valkyr.Rule.prototype);
   ComparisonRule.prototype.constructor = ComparisonRule;
 
-  ComparisonRule.prototype.$params = function(params){
+  ComparisonRule.method("$params", function(params){
     this.$$params = params;
     return this;
-  };
+  });
 
-  ComparisonRule.prototype.$check = function(fieldName, value){
+  ComparisonRule.method("$check", function(fieldName, value){
     var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
@@ -19,12 +19,12 @@
     }
 
     return result;
-  };
+  });
 
-  ComparisonRule.prototype.$getExtraInfo = function(form){
+  ComparisonRule.method("$getExtraInfo", function(form){
     this.$$comparedTo = form[this.$$params];
     return this;
-  };
+  });
 
   window.valkyr.ComparisonRule = ComparisonRule;
 })();

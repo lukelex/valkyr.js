@@ -29,15 +29,15 @@
     return newRule;
   };
 
-  Rule.prototype.$params = function(_){
+  Rule.method("$params", function(_){
     return this;
-  };
+  });
 
-  Rule.prototype.$getExtraInfo = function(_){
+  Rule.method("$getExtraInfo", function(_){
     return this;
-  };
+  });
 
-  Rule.prototype.$check = function(fieldName, value){
+  Rule.method("$check", function(fieldName, value){
     var result = {
       isOk: this.$checkWithHierarchy(fieldName, value)
     };
@@ -47,13 +47,13 @@
     }
 
     return result;
-  };
+  });
 
-  Rule.prototype.$checkWithHierarchy = function(fieldName, value){
+  Rule.method("$checkWithHierarchy", function(fieldName, value){
     return this.$$inheritanceRule.$check(
       fieldName, value
     ).isOk && this.$$validator(value);
-  };
+  });
 
   window.valkyr.Rule = Rule;
 })();

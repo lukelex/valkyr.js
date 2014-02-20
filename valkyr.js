@@ -5,11 +5,20 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.2.0 | From: 18-02-2014
+// Version: 0.2.1 | From: 20-02-2014
 
 window.valkyr = {
   customRules: {}
 };
+
+(function(){
+  Function.prototype.method = function(name, func){
+    if (!this.hasOwnProperty(name)) {
+      this.prototype[name] = func;
+      return this;
+    }
+  }
+})();
 
 (function(){
   function Rule(config){
@@ -42,15 +51,15 @@ window.valkyr = {
     return newRule;
   };
 
-  Rule.prototype.$params = function(_){
+  Rule.method("$params", function(_){
     return this;
-  };
+  });
 
-  Rule.prototype.$getExtraInfo = function(_){
+  Rule.method("$getExtraInfo", function(_){
     return this;
-  };
+  });
 
-  Rule.prototype.$check = function(fieldName, value){
+  Rule.method("$check", function(fieldName, value){
     var result = {
       isOk: this.$checkWithHierarchy(fieldName, value)
     };
@@ -60,13 +69,13 @@ window.valkyr = {
     }
 
     return result;
-  };
+  });
 
-  Rule.prototype.$checkWithHierarchy = function(fieldName, value){
+  Rule.method("$checkWithHierarchy", function(fieldName, value){
     return this.$$inheritanceRule.$check(
       fieldName, value
     ).isOk && this.$$validator(value);
-  };
+  });
 
   window.valkyr.Rule = Rule;
 })();
@@ -79,12 +88,12 @@ window.valkyr = {
   ComparisonRule.prototype = Object.create(window.valkyr.Rule.prototype);
   ComparisonRule.prototype.constructor = ComparisonRule;
 
-  ComparisonRule.prototype.$params = function(params){
+  ComparisonRule.method("$params", function(params){
     this.$$params = params;
     return this;
-  };
+  });
 
-  ComparisonRule.prototype.$check = function(fieldName, value){
+  ComparisonRule.method("$check", function(fieldName, value){
     var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
@@ -92,12 +101,12 @@ window.valkyr = {
     }
 
     return result;
-  };
+  });
 
-  ComparisonRule.prototype.$getExtraInfo = function(form){
+  ComparisonRule.method("$getExtraInfo", function(form){
     this.$$comparedTo = form[this.$$params];
     return this;
-  };
+  });
 
   window.valkyr.ComparisonRule = ComparisonRule;
 })();
@@ -110,12 +119,12 @@ window.valkyr = {
   ParameterRule.prototype = Object.create(window.valkyr.Rule.prototype);
   ParameterRule.prototype.constructor = ParameterRule;
 
-  ParameterRule.prototype.$params = function(params){
+  ParameterRule.method("$params", function(params){
     this.$$params = params;
     return this;
-  };
+  });
 
-  ParameterRule.prototype.$check = function(fieldName, value){
+  ParameterRule.method("$check", function(fieldName, value){
     var result = { isOk: this.$$validator(value, this.$$params) };
     if (!result.isOk) {
       result.message = this.$$message.replace(/\%s/, fieldName);
@@ -123,7 +132,7 @@ window.valkyr = {
     }
 
     return result;
-  };
+  });
 
   window.valkyr.ParameterRule = ParameterRule;
 })();
@@ -159,7 +168,7 @@ window.valkyr = {
     return newConstraints;
   }
 
-  Validator.prototype.$setupSubmission = function(){
+  Validator.method("$setupSubmission", function(){
     this.$$originalSubmit = this.$$form.onsubmit;
 
     this.$$form.onsubmit = (function(that) {
@@ -171,7 +180,7 @@ window.valkyr = {
         }
       };
     })(this);
-  };
+  });
 
   function preventSubmission(event) {
     if (event && event.preventDefault) {
@@ -182,15 +191,15 @@ window.valkyr = {
     }
   }
 
-  Validator.prototype.validate = function(field){
+  Validator.method("validate", function(field){
     if (field) {
       this.$validateField(field);
     } else {
       this.$validateAllFields();
     }
-  };
+  });
 
-  Validator.prototype.$validateField = function(field, constraint){
+  Validator.method("$validateField", function(field, constraint){
     var result;
 
     if (!constraint) {
@@ -202,11 +211,11 @@ window.valkyr = {
     if (result.errors.length > 0) {
       this.errors[result.name] = result.errors;
     } else {
-      this.errors[result.name] = undefined;
+      delete this.errors[result.name];
     }
-  };
+  });
 
-  Validator.prototype.$validateAllFields = function(){
+  Validator.method("$validateAllFields", function(){
     var i, result;
 
     this.errors = {};
@@ -216,18 +225,18 @@ window.valkyr = {
     while (i--) {
       this.$validateField(null, this.$$constraints[i]);
     }
-  };
+  });
 
-  Validator.prototype.$constraintFor = function(field){
+  Validator.method("$constraintFor", function(field){
     var i = this.$$constraints.length;
     while (i--) {
       if (this.$$constraints[i].$$field == field) {
         return this.$$constraints[i];
       }
     }
-  };
+  });
 
-  Validator.prototype.isValid = function(){
+  Validator.method("isValid", function(){
     var isValid = false;
 
     this.validate();
@@ -239,9 +248,9 @@ window.valkyr = {
     }
 
     return isValid;
-  };
+  });
 
-  Validator.prototype.submit = function(options){
+  Validator.method("submit", function(options){
     if (!(options && options.skipValidations === true)) {
       if (!this.isValid()) {
         return false;
@@ -251,17 +260,12 @@ window.valkyr = {
     if (this.$$originalSubmit) {
       this.$$originalSubmit();
     }
-  };
+  });
 
-  Validator.prototype.onError = function(callback){
+  Validator.method("onError", function(callback){
     this.$$onError = callback;
     return this;
-  };
-
-  Validator.prototype.whenValid = function(){};
-  Validator.prototype.whenInvalid = function(callback){
-    callback(this.$$errors);
-  };
+  });
 
   window.valkyr.Validator = Validator;
 })();
@@ -315,7 +319,7 @@ window.valkyr = {
     return rules;
   }
 
-  Constraint.prototype.$validate = function(){
+  Constraint.method("$validate", function(){
     var i, result, verification;
 
     result = { name: this.$$name, errors: [] };
@@ -332,9 +336,9 @@ window.valkyr = {
     }
 
     return result;
-  };
+  });
 
-  Constraint.prototype.$value = function(){
+  Constraint.method("$value", function(){
     if (isCheckbox(this.$$field)) {
       return this.$$field.checked;
     } else if (isRadio(this.$$field)) {
@@ -347,7 +351,7 @@ window.valkyr = {
     }
 
     return this.$$field.value;
-  };
+  });
 
   function isCheckbox(elm){
     return elm.nodeName === "INPUT" && elm.type === "checkbox";
