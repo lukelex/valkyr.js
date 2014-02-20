@@ -3,8 +3,7 @@
     window.valkyr.Rule.call(this, config);
   }
 
-  ParameterRule.prototype = Object.create(window.valkyr.Rule.prototype);
-  ParameterRule.prototype.constructor = ParameterRule;
+  ParameterRule.inherits(window.valkyr.Rule);
 
   ParameterRule.method("$params", function(params){
     this.$$params = params;

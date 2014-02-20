@@ -18,6 +18,11 @@ window.valkyr = {
       return this;
     }
   }
+
+  Function.method("inherits", function (Parent) {
+    this.prototype = Object.create(Parent.prototype);
+    return this;
+  });
 })();
 
 (function(){
@@ -85,8 +90,7 @@ window.valkyr = {
     window.valkyr.Rule.call(this, config);
   }
 
-  ComparisonRule.prototype = Object.create(window.valkyr.Rule.prototype);
-  ComparisonRule.prototype.constructor = ComparisonRule;
+  ComparisonRule.inherits(window.valkyr.Rule);
 
   ComparisonRule.method("$params", function(params){
     this.$$params = params;
@@ -116,8 +120,7 @@ window.valkyr = {
     window.valkyr.Rule.call(this, config);
   }
 
-  ParameterRule.prototype = Object.create(window.valkyr.Rule.prototype);
-  ParameterRule.prototype.constructor = ParameterRule;
+  ParameterRule.inherits(window.valkyr.Rule);
 
   ParameterRule.method("$params", function(params){
     this.$$params = params;

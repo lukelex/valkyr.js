@@ -3,8 +3,7 @@
     window.valkyr.Rule.call(this, config);
   }
 
-  ComparisonRule.prototype = Object.create(window.valkyr.Rule.prototype);
-  ComparisonRule.prototype.constructor = ComparisonRule;
+  ComparisonRule.inherits(window.valkyr.Rule);
 
   ComparisonRule.method("$params", function(params){
     this.$$params = params;
