@@ -1,15 +1,11 @@
 window.valkyr.constraint = function(form, spec){
-  var rulesSeparator, field, rules;
+  var rules, field;
 
-  rulesSeparator = "|";
-
-  checkForDuplicateRules(spec["rules"].split(rulesSeparator));
+  checkForDuplicateRules();
 
   rules = [];
-
-  field = selectField(form, spec.name);
-
-  buildRules(spec["rules"], form);
+  buildRules();
+  field = form[spec.name];
 
   spec.field = function(){ return field; };
 
@@ -47,11 +43,12 @@ window.valkyr.constraint = function(form, spec){
     return field.value;
   }
 
-  function checkForDuplicateRules(rules){
-    var i, valuesSoFar = {};
-    i = rules.length;
+  function checkForDuplicateRules(){
+    var i, names, valuesSoFar = {};
+    names = rulesNames();
+    i = names.length;
     while (i--) {
-      var value = rules[i];
+      var value = names[i];
       if (Object.prototype.hasOwnProperty.call(valuesSoFar, value)) {
         throw "Duplicate rule declaration!";
       }
@@ -59,23 +56,21 @@ window.valkyr.constraint = function(form, spec){
     }
   }
 
-  function selectField(form, fieldName){
-    return form[fieldName];
-  }
-
-  function buildRules(rulesDeclaration, form){
-    var i, rulesNames;
-
-    rulesNames = rulesDeclaration.split(rulesSeparator);
-
-    i = rulesNames.length;
+  function buildRules(){
+    var i, names;
+    names = rulesNames();
+    i = names.length;
     while (i--) {
       rules.push(
         window.valkyr.rule.retrieve(
-          rulesNames[i]
+          names[i]
         ).getExtraInfo(form)
       );
     }
+  }
+
+  function rulesNames(){
+    return spec.rules.split("|");
   }
 
   function isCheckbox(){
