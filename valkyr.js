@@ -18,11 +18,6 @@ window.valkyr = {
       return this;
     }
   }
-
-  Function.method("inherits", function (Parent) {
-    this.prototype = Object.create(Parent.prototype);
-    return this;
-  });
 })();
 
 (function(){
