@@ -22,6 +22,14 @@
       return result;
     };
 
+    function buildInheritanceRule(inherits){
+      if (inherits) {
+        return retrieve(inherits);
+      } else {
+        return { check: function(){ return { isOk: true }; } };
+      }
+    }
+
     function checkWithHierarchy(fieldName, value){
       return spec.inheritanceRule.check(
         fieldName, value
@@ -47,12 +55,4 @@
   }
 
   window.valkyr.rule.retrieve = retrieve;
-
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return retrieve(inherits);
-    } else {
-      return { check: function(){ return { isOk: true }; } };
-    }
-  }
 })();

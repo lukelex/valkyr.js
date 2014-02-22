@@ -4,5 +4,5 @@
       this.prototype[name] = func;
       return this;
     }
-  }
+  };
 })();

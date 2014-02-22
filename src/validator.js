@@ -22,7 +22,7 @@
     i = constraints.length;
     while (i--) {
       newConstraints.push(
-        new window.valkyr.Constraint(form, constraints[i])
+        window.valkyr.constraint(form, constraints[i])
       );
     }
 
@@ -67,7 +67,7 @@
       constraint = this.$constraintFor(field);
     }
 
-    result = constraint.$validate();
+    result = constraint.validate();
 
     if (result.errors.length > 0) {
       this.errors[result.name] = result.errors;
@@ -82,7 +82,6 @@
     this.errors = {};
 
     i = this.$$constraints.length;
-
     while (i--) {
       this.$validateField(null, this.$$constraints[i]);
     }
@@ -91,7 +90,7 @@
   Validator.method("$constraintFor", function(field){
     var i = this.$$constraints.length;
     while (i--) {
-      if (this.$$constraints[i].$$field == field) {
+      if (this.$$constraints[i].field() == field) {
         return this.$$constraints[i];
       }
     }

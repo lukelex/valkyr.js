@@ -17,7 +17,7 @@ window.valkyr = {
       this.prototype[name] = func;
       return this;
     }
-  }
+  };
 })();
 
 (function(){
@@ -44,6 +44,14 @@ window.valkyr = {
       return result;
     };
 
+    function buildInheritanceRule(inherits){
+      if (inherits) {
+        return retrieve(inherits);
+      } else {
+        return { check: function(){ return { isOk: true }; } };
+      }
+    }
+
     function checkWithHierarchy(fieldName, value){
       return spec.inheritanceRule.check(
         fieldName, value
@@ -69,14 +77,6 @@ window.valkyr = {
   }
 
   window.valkyr.rule.retrieve = retrieve;
-
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return retrieve(inherits);
-    } else {
-      return { check: function(){ return { isOk: true }; } };
-    }
-  }
 })();
 
 window.valkyr.comparisonRule = function(spec){
@@ -154,7 +154,7 @@ window.valkyr.parameterRule = function(spec){
     i = constraints.length;
     while (i--) {
       newConstraints.push(
-        new window.valkyr.Constraint(form, constraints[i])
+        window.valkyr.constraint(form, constraints[i])
       );
     }
 
@@ -199,7 +199,7 @@ window.valkyr.parameterRule = function(spec){
       constraint = this.$constraintFor(field);
     }
 
-    result = constraint.$validate();
+    result = constraint.validate();
 
     if (result.errors.length > 0) {
       this.errors[result.name] = result.errors;
@@ -214,7 +214,6 @@ window.valkyr.parameterRule = function(spec){
     this.errors = {};
 
     i = this.$$constraints.length;
-
     while (i--) {
       this.$validateField(null, this.$$constraints[i]);
     }
@@ -223,7 +222,7 @@ window.valkyr.parameterRule = function(spec){
   Validator.method("$constraintFor", function(field){
     var i = this.$$constraints.length;
     while (i--) {
-      if (this.$$constraints[i].$$field == field) {
+      if (this.$$constraints[i].field() == field) {
         return this.$$constraints[i];
       }
     }
@@ -263,18 +262,53 @@ window.valkyr.parameterRule = function(spec){
   window.valkyr.Validator = Validator;
 })();
 
-(function(){
-  var rulesSeparator = "|";
+window.valkyr.constraint = function(form, spec){
+  var rulesSeparator, field, rules;
 
-  function Constraint(form, config){
-    checkForDuplicateRules(config["rules"].split(rulesSeparator));
+  rulesSeparator = "|";
 
-    this.$$as    = config["as"];
-    this.$$name  = config["name"];
+  checkForDuplicateRules(spec["rules"].split(rulesSeparator));
 
-    this.$$field = selectField(form, this.$$name);
+  rules = [];
 
-    this.$$rules = buildRules(config["rules"], form);
+  field = selectField(form, spec.name);
+
+  buildRules(spec["rules"], form);
+
+  spec.field = function(){ return field; };
+
+  spec.validate = function(){
+    var i, result, verification;
+
+    result = { name: spec.name, errors: [] };
+
+    i = rules.length;
+    while (i--) {
+      verification = rules[i].check(
+        spec.as || spec.name, value()
+      );
+
+      if (!verification.isOk) {
+        result.errors.push(verification.message);
+      }
+    }
+
+    return result;
+  };
+
+  function value(){
+    if (isCheckbox()) {
+      return field.checked;
+    } else if (isRadio()) {
+      var i = field.length;
+      while(i--) {
+        if (field[i].checked) {
+          return field[i].value;
+        }
+      }
+    }
+
+    return field.value;
   }
 
   function checkForDuplicateRules(rules){
@@ -294,11 +328,9 @@ window.valkyr.parameterRule = function(spec){
   }
 
   function buildRules(rulesDeclaration, form){
-    var i, rulesNames, rules;
+    var i, rulesNames;
 
     rulesNames = rulesDeclaration.split(rulesSeparator);
-
-    rules = [];
 
     i = rulesNames.length;
     while (i--) {
@@ -308,57 +340,21 @@ window.valkyr.parameterRule = function(spec){
         ).getExtraInfo(form)
       );
     }
-
-    return rules;
   }
 
-  Constraint.method("$validate", function(){
-    var i, result, verification;
-
-    result = { name: this.$$name, errors: [] };
-
-    i = this.$$rules.length;
-    while (i--) {
-      verification = this.$$rules[i].check(
-        this.$$as || this.$$name, this.$value()
-      );
-
-      if (!verification.isOk) {
-        result.errors.push(verification.message);
-      }
-    }
-
-    return result;
-  });
-
-  Constraint.method("$value", function(){
-    if (isCheckbox(this.$$field)) {
-      return this.$$field.checked;
-    } else if (isRadio(this.$$field)) {
-      var i = this.$$field.length;
-      while(i--) {
-        if (this.$$field[i].checked) {
-          return this.$$field[i].value;
-        }
-      }
-    }
-
-    return this.$$field.value;
-  });
-
-  function isCheckbox(elm){
-    return elm.nodeName === "INPUT" && elm.type === "checkbox";
+  function isCheckbox(){
+    return field.nodeName === "INPUT" && field.type === "checkbox";
   }
 
-  function isRadio(elm){
-    if (elm instanceof window.NodeList) {
-      return elm[0].nodeName === "INPUT" && elm[0].type === "radio";
+  function isRadio(){
+    if (field instanceof window.NodeList) {
+      return field[0].nodeName === "INPUT" && field[0].type === "radio";
     }
     return false;
   }
 
-  window.valkyr.Constraint = Constraint;
-})();
+  return spec;
+};
 
 (function(){
   var rules = {};
