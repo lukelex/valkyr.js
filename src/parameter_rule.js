@@ -1,24 +1,22 @@
-(function(){
-  function ParameterRule(config){
-    window.valkyr.Rule.call(this, config);
-  }
+window.valkyr.parameterRule = function(spec){
+  var obj = window.valkyr.rule(spec);
 
-  ParameterRule.inherits(window.valkyr.Rule);
+  obj.setParams = function(newParams){
+    obj.params = newParams;
+    return obj;
+  };
 
-  ParameterRule.method("$params", function(params){
-    this.$$params = params;
-    return this;
-  });
-
-  ParameterRule.method("$check", function(fieldName, value){
-    var result = { isOk: this.$$validator(value, this.$$params) };
+  obj.check = function(fieldName, value){
+    var result = {
+      isOk: obj.validator(value, obj.params)
+    };
     if (!result.isOk) {
-      result.message = this.$$message.replace(/\%s/, fieldName);
-      result.message = result.message.replace(/\%s/, this.$$params);
+      result.message = obj.message.replace(/\%s/, fieldName);
+      result.message = result.message.replace(/\%s/, obj.params);
     }
 
     return result;
-  });
+  };
 
-  window.valkyr.ParameterRule = ParameterRule;
-})();
+  return obj;
+};

@@ -38,9 +38,9 @@
     i = rulesNames.length;
     while (i--) {
       rules.push(
-        window.valkyr.Rule.$retrieve(
+        window.valkyr.rule.retrieve(
           rulesNames[i]
-        ).$getExtraInfo(form)
+        ).getExtraInfo(form)
       );
     }
 
@@ -54,7 +54,7 @@
 
     i = this.$$rules.length;
     while (i--) {
-      verification = this.$$rules[i].$check(
+      verification = this.$$rules[i].check(
         this.$$as || this.$$name, this.$value()
       );
 

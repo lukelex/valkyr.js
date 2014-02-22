@@ -8,7 +8,7 @@
       ruleConfig = parseRuleName(ruleReference);
 
       if (rule = rules[ruleConfig.name]) {
-        rule.$params(ruleConfig.params);
+        rule.setParams(ruleConfig.params);
       }
 
       return rule;
@@ -27,7 +27,7 @@
 
   window.valkyr.predefinedRules = predefinedRules;
 
-  rules["minLength"] = new window.valkyr.ParameterRule({
+  rules["minLength"] = window.valkyr.parameterRule({
     name: "minLength",
     message: "The %s field must be at least %s characters in length.",
     validator: function(value, length){
@@ -35,7 +35,7 @@
     }
   });
 
-  rules["maxLength"] = new window.valkyr.ParameterRule({
+  rules["maxLength"] = window.valkyr.parameterRule({
     name: "maxLength",
     message: "The %s field must not exceed %s characters in length.",
     validator: function(value, length){
@@ -43,7 +43,7 @@
     }
   });
 
-  rules["exactLength"] = new window.valkyr.ParameterRule({
+  rules["exactLength"] = window.valkyr.parameterRule({
     name: "exactLength",
     message: "The %s field must be exactly %s characters in length.",
     validator: function(value, length){
@@ -51,7 +51,7 @@
     }
   });
 
-  rules["required"] = new window.valkyr.Rule({
+  rules["required"] = window.valkyr.rule({
     name: "required",
     message: "The %s field can't be empty.",
     validator: function(value){
@@ -61,7 +61,7 @@
     }
   });
 
-  rules["email"] = new window.valkyr.Rule({
+  rules["email"] = window.valkyr.rule({
     name: "emailFormat",
     inherits: "required",
     message: "The %s field must contain a valid email address.",
@@ -72,7 +72,7 @@
     }
   });
 
-  rules["url"] = new window.valkyr.Rule({
+  rules["url"] = window.valkyr.rule({
     name: "url",
     inherits: "required",
     message: "The %s field must contain a valid URL.",
@@ -83,7 +83,7 @@
     }
   });
 
-  rules["numeric"] = new window.valkyr.Rule({
+  rules["numeric"] = window.valkyr.rule({
     name: "number",
     message: "The %s field must be a number.",
     validator: function(value){
@@ -91,7 +91,7 @@
     }
   });
 
-  rules["integer"] = new window.valkyr.Rule({
+  rules["integer"] = window.valkyr.rule({
     name: "integer",
     inherits: "numeric",
     message: "The %s field must contain an integer.",
@@ -100,7 +100,7 @@
     }
   });
 
-  rules["decimal"] = new window.valkyr.Rule({
+  rules["decimal"] = window.valkyr.rule({
     name: "decimal",
     inherits: "numeric",
     message: "The %s field must contain a decimal number.",
@@ -109,7 +109,7 @@
     }
   });
 
-  rules["natural"] = new window.valkyr.Rule({
+  rules["natural"] = window.valkyr.rule({
     name: "natural",
     inherits: "numeric",
     message: "The %s field must contain only positive numbers.",
@@ -118,7 +118,7 @@
     }
   });
 
-  rules["alphabetical"] = new window.valkyr.Rule({
+  rules["alphabetical"] = window.valkyr.rule({
     name: "alphabetical",
     inherits: "required",
     message: "The %s field must only contain alphabetical characters.",
@@ -127,7 +127,7 @@
     }
   });
 
-  rules["equals"] = new window.valkyr.ComparisonRule({
+  rules["equals"] = window.valkyr.comparisonRule({
     name: "equals",
     inherits: "required",
     message: "The %s field needs to be equal to %s field.",
@@ -136,7 +136,7 @@
     }
   });
 
-  rules["credit-card"] = new window.valkyr.Rule({
+  rules["credit-card"] = window.valkyr.rule({
     name: "creditCardNumber",
     inherits: "required",
     message: "The %s field doesn't have a valid credit-card number.",
@@ -157,7 +157,7 @@
     }
   });
 
-  rules["ip"] = new window.valkyr.Rule({
+  rules["ip"] = window.valkyr.rule({
     name: "IP",
     inherits: "required",
     message: "The %s field must contain a valid IP.",

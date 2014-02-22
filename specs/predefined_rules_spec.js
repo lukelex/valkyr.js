@@ -5,7 +5,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "-10")
+          rule.check("age", "-10")
         ).toEqual({
           isOk: true
         });
@@ -15,7 +15,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "0")
+          rule.check("age", "0")
         ).toEqual({
           isOk: true
         });
@@ -25,7 +25,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "5")
+          rule.check("age", "5")
         ).toEqual({
           isOk: true
         });
@@ -35,7 +35,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", -40)
+          rule.check("age", -40)
         ).toEqual({
           isOk: true
         });
@@ -45,7 +45,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", 0)
+          rule.check("age", 0)
         ).toEqual({
           isOk: true
         });
@@ -55,7 +55,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", 32)
+          rule.check("age", 32)
         ).toEqual({
           isOk: true
         });
@@ -65,7 +65,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "040")
+          rule.check("age", "040")
         ).toEqual({
           isOk: true
         });
@@ -75,7 +75,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", 0144)
+          rule.check("age", 0144)
         ).toEqual({
           isOk: true
         });
@@ -85,7 +85,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "0xFF")
+          rule.check("age", "0xFF")
         ).toEqual({
           isOk: true
         });
@@ -95,7 +95,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", 0xFFF)
+          rule.check("age", 0xFFF)
         ).toEqual({
           isOk: true
         });
@@ -107,7 +107,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "-1.6")
+          rule.check("age", "-1.6")
         ).toEqual({
           isOk: true
         });
@@ -117,7 +117,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "4.5")
+          rule.check("age", "4.5")
         ).toEqual({
           isOk: true
         });
@@ -127,7 +127,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", -1.3)
+          rule.check("age", -1.3)
         ).toEqual({
           isOk: true
         });
@@ -137,7 +137,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", 2112.333)
+          rule.check("age", 2112.333)
         ).toEqual({
           isOk: true
         });
@@ -147,7 +147,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", 3e8)
+          rule.check("age", 3e8)
         ).toEqual({
           isOk: true
         });
@@ -157,7 +157,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "3e8")
+          rule.check("age", "3e8")
         ).toEqual({
           isOk: true
         });
@@ -169,7 +169,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "")
+          rule.check("age", "")
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -180,7 +180,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "      ")
+          rule.check("age", "      ")
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -191,7 +191,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "\t\t\t")
+          rule.check("age", "\t\t\t")
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -202,7 +202,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "abcd12345")
+          rule.check("age", "abcd12345")
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -213,7 +213,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "thiago moreira rocha")
+          rule.check("age", "thiago moreira rocha")
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -224,7 +224,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", true)
+          rule.check("age", true)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -235,7 +235,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", false)
+          rule.check("age", false)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -246,7 +246,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "7.2abcd")
+          rule.check("age", "7.2abcd")
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -257,7 +257,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", undefined)
+          rule.check("age", undefined)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -268,7 +268,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", null)
+          rule.check("age", null)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -279,7 +279,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", "")
+          rule.check("age", "")
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -290,7 +290,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", NaN)
+          rule.check("age", NaN)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -301,7 +301,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", Infinity)
+          rule.check("age", Infinity)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -312,7 +312,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", Number.POSITIVE_INFINITY)
+          rule.check("age", Number.POSITIVE_INFINITY)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -323,7 +323,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", Number.NEGATIVE_INFINITY)
+          rule.check("age", Number.NEGATIVE_INFINITY)
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -334,7 +334,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", new Date(2014,05,02))
+          rule.check("age", new Date(2014,05,02))
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -345,7 +345,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", new Object())
+          rule.check("age", new Object())
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -356,7 +356,7 @@ describe("predefinedRules", function(){
         var rule = valkyr.predefinedRules.$find("numeric");
 
         expect(
-          rule.$check("age", function(){})
+          rule.check("age", function(){})
         ).toEqual({
           isOk: false,
           message: "The age field must be a number."
@@ -370,7 +370,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("required");
 
       expect(
-        rule.$check("username", "with some value")
+        rule.check("username", "with some value")
       ).toEqual({
         isOk: true
       });
@@ -380,7 +380,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("required");
 
       expect(
-        rule.$check("username", "")
+        rule.check("username", "")
       ).toEqual({
         isOk: false,
         message: "The username field can't be empty."
@@ -391,7 +391,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("required");
 
       expect(
-        rule.$check("username", undefined)
+        rule.check("username", undefined)
       ).toEqual({
         isOk: false,
         message: "The username field can't be empty."
@@ -402,7 +402,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("required");
 
       expect(
-        rule.$check("username", null)
+        rule.check("username", null)
       ).toEqual({
         isOk: false,
         message: "The username field can't be empty."
@@ -415,7 +415,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("email");
 
       expect(
-        rule.$check("email", "valkyr@nordic.eu")
+        rule.check("email", "valkyr@nordic.eu")
       ).toEqual({
         isOk: true
       });
@@ -425,7 +425,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("email");
 
       expect(
-        rule.$check("email", "valkyr@nordic.eu.org")
+        rule.check("email", "valkyr@nordic.eu.org")
       ).toEqual({
         isOk: true
       });
@@ -435,7 +435,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("email");
 
       expect(
-        rule.$check("email", "valkyr_nordic.eu.org")
+        rule.check("email", "valkyr_nordic.eu.org")
       ).toEqual({
         isOk: false,
         message: "The email field must contain a valid email address."
@@ -446,7 +446,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("email");
 
       expect(
-        rule.$check("email", "valkyr@nordic")
+        rule.check("email", "valkyr@nordic")
       ).toEqual({
         isOk: false,
         message: "The email field must contain a valid email address."
@@ -457,7 +457,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("email");
 
       expect(
-        rule.$check("email", "")
+        rule.check("email", "")
       ).toEqual({
         isOk: false,
         message: "The email field must contain a valid email address."
@@ -470,7 +470,7 @@ describe("predefinedRules", function(){
 
     it("valid url", function(){
       expect(
-        rule.$check("youtube_link", "https://youtu.be/v/2jbna9f")
+        rule.check("youtube_link", "https://youtu.be/v/2jbna9f")
       ).toEqual({
         isOk: true
       });
@@ -480,7 +480,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("url");
 
       expect(
-        rule.$check("youtube_link", "")
+        rule.check("youtube_link", "")
       ).toEqual({
         isOk: false,
         message: "The youtube_link field must contain a valid URL."
@@ -491,7 +491,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("url");
 
       expect(
-        rule.$check("youtube_link", "ww.valkyr")
+        rule.check("youtube_link", "ww.valkyr")
       ).toEqual({
         isOk: false,
         message: "The youtube_link field must contain a valid URL."
@@ -504,7 +504,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("integer");
 
       expect(
-        rule.$check("age", "1")
+        rule.check("age", "1")
       ).toEqual({
         isOk: true
       });
@@ -514,7 +514,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("integer");
 
       expect(
-        rule.$check("age", "189713")
+        rule.check("age", "189713")
       ).toEqual({
         isOk: true
       });
@@ -524,7 +524,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("integer");
 
       expect(
-        rule.$check("age", "-8")
+        rule.check("age", "-8")
       ).toEqual({
         isOk: true
       });
@@ -534,7 +534,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("integer");
 
       expect(
-        rule.$check("age", "-88127")
+        rule.check("age", "-88127")
       ).toEqual({
         isOk: true
       });
@@ -544,7 +544,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("integer");
 
       expect(
-        rule.$check("age", "1.0")
+        rule.check("age", "1.0")
       ).toEqual({
         isOk: false,
         message: "The age field must contain an integer."
@@ -555,7 +555,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("integer");
 
       expect(
-        rule.$check("age", "")
+        rule.check("age", "")
       ).toEqual({
         isOk: false,
         message: "The age field must contain an integer."
@@ -568,7 +568,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("decimal");
 
       expect(
-        rule.$check("weight", "70.6")
+        rule.check("weight", "70.6")
       ).toEqual({
         isOk: true
       });
@@ -578,7 +578,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("decimal");
 
       expect(
-        rule.$check("weight", "189.713")
+        rule.check("weight", "189.713")
       ).toEqual({
         isOk: true
       });
@@ -588,7 +588,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("decimal");
 
       expect(
-        rule.$check("weight", "-8.25")
+        rule.check("weight", "-8.25")
       ).toEqual({
         isOk: true
       });
@@ -598,7 +598,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("decimal");
 
       expect(
-        rule.$check("weigth", "-881.27")
+        rule.check("weigth", "-881.27")
       ).toEqual({
         isOk: true
       });
@@ -608,7 +608,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("decimal");
 
       expect(
-        rule.$check("weigth", "1")
+        rule.check("weigth", "1")
       ).toEqual({
         isOk: false,
         message: "The weigth field must contain a decimal number."
@@ -619,7 +619,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("decimal");
 
       expect(
-        rule.$check("weigth", "")
+        rule.check("weigth", "")
       ).toEqual({
         isOk: false,
         message: "The weigth field must contain a decimal number."
@@ -632,7 +632,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("natural");
 
       expect(
-        rule.$check("age", "25")
+        rule.check("age", "25")
       ).toEqual({
         isOk: true
       });
@@ -642,7 +642,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("natural");
 
       expect(
-        rule.$check("age", "-25")
+        rule.check("age", "-25")
       ).toEqual({
         isOk: false,
         message: "The age field must contain only positive numbers."
@@ -653,7 +653,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("natural");
 
       expect(
-        rule.$check("age", "")
+        rule.check("age", "")
       ).toEqual({
         isOk: false,
         message: "The age field must contain only positive numbers."
@@ -666,7 +666,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("alphabetical");
 
       expect(
-        rule.$check("username", "lukelex")
+        rule.check("username", "lukelex")
       ).toEqual({
         isOk: true
       });
@@ -676,7 +676,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("alphabetical");
 
       expect(
-        rule.$check("username", "102839")
+        rule.check("username", "102839")
       ).toEqual({
         isOk: false,
         message: "The username field must only contain alphabetical characters."
@@ -687,7 +687,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("alphabetical");
 
       expect(
-        rule.$check("username", "luke lex")
+        rule.check("username", "luke lex")
       ).toEqual({
         isOk: false,
         message: "The username field must only contain alphabetical characters."
@@ -698,7 +698,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("alphabetical");
 
       expect(
-        rule.$check("username", "")
+        rule.check("username", "")
       ).toEqual({
         isOk: false,
         message: "The username field must only contain alphabetical characters."
@@ -713,10 +713,10 @@ describe("predefinedRules", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
 
-      rule = valkyr.predefinedRules.$find("equals[password]").$getExtraInfo(form);
+      rule = valkyr.predefinedRules.$find("equals[password]").getExtraInfo(form);
 
       expect(
-        rule.$check("password_confirmation", "1029384756")
+        rule.check("password_confirmation", "1029384756")
       ).toEqual({
         isOk: true
       });
@@ -728,10 +728,10 @@ describe("predefinedRules", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
 
-      rule = valkyr.predefinedRules.$find("equals[password]").$getExtraInfo(form);
+      rule = valkyr.predefinedRules.$find("equals[password]").getExtraInfo(form);
 
       expect(
-        rule.$check("password_confirmation", "99999999")
+        rule.check("password_confirmation", "99999999")
       ).toEqual({
         isOk: false,
         message: "The password_confirmation field needs to be equal to password field."
@@ -744,7 +744,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("credit-card");
 
       expect(
-        rule.$check("CC", "1")
+        rule.check("CC", "1")
       ).toEqual({
         isOk: false,
         message: "The CC field doesn't have a valid credit-card number."
@@ -755,7 +755,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("credit-card");
 
       expect(
-        rule.$check("CC", "4984421209470251")
+        rule.check("CC", "4984421209470251")
       ).toEqual({
         isOk: true
       });
@@ -767,7 +767,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("ip");
 
       expect(
-        rule.$check("router-ip", "192.168.0.1")
+        rule.check("router-ip", "192.168.0.1")
       ).toEqual({
         isOk: true
       });
@@ -777,7 +777,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("ip");
 
       expect(
-        rule.$check("router-ip", "192.168")
+        rule.check("router-ip", "192.168")
       ).toEqual({
         isOk: false,
         message: "The router-ip field must contain a valid IP."
@@ -788,7 +788,7 @@ describe("predefinedRules", function(){
       var rule = valkyr.predefinedRules.$find("ip");
 
       expect(
-        rule.$check("router-ip", "192.168.0.351")
+        rule.check("router-ip", "192.168.0.351")
       ).toEqual({
         isOk: false,
         message: "The router-ip field must contain a valid IP."

@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.2.1 | From: 20-02-2014
+// Version: 0.2.1 | From: 22-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -26,119 +26,114 @@ window.valkyr = {
 })();
 
 (function(){
-  function Rule(config){
-    this.$$name            = config.name;
-    this.$$message         = config.message;
-    this.$$validator       = config.validator;
-    this.$$inheritanceRule = buildInheritanceRule(config.inherits);
-  }
+  window.valkyr.rule = function(spec){
+    spec.inheritanceRule = buildInheritanceRule(spec.inherits)
 
-  function buildInheritanceRule(inherits){
-    if (inherits) {
-      return Rule.$retrieve(inherits);
-    } else {
-      return { $check: function(){ return {isOk: true}; } };
-    }
-  }
+    spec.setParams = function(_){
+      return spec;
+    };
 
-  Rule.$retrieve = function(ruleName){
+    spec.getExtraInfo = function(_){
+      return spec;
+    };
+
+    spec.check = function(fieldName, value){
+      var result = {
+        isOk: checkWithHierarchy(fieldName, value)
+      };
+
+      if (!result.isOk) {
+        result.message = spec.message.replace(/\%s/, fieldName);
+      }
+
+      return result;
+    };
+
+    function checkWithHierarchy(fieldName, value){
+      return spec.inheritanceRule.check(
+        fieldName, value
+      ).isOk && spec.validator(value);
+    };
+
+    return spec;
+  };
+
+  window.valkyr.rule.build = function(spec){
+    var newRule = window.valkyr.rule(spec);
+    window.valkyr.customRules[spec.name] = newRule;
+    return newRule;
+  };
+
+  function retrieve(ruleName){
     var rule = window.valkyr.predefinedRules.$find(ruleName)
             || window.valkyr.customRules[ruleName];
 
     if (!rule) { throw "Rule " + ruleName + " does not exist!"; }
 
     return rule;
+  }
+
+  window.valkyr.rule.retrieve = retrieve;
+
+  function buildInheritanceRule(inherits){
+    if (inherits) {
+      return retrieve(inherits);
+    } else {
+      return { check: function(){ return { isOk: true }; } };
+    }
+  }
+})();
+
+window.valkyr.comparisonRule = function(spec){
+  var obj = window.valkyr.rule(spec);
+
+  obj.setParams = function(newParams){
+    obj.params = newParams;
+    return obj;
   };
 
-  Rule.build = function(config){
-    var newRule = new Rule(config);
-    window.valkyr.customRules[config.name] = newRule;
-    return newRule;
-  };
-
-  Rule.method("$params", function(_){
-    return this;
-  });
-
-  Rule.method("$getExtraInfo", function(_){
-    return this;
-  });
-
-  Rule.method("$check", function(fieldName, value){
+  obj.check = function(fieldName, value){
     var result = {
-      isOk: this.$checkWithHierarchy(fieldName, value)
+      isOk: obj.validator(value, obj.comparedTo.value)
     };
-
     if (!result.isOk) {
-      result.message = this.$$message.replace(/\%s/, fieldName);
+      result.message = obj.message.replace(/\%s/, fieldName);
+      result.message = result.message.replace(/\%s/, obj.params);
     }
 
     return result;
-  });
+  };
 
-  Rule.method("$checkWithHierarchy", function(fieldName, value){
-    return this.$$inheritanceRule.$check(
-      fieldName, value
-    ).isOk && this.$$validator(value);
-  });
+  obj.getExtraInfo = function(form){
+    obj.comparedTo = form[obj.params];
+    return obj;
+  };
 
-  window.valkyr.Rule = Rule;
-})();
+  return obj;
+};
 
-(function(){
-  function ComparisonRule(config){
-    window.valkyr.Rule.call(this, config);
-  }
+window.valkyr.parameterRule = function(spec){
+  var obj = window.valkyr.rule(spec);
 
-  ComparisonRule.inherits(window.valkyr.Rule);
+  obj.setParams = function(newParams){
+    obj.params = newParams;
+    return obj;
+  };
 
-  ComparisonRule.method("$params", function(params){
-    this.$$params = params;
-    return this;
-  });
-
-  ComparisonRule.method("$check", function(fieldName, value){
-    var result = { isOk: this.$$validator(value, this.$$comparedTo.value) };
+  obj.check = function(fieldName, value){
+    var result = {
+      isOk: obj.validator(value, obj.params)
+    };
     if (!result.isOk) {
-      result.message = this.$$message.replace(/\%s/, fieldName);
-      result.message = result.message.replace(/\%s/, this.$$params);
+      result.message = obj.message.replace(/\%s/, fieldName);
+      result.message = result.message.replace(/\%s/, obj.params);
     }
 
     return result;
-  });
+  };
 
-  ComparisonRule.method("$getExtraInfo", function(form){
-    this.$$comparedTo = form[this.$$params];
-    return this;
-  });
-
-  window.valkyr.ComparisonRule = ComparisonRule;
-})();
-
-(function(){
-  function ParameterRule(config){
-    window.valkyr.Rule.call(this, config);
-  }
-
-  ParameterRule.inherits(window.valkyr.Rule);
-
-  ParameterRule.method("$params", function(params){
-    this.$$params = params;
-    return this;
-  });
-
-  ParameterRule.method("$check", function(fieldName, value){
-    var result = { isOk: this.$$validator(value, this.$$params) };
-    if (!result.isOk) {
-      result.message = this.$$message.replace(/\%s/, fieldName);
-      result.message = result.message.replace(/\%s/, this.$$params);
-    }
-
-    return result;
-  });
-
-  window.valkyr.ParameterRule = ParameterRule;
-})();
+  return obj;
+};
 
 (function(){
   function Validator(form, constraints){
@@ -313,9 +308,9 @@ window.valkyr = {
     i = rulesNames.length;
     while (i--) {
       rules.push(
-        window.valkyr.Rule.$retrieve(
+        window.valkyr.rule.retrieve(
           rulesNames[i]
-        ).$getExtraInfo(form)
+        ).getExtraInfo(form)
       );
     }
 
@@ -329,7 +324,7 @@ window.valkyr = {
 
     i = this.$$rules.length;
     while (i--) {
-      verification = this.$$rules[i].$check(
+      verification = this.$$rules[i].check(
         this.$$as || this.$$name, this.$value()
       );
 
@@ -380,7 +375,7 @@ window.valkyr = {
       ruleConfig = parseRuleName(ruleReference);
 
       if (rule = rules[ruleConfig.name]) {
-        rule.$params(ruleConfig.params);
+        rule.setParams(ruleConfig.params);
       }
 
       return rule;
@@ -399,7 +394,7 @@ window.valkyr = {
 
   window.valkyr.predefinedRules = predefinedRules;
 
-  rules["minLength"] = new window.valkyr.ParameterRule({
+  rules["minLength"] = window.valkyr.parameterRule({
     name: "minLength",
     message: "The %s field must be at least %s characters in length.",
     validator: function(value, length){
@@ -407,7 +402,7 @@ window.valkyr = {
     }
   });
 
-  rules["maxLength"] = new window.valkyr.ParameterRule({
+  rules["maxLength"] = window.valkyr.parameterRule({
     name: "maxLength",
     message: "The %s field must not exceed %s characters in length.",
     validator: function(value, length){
@@ -415,7 +410,7 @@ window.valkyr = {
     }
   });
 
-  rules["exactLength"] = new window.valkyr.ParameterRule({
+  rules["exactLength"] = window.valkyr.parameterRule({
     name: "exactLength",
     message: "The %s field must be exactly %s characters in length.",
     validator: function(value, length){
@@ -423,7 +418,7 @@ window.valkyr = {
     }
   });
 
-  rules["required"] = new window.valkyr.Rule({
+  rules["required"] = window.valkyr.rule({
     name: "required",
     message: "The %s field can't be empty.",
     validator: function(value){
@@ -433,7 +428,7 @@ window.valkyr = {
     }
   });
 
-  rules["email"] = new window.valkyr.Rule({
+  rules["email"] = window.valkyr.rule({
     name: "emailFormat",
     inherits: "required",
     message: "The %s field must contain a valid email address.",
@@ -444,7 +439,7 @@ window.valkyr = {
     }
   });
 
-  rules["url"] = new window.valkyr.Rule({
+  rules["url"] = window.valkyr.rule({
     name: "url",
     inherits: "required",
     message: "The %s field must contain a valid URL.",
@@ -455,7 +450,7 @@ window.valkyr = {
     }
   });
 
-  rules["numeric"] = new window.valkyr.Rule({
+  rules["numeric"] = window.valkyr.rule({
     name: "number",
     message: "The %s field must be a number.",
     validator: function(value){
@@ -463,7 +458,7 @@ window.valkyr = {
     }
   });
 
-  rules["integer"] = new window.valkyr.Rule({
+  rules["integer"] = window.valkyr.rule({
     name: "integer",
     inherits: "numeric",
     message: "The %s field must contain an integer.",
@@ -472,7 +467,7 @@ window.valkyr = {
     }
   });
 
-  rules["decimal"] = new window.valkyr.Rule({
+  rules["decimal"] = window.valkyr.rule({
     name: "decimal",
     inherits: "numeric",
     message: "The %s field must contain a decimal number.",
@@ -481,7 +476,7 @@ window.valkyr = {
     }
   });
 
-  rules["natural"] = new window.valkyr.Rule({
+  rules["natural"] = window.valkyr.rule({
     name: "natural",
     inherits: "numeric",
     message: "The %s field must contain only positive numbers.",
@@ -490,7 +485,7 @@ window.valkyr = {
     }
   });
 
-  rules["alphabetical"] = new window.valkyr.Rule({
+  rules["alphabetical"] = window.valkyr.rule({
     name: "alphabetical",
     inherits: "required",
     message: "The %s field must only contain alphabetical characters.",
@@ -499,7 +494,7 @@ window.valkyr = {
     }
   });
 
-  rules["equals"] = new window.valkyr.ComparisonRule({
+  rules["equals"] = window.valkyr.comparisonRule({
     name: "equals",
     inherits: "required",
     message: "The %s field needs to be equal to %s field.",
@@ -508,7 +503,7 @@ window.valkyr = {
     }
   });
 
-  rules["credit-card"] = new window.valkyr.Rule({
+  rules["credit-card"] = window.valkyr.rule({
     name: "creditCardNumber",
     inherits: "required",
     message: "The %s field doesn't have a valid credit-card number.",
@@ -529,7 +524,7 @@ window.valkyr = {
     }
   });
 
-  rules["ip"] = new window.valkyr.Rule({
+  rules["ip"] = window.valkyr.rule({
     name: "IP",
     inherits: "required",
     message: "The %s field must contain a valid IP.",
