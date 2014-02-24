@@ -1,12 +1,13 @@
 window.valkyr.parameterRule = function(spec){
   var obj = window.valkyr.rule(spec);
 
-  obj.setParams = function(newParams){
+  function setParams(newParams){
     obj.params = newParams;
     return obj;
-  };
+  }
+  obj.setParams = setParams;
 
-  obj.check = function(fieldName, value){
+  function check(fieldName, value){
     var result = {
       isOk: obj.validator(value, obj.params)
     };
@@ -16,7 +17,8 @@ window.valkyr.parameterRule = function(spec){
     }
 
     return result;
-  };
+  }
+  obj.check = check;
 
   return obj;
 };

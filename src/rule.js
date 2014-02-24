@@ -1,16 +1,14 @@
 (function(){
-  window.valkyr.rule = function(spec){
+  function rule(spec){
     spec.inheritanceRule = buildInheritanceRule(spec.inherits)
 
-    spec.setParams = function(_){
-      return spec;
-    };
+    function setParams(_){ return spec; }
+    spec.setParams = setParams;
 
-    spec.getExtraInfo = function(_){
-      return spec;
-    };
+    function getExtraInfo(_){ return spec; }
+    spec.getExtraInfo = getExtraInfo;
 
-    spec.check = function(fieldName, value){
+    function check(fieldName, value){
       var result = {
         isOk: checkWithHierarchy(fieldName, value)
       };
@@ -20,7 +18,8 @@
       }
 
       return result;
-    };
+    }
+    spec.check = check;
 
     function buildInheritanceRule(inherits){
       if (inherits) {
@@ -37,13 +36,15 @@
     };
 
     return spec;
-  };
+  }
+  window.valkyr.rule = rule;
 
-  window.valkyr.rule.build = function(spec){
-    var newRule = window.valkyr.rule(spec);
+  function build(spec){
+    var newRule = rule(spec);
     window.valkyr.customRules[spec.name] = newRule;
     return newRule;
-  };
+  }
+  rule.build = build;
 
   function retrieve(ruleName){
     var rule = window.valkyr.predefinedRules.$find(ruleName)
@@ -53,6 +54,5 @@
 
     return rule;
   }
-
-  window.valkyr.rule.retrieve = retrieve;
+  rule.retrieve = retrieve;
 })();

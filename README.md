@@ -123,7 +123,7 @@ signUpForm.isValid() // true or false
 Often you will need to define your own rules. ValkyrJS offers you a clean way to do it.
 
 ```javascript
-valkyr.Rule.build({
+buildRule({
   name: "negative",
   message: "The %s field must be a negative number.",
   validator: function (value) {
@@ -143,7 +143,7 @@ Rules can be extended and composed based on previously defined rules throught th
 Example: a VISA credit card validation would check if the credit card number starts with a `4` but would also verify if the overall number is a valid credit card. Since ValkyrJS already has the `credit-card` rule pre-defined you can just create the VISA rule and inherit from it.
 
 ```javascript
-valkyr.Rule.build({
+buildRule({
   name: "VISA",
   message: "The %s field does not have a valid VISA credit-card number.",
   inherits: "credit-card"

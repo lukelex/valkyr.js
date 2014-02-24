@@ -1,3 +1,4 @@
 (function(){
-  window.Validator = window.valkyr.Validator;
+  window.validator = window.valkyr.validator;
+  window.buildRule = window.valkyr.rule.build;
 })();

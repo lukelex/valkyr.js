@@ -9,7 +9,7 @@ window.valkyr.constraint = function(form, spec){
 
   spec.field = function(){ return field; };
 
-  spec.validate = function(){
+  function validate(){
     var i, result, verification;
 
     result = { name: spec.name, errors: [] };
@@ -26,7 +26,8 @@ window.valkyr.constraint = function(form, spec){
     }
 
     return result;
-  };
+  }
+  spec.validate = validate;
 
   function value(){
     if (isCheckbox()) {
