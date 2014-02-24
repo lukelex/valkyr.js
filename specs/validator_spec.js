@@ -1,40 +1,23 @@
-describe("Validator", function(){
+describe("validator", function(){
   describe("#initialize", function(){
     it("should throw if no form is passed", function(){
       expect(function(){
-        new valkyr.Validator();
+        valkyr.validator();
       }).toThrow("Missing form");
     });
 
     it("should throw if no constraints are passed", function(){
       expect(function(){
-        new valkyr.Validator("form");
+        valkyr.validator("form");
       }).toThrow("Missing constraints");
     });
 
     it("should throw if constraints is not an array", function(){
       expect(function(){
-        new valkyr.Validator("form", {});
+        valkyr.validator("form", {});
       }).toThrow("Constraints must be an array");
     });
 
-    it("should build up the constraints", function(){
-      var form, loginForm;
-
-      form = document.createElement("form");
-      form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
-
-      loginForm = new valkyr.Validator(form, [{
-          name: "username",
-          rules: "required"
-        }, {
-          name: "password",
-          rules: "required"
-        }]
-      );
-
-      expect(loginForm.$$constraints.length).toEqual(2);
-    });
 
     it("with an absent rule", function(){
       var form;
@@ -43,7 +26,7 @@ describe("Validator", function(){
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
       expect(function(){
-        new valkyr.Validator(form, [{
+        new valkyr.validator(form, [{
           name: "username",
           rules: "fakeRules"
         }]);
@@ -52,13 +35,13 @@ describe("Validator", function(){
   });
 
   describe("validate", function(){
-    it("when ok", function(){
+    it("when not ok", function(){
       var form, loginForm;
 
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = new valkyr.Validator(form, [{
+      loginForm = new valkyr.validator(form, [{
           name: "username",
           rules: "required"
         }, {
@@ -83,7 +66,7 @@ describe("Validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = new valkyr.Validator(form, [{
+      loginForm = new valkyr.validator(form, [{
           name: "username",
           rules: "required"
         }, {
@@ -107,7 +90,7 @@ describe("Validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = new valkyr.Validator(form, [{
+      loginForm = new valkyr.validator(form, [{
           name: "username",
           rules: "required"
         }, {
@@ -135,20 +118,20 @@ describe("Validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = new valkyr.Validator(form, []);
+      loginForm = new valkyr.validator(form, []);
 
       spyOn(loginForm, "validate");
 
       expect(loginForm.isValid()).toBeTruthy();
     });
 
-    it("when valid", function(){
+    it("when not valid", function(){
       var form, loginForm;
 
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = new valkyr.Validator(form, []);
+      loginForm = valkyr.validator(form, []);
 
       spyOn(loginForm, "validate").andCallFake(function(){
         this.errors = { username: ["some error"] };
@@ -169,7 +152,7 @@ describe("Validator", function(){
 
       form.onsubmit = previousSubmission;
 
-      loginForm = new valkyr.Validator(form, []);
+      loginForm = new valkyr.validator(form, []);
       loginForm.submit();
 
       expect(previousSubmission).toHaveBeenCalled();
@@ -181,7 +164,7 @@ describe("Validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = new valkyr.Validator(form, []);
+      loginForm = new valkyr.validator(form, []);
 
       expect(function(){
         loginForm.submit();
@@ -191,7 +174,7 @@ describe("Validator", function(){
 
   describe("#submit", function(){
     it("should skip validations", function(){
-      var login = new window.valkyr.Validator("<form>", []);
+      var login = new window.valkyr.validator("<form>", []);
 
       spyOn(login, "isValid");
 

@@ -26,7 +26,7 @@ ValkyrJS needs only two parameters to start of, the form element and a list of c
 ```javascript
 var form = document.forms[0];
 
-new Validator(form, [{
+validator(form, [{
   name: "email",
   rules: "email"
 }, {
@@ -53,7 +53,7 @@ A more complex example:
 ```javascript
 var form = document.forms[0];
 
-new Validator(form, [{
+validator(form, [{
   name: "name",
   rules: "minLength[4]"
 },{
@@ -97,7 +97,7 @@ new Validator(form, [{
 While declaring the form constraints you can set some extra options:
 
 ```jacascript
-new Validator(form, [{
+validator(form, [{
   ...
   as: "" // change the name that should be displayed in the error message
 }]);
@@ -109,7 +109,7 @@ Sometimes you will need to check if your form is in a valid state without triger
 ```javascript
 var form = document.forms[0];
 
-var signUpForm = new Validator(form, [{...}]);
+var signUpForm = validator(form, [{...}]);
 
 signUpForm.validate(); // this will update the `errors` variable with the current state of the form
 signUpForm.errors; // {email: [...], password: [...]}
@@ -131,7 +131,7 @@ valkyr.Rule.build({
   }
 });
 
-new Validator(form, [{
+validator(form, [{
   ...
   rules: "negative"
 }]);
