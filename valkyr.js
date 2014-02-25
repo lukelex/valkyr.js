@@ -5,20 +5,11 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.2.1 | From: 24-02-2014
+// Version: 0.2.1 | From: 25-02-2014
 
 window.valkyr = {
   customRules: {}
 };
-
-(function(){
-  Function.prototype.method = function(name, func){
-    if (!this.hasOwnProperty(name)) {
-      this.prototype[name] = func;
-      return this;
-    }
-  };
-})();
 
 (function(){
   function rule(spec){
@@ -522,7 +513,5 @@ window.valkyr.constraint = function(form, spec){
   });
 })();
 
-(function(){
-  window.validator = window.valkyr.validator;
-  window.buildRule = window.valkyr.rule.build;
-})();
+window.validator = window.valkyr.validator;
+window.buildRule = window.valkyr.rule.build;
