@@ -173,13 +173,34 @@ describe("validator", function(){
 
   describe("#submit", function(){
     it("should skip validations", function(){
-      var login = window.valkyr.validator("<form>", []);
+      var login = valkyr.validator("<form>", []);
 
       spyOn(login, "isValid");
 
       login.submit({skipValidations: true});
 
       expect(login.isValid).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("#onError", function(){
+    it("should be called when form is invalid", function(){
+      var login, onError;
+
+      onError = jasmine.createSpy("onError");
+
+      login = document.createElement("form");
+      login.innerHTML = "<input name=\"username\"/>";
+
+      loginForm = valkyr.validator(login, [{
+          name: "username",
+          rules: "required"
+        }]
+      ).onError(onError);
+
+      loginForm.isValid();
+
+      expect(onError).toHaveBeenCalled();
     });
   });
 });

@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.2.1 | From: 25-02-2014
+// Version: 0.2.2 | From: 28-02-2014
 
 window.valkyr = {
   customRules: {}
@@ -140,7 +140,7 @@ window.valkyr.validator = function(form, spec) {
   buildConstraints();
   setupSubmission();
 
-  onError = function(){};
+  onErrorCallback = function(){};
 
   function buildConstraints(){
     var i = spec.length;
@@ -226,14 +226,14 @@ window.valkyr.validator = function(form, spec) {
     isValid = Object.keys(spec.errors).length === 0;
 
     if (!isValid) {
-      onError(spec.errors);
+      onErrorCallback(spec.errors);
     }
 
     return isValid;
   }
   spec.isValid = isValid;
 
-  function submit(options) {
+  function submit(options){
     if (!(options && options.skipValidations === true)) {
       if (!spec.isValid()) {
         return false;
@@ -246,10 +246,11 @@ window.valkyr.validator = function(form, spec) {
   }
   spec.submit = submit;
 
-  function onError(callback) {
-    onError = callback;
+  function onError(callback){
+    onErrorCallback = callback;
     return spec;
   }
+  spec.onError = onError;
 
   return spec;
 };
