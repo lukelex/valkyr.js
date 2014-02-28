@@ -31,8 +31,7 @@ window.valkyr = {
       }
 
       return result;
-    }
-    spec.check = check;
+    } spec.check = check;
 
     function buildInheritanceRule(inherits){
       if (inherits) {
@@ -56,8 +55,7 @@ window.valkyr = {
     var newRule = rule(spec);
     window.valkyr.customRules[spec.name] = newRule;
     return newRule;
-  }
-  rule.build = build;
+  } rule.build = build;
 
   function retrieve(ruleName){
     var rule = window.valkyr.predefinedRules.$find(ruleName)
@@ -66,8 +64,7 @@ window.valkyr = {
     if (!rule) { throw "Rule " + ruleName + " does not exist!"; }
 
     return rule;
-  }
-  rule.retrieve = retrieve;
+  } rule.retrieve = retrieve;
 })();
 
 window.valkyr.comparisonRule = function(spec){
@@ -76,8 +73,7 @@ window.valkyr.comparisonRule = function(spec){
   function setParams(newParams){
     obj.params = newParams;
     return obj;
-  }
-  obj.setParams = setParams;
+  } obj.setParams = setParams;
 
   function check(fieldName, value){
     var result = {
@@ -89,14 +85,12 @@ window.valkyr.comparisonRule = function(spec){
     }
 
     return result;
-  }
-  obj.check = check;
+  } obj.check = check;
 
   function getExtraInfo(form){
     obj.comparedTo = form[obj.params];
     return obj;
-  }
-  obj.getExtraInfo = getExtraInfo;
+  } obj.getExtraInfo = getExtraInfo;
 
   return obj;
 };
@@ -107,8 +101,7 @@ window.valkyr.parameterRule = function(spec){
   function setParams(newParams){
     obj.params = newParams;
     return obj;
-  }
-  obj.setParams = setParams;
+  } obj.setParams = setParams;
 
   function check(fieldName, value){
     var result = {
@@ -120,8 +113,7 @@ window.valkyr.parameterRule = function(spec){
     }
 
     return result;
-  }
-  obj.check = check;
+  } obj.check = check;
 
   return obj;
 };
@@ -179,8 +171,7 @@ window.valkyr.validator = function(form, spec) {
     } else {
       validateAllFields();
     }
-  }
-  spec.validate = validate;
+  } spec.validate = validate;
 
   function validateField (field, constraint){
     var result;
@@ -230,8 +221,7 @@ window.valkyr.validator = function(form, spec) {
     }
 
     return isValid;
-  }
-  spec.isValid = isValid;
+  } spec.isValid = isValid;
 
   function submit(options){
     if (!(options && options.skipValidations === true)) {
@@ -243,14 +233,12 @@ window.valkyr.validator = function(form, spec) {
     if (originalSubmit) {
       originalSubmit();
     }
-  }
-  spec.submit = submit;
+  } spec.submit = submit;
 
   function onError(callback){
     onErrorCallback = callback;
     return spec;
-  }
-  spec.onError = onError;
+  } spec.onError = onError;
 
   return spec;
 };
@@ -283,8 +271,7 @@ window.valkyr.constraint = function(form, spec){
     }
 
     return result;
-  }
-  spec.validate = validate;
+  } spec.validate = validate;
 
   function value(){
     if (isCheckbox()) {

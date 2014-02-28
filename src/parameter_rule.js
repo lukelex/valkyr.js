@@ -4,8 +4,7 @@ window.valkyr.parameterRule = function(spec){
   function setParams(newParams){
     obj.params = newParams;
     return obj;
-  }
-  obj.setParams = setParams;
+  } obj.setParams = setParams;
 
   function check(fieldName, value){
     var result = {
@@ -17,8 +16,7 @@ window.valkyr.parameterRule = function(spec){
     }
 
     return result;
-  }
-  obj.check = check;
+  } obj.check = check;
 
   return obj;
 };

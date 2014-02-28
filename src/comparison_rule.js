@@ -4,8 +4,7 @@ window.valkyr.comparisonRule = function(spec){
   function setParams(newParams){
     obj.params = newParams;
     return obj;
-  }
-  obj.setParams = setParams;
+  } obj.setParams = setParams;
 
   function check(fieldName, value){
     var result = {
@@ -17,14 +16,12 @@ window.valkyr.comparisonRule = function(spec){
     }
 
     return result;
-  }
-  obj.check = check;
+  } obj.check = check;
 
   function getExtraInfo(form){
     obj.comparedTo = form[obj.params];
     return obj;
-  }
-  obj.getExtraInfo = getExtraInfo;
+  } obj.getExtraInfo = getExtraInfo;
 
   return obj;
 };

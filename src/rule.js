@@ -18,8 +18,7 @@
       }
 
       return result;
-    }
-    spec.check = check;
+    } spec.check = check;
 
     function buildInheritanceRule(inherits){
       if (inherits) {
@@ -43,8 +42,7 @@
     var newRule = rule(spec);
     window.valkyr.customRules[spec.name] = newRule;
     return newRule;
-  }
-  rule.build = build;
+  } rule.build = build;
 
   function retrieve(ruleName){
     var rule = window.valkyr.predefinedRules.$find(ruleName)
@@ -53,6 +51,5 @@
     if (!rule) { throw "Rule " + ruleName + " does not exist!"; }
 
     return rule;
-  }
-  rule.retrieve = retrieve;
+  } rule.retrieve = retrieve;
 })();

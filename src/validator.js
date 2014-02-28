@@ -51,8 +51,7 @@ window.valkyr.validator = function(form, spec) {
     } else {
       validateAllFields();
     }
-  }
-  spec.validate = validate;
+  } spec.validate = validate;
 
   function validateField (field, constraint){
     var result;
@@ -102,8 +101,7 @@ window.valkyr.validator = function(form, spec) {
     }
 
     return isValid;
-  }
-  spec.isValid = isValid;
+  } spec.isValid = isValid;
 
   function submit(options){
     if (!(options && options.skipValidations === true)) {
@@ -115,14 +113,12 @@ window.valkyr.validator = function(form, spec) {
     if (originalSubmit) {
       originalSubmit();
     }
-  }
-  spec.submit = submit;
+  } spec.submit = submit;
 
   function onError(callback){
     onErrorCallback = callback;
     return spec;
-  }
-  spec.onError = onError;
+  } spec.onError = onError;
 
   return spec;
 };

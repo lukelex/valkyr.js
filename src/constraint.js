@@ -26,8 +26,7 @@ window.valkyr.constraint = function(form, spec){
     }
 
     return result;
-  }
-  spec.validate = validate;
+  } spec.validate = validate;
 
   function value(){
     if (isCheckbox()) {
