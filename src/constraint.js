@@ -1,41 +1,40 @@
-window.valkyr.constraint = function(form, spec){
+window.valkyr.constraint = function( form, spec ){
   var rules, field;
 
   checkForDuplicateRules();
 
   rules = [];
   buildRules();
-  field = form[spec.name];
+  field = form[ spec.name ];
 
   spec.field = function(){ return field; };
 
-  function validate(){
-    var i, result, verification;
+  spec.validate = function validate(){
+    var result = { name: spec.name, errors: [] },
+        i = rules.length,
+        verification;
 
-    result = { name: spec.name, errors: [] };
-
-    i = rules.length;
-    while (i--) {
-      verification = rules[i].check(
+    while ( i-- ) {
+      verification = rules[ i ].check(
         spec.as || spec.name, value()
       );
 
-      if (!verification.isOk) {
-        result.errors.push(verification.message);
+      if ( !verification.isOk ) {
+        result.errors.push( verification.message );
       }
     }
 
     return result;
-  } spec.validate = validate;
+  };
 
   function value(){
-    if (isCheckbox()) {
+    if ( isCheckbox() ) {
       return field.checked;
-    } else if (isRadio()) {
+    } else if ( isRadio() ) {
       var i = field.length;
-      while(i--) {
-        if (field[i].checked) {
-          return field[i].value;
+      while( i-- ) {
+        if ( field[ i ].checked ) {
+          return field[ i ].value;
         }
       }
     }
@@ -44,33 +43,34 @@ window.valkyr.constraint = function(form, spec){
   }
 
   function checkForDuplicateRules(){
-    var i, names, valuesSoFar = {};
-    names = rulesNames();
-    i = names.length;
-    while (i--) {
-      var value = names[i];
-      if (Object.prototype.hasOwnProperty.call(valuesSoFar, value)) {
+    var names = rulesNames(),
+        i = names.length,
+        valuesSoFar = {};
+
+    while ( i-- ) {
+      var value = names[ i ];
+      if ( Object.prototype.hasOwnProperty.call( valuesSoFar, value ) ) {
         throw "Duplicate rule declaration!";
       }
-      valuesSoFar[value] = true;
+      valuesSoFar[ value ] = true;
     }
   }
 
   function buildRules(){
-    var i, names;
-    names = rulesNames();
-    i = names.length;
-    while (i--) {
+    var names = rulesNames(),
+        i = names.length;
+
+    while ( i-- ) {
       rules.push(
         window.valkyr.rule.retrieve(
-          names[i]
-        ).getExtraInfo(form)
+          names[ i ]
+        ).getExtraInfo( form )
       );
     }
   }
 
   function rulesNames(){
-    return spec.rules.split("|");
+    return spec.rules.split( "|" );
   }
 
   function isCheckbox(){
@@ -78,8 +78,8 @@ window.valkyr.constraint = function(form, spec){
   }
 
   function isRadio(){
-    if (field instanceof window.NodeList) {
-      return field[0].nodeName === "INPUT" && field[0].type === "radio";
+    if ( field instanceof window.NodeList ) {
+      return field[ 0 ].nodeName === "INPUT" && field[ 0 ].type === "radio";
     }
     return false;
   }

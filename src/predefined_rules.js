@@ -2,154 +2,154 @@
   var rules = {};
 
   var predefinedRules = {
-    $find: function(ruleReference){
+    find: function( ruleReference ){
       var ruleConfig, rule;
 
-      ruleConfig = parseRuleName(ruleReference);
+      ruleConfig = parseRuleName( ruleReference );
 
-      if (rule = rules[ruleConfig.name]) {
-        rule.setParams(ruleConfig.params);
+      if (rule = rules[ ruleConfig.name ] ) {
+        rule.setParams( ruleConfig.params );
       }
 
       return rule;
     }
   };
 
-  function parseRuleName(ruleConfig){
-    var params = ruleConfig.match(/\[(.+?)\]$/);
-    if (params) { params = params[1]; }
+  function parseRuleName( ruleConfig ){
+    var params = ruleConfig.match( /\[(.+?)\]$/ );
+    if ( params ) { params = params[ 1 ]; }
 
     return {
-      name: ruleConfig.match(/^.+?(?=\[.+?\])/) || ruleConfig,
+      name: ruleConfig.match( /^.+?(?=\[.+?\])/ ) || ruleConfig,
       params: params
     };
   }
 
   window.valkyr.predefinedRules = predefinedRules;
 
-  rules["minLength"] = window.valkyr.parameterRule({
+  rules[ "minLength" ] = window.valkyr.parameterRule({
     name: "minLength",
     message: "The %s field must be at least %s characters in length.",
-    validator: function(value, length){
+    validator: function( value, length ){
       return value.length >= length;
     }
   });
 
-  rules["maxLength"] = window.valkyr.parameterRule({
+  rules[ "maxLength" ] = window.valkyr.parameterRule({
     name: "maxLength",
     message: "The %s field must not exceed %s characters in length.",
-    validator: function(value, length){
+    validator: function( value, length ){
       return value.length <= length;
     }
   });
 
-  rules["exactLength"] = window.valkyr.parameterRule({
+  rules[ "exactLength" ] = window.valkyr.parameterRule({
     name: "exactLength",
     message: "The %s field must be exactly %s characters in length.",
-    validator: function(value, length){
+    validator: function( value, length ){
       return value.length === length;
     }
   });
 
-  rules["required"] = window.valkyr.rule({
+  rules[ "required" ] = window.valkyr.rule({
     name: "required",
     message: "The %s field can't be empty.",
-    validator: function(value){
-      if (!value || value === false) { return false; }
-      if (value === true) { return true; }
+    validator: function( value ){
+      if ( !value || value === false ) { return false; }
+      if ( value === true ) { return true; }
       return value.length > 0;
     }
   });
 
-  rules["email"] = window.valkyr.rule({
+  rules[ "email" ] = window.valkyr.rule({
     name: "emailFormat",
     inherits: "required",
     message: "The %s field must contain a valid email address.",
-    validator: function(value){
+    validator: function( value ){
       return !!value.match(
         /^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/
       );
     }
   });
 
-  rules["url"] = window.valkyr.rule({
+  rules[ "url" ] = window.valkyr.rule({
     name: "url",
     inherits: "required",
     message: "The %s field must contain a valid URL.",
-    validator: function(value){
+    validator: function( value ){
       return !!value.match(
         /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/
       );
     }
   });
 
-  rules["numeric"] = window.valkyr.rule({
+  rules[ "numeric" ] = window.valkyr.rule({
     name: "number",
     message: "The %s field must be a number.",
-    validator: function(value){
-      return !isNaN(parseFloat(value)) && isFinite(value);
+    validator: function( value ){
+      return !isNaN( parseFloat( value ) ) && isFinite( value );
     }
   });
 
-  rules["integer"] = window.valkyr.rule({
+  rules[ "integer" ] = window.valkyr.rule({
     name: "integer",
     inherits: "numeric",
     message: "The %s field must contain an integer.",
-    validator: function(value){
-      return !!value.match(/^\-?[0-9]+$/);
+    validator: function( value ){
+      return !!value.match( /^\-?[0-9]+$/ );
     }
   });
 
-  rules["decimal"] = window.valkyr.rule({
+  rules[ "decimal" ] = window.valkyr.rule({
     name: "decimal",
     inherits: "numeric",
     message: "The %s field must contain a decimal number.",
-    validator: function(value){
-      return !!value.match(/^\-?[0-9]*\.[0-9]+$/);
+    validator: function( value ){
+      return !!value.match( /^\-?[0-9]*\.[0-9]+$/ );
     }
   });
 
-  rules["natural"] = window.valkyr.rule({
+  rules[ "natural" ] = window.valkyr.rule({
     name: "natural",
     inherits: "numeric",
     message: "The %s field must contain only positive numbers.",
-    validator: function(value){
-      return !!value.match(/^[0-9]+$/i);
+    validator: function( value ){
+      return !!value.match( /^[0-9]+$/i );
     }
   });
 
-  rules["alphabetical"] = window.valkyr.rule({
+  rules[ "alphabetical" ] = window.valkyr.rule({
     name: "alphabetical",
     inherits: "required",
     message: "The %s field must only contain alphabetical characters.",
-    validator: function(value){
-      return !!value.match(/^[a-z]+$/i);
+    validator: function( value ){
+      return !!value.match( /^[a-z]+$/i );
     }
   });
 
-  rules["equals"] = window.valkyr.comparisonRule({
+  rules[ "equals" ] = window.valkyr.comparisonRule({
     name: "equals",
     inherits: "required",
     message: "The %s field needs to be equal to %s field.",
-    validator: function(value, comparedTo){
+    validator: function( value, comparedTo ){
       return value === comparedTo;
     }
   });
 
-  rules["credit-card"] = window.valkyr.rule({
+  rules[ "credit-card" ] = window.valkyr.rule({
     name: "creditCardNumber",
     inherits: "required",
     message: "The %s field doesn't have a valid credit-card number.",
-    validator: function(number){
+    validator: function( number ){
       var len, mul, prodArr, sum;
 
       len = number.length;
       mul = 0;
-      prodArr = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 2, 4, 6, 8, 1, 3, 5, 7, 9]];
+      prodArr = [ [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 ] ];
       sum = 0;
 
-      while (len--) {
-        sum += prodArr[mul][parseInt(number.charAt(len), 10)];
+      while ( len-- ) {
+        sum += prodArr[ mul ][ parseInt( number.charAt( len ), 10 ) ];
         mul ^= 1;
       }
 
@@ -157,12 +157,12 @@
     }
   });
 
-  rules["ip"] = window.valkyr.rule({
+  rules[ "ip" ] = window.valkyr.rule({
     name: "IP",
     inherits: "required",
     message: "The %s field must contain a valid IP.",
-    validator: function(ip){
-      return !!ip.match(/^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/i);
+    validator: function( ip ){
+      return !!ip.match( /^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/i );
     }
   });
 })();
