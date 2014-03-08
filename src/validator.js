@@ -1,19 +1,16 @@
-window.valkyr.validator = function( form, spec ) {
+window.validator = window.valkyr.validator = function( form, spec ){
   if ( !form ) { throw "Missing form"; }
   if ( !spec ) { throw "Missing constraints"; }
-  if ( !( spec instanceof Array ) ) {
-    throw "Constraints must be an array";
-  }
+  if ( !( spec instanceof Array ) ) { throw "Constraints must be an array"; }
 
   var constraints = [],
-      originalSubmit;
+      originalSubmit,
+      onErrorCallback = function(){};
 
   spec.errors = {};
 
   buildConstraints();
   setupSubmission();
-
-  onErrorCallback = function(){};
 
   spec.validate = function validate( field ){
     if ( field ) {

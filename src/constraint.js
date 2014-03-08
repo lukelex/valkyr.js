@@ -1,11 +1,10 @@
 window.valkyr.constraint = function( form, spec ){
-  var rules, field;
-
   checkForDuplicateRules();
 
-  rules = [];
+  var rules = [],
+      field = form[ spec.name ];
+
   buildRules();
-  field = form[ spec.name ];
 
   spec.field = function(){ return field; };
 

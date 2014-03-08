@@ -15,9 +15,9 @@ window.valkyr = {
   function rule( spec ){
     spec.inheritanceRule = buildInheritanceRule( spec.inherits )
 
-    spec.setParams = function setParams( _ ){ return spec; }
+    spec.setParams = function setParams( _ ){ return spec; };
 
-    spec.getExtraInfo = function getExtraInfo( _ ){ return spec; }
+    spec.getExtraInfo = function getExtraInfo( _ ){ return spec; };
 
     spec.check = function check( fieldName, value ){
       var result = {
@@ -43,16 +43,16 @@ window.valkyr = {
       return spec.inheritanceRule.check(
         fieldName, value
       ).isOk && spec.validator( value );
-    };
+    }
 
     return spec;
   } window.valkyr.rule = rule;
 
-  function build( spec ){
+  window.buildRule = rule.build = function build( spec ){
     var newRule = rule( spec );
     window.valkyr.customRules[ spec.name ] = newRule;
     return newRule;
-  } rule.build = build;
+  };
 
   function retrieve( ruleName ){
     var rule = window.valkyr.predefinedRules.find( ruleName )
@@ -67,12 +67,12 @@ window.valkyr = {
 window.valkyr.comparisonRule = function( spec ){
   var obj = window.valkyr.rule( spec );
 
-  function setParams( newParams ){
+  obj.setParams = function setParams( newParams ){
     obj.params = newParams;
     return obj;
-  } obj.setParams = setParams;
+  };
 
-  function check( fieldName, value ){
+  obj.check = function check( fieldName, value ){
     var result = {
       isOk: obj.validator( value, obj.comparedTo.value )
     };
@@ -82,12 +82,12 @@ window.valkyr.comparisonRule = function( spec ){
     }
 
     return result;
-  } obj.check = check;
+  };
 
-  function getExtraInfo( form ){
+  obj.getExtraInfo = function getExtraInfo( form ){
     obj.comparedTo = form[ obj.params ];
     return obj;
-  } obj.getExtraInfo = getExtraInfo;
+  };
 
   return obj;
 };
@@ -115,22 +115,19 @@ window.valkyr.parameterRule = function( spec ){
   return obj;
 };
 
-window.valkyr.validator = function( form, spec ) {
+window.validator = window.valkyr.validator = function( form, spec ){
   if ( !form ) { throw "Missing form"; }
   if ( !spec ) { throw "Missing constraints"; }
-  if ( !( spec instanceof Array ) ) {
-    throw "Constraints must be an array";
-  }
+  if ( !( spec instanceof Array ) ) { throw "Constraints must be an array"; }
 
   var constraints = [],
-      originalSubmit;
+      originalSubmit,
+      onErrorCallback = function(){};
 
   spec.errors = {};
 
   buildConstraints();
   setupSubmission();
-
-  onErrorCallback = function(){};
 
   spec.validate = function validate( field ){
     if ( field ) {
@@ -241,13 +238,12 @@ window.valkyr.validator = function( form, spec ) {
 };
 
 window.valkyr.constraint = function( form, spec ){
-  var rules, field;
-
   checkForDuplicateRules();
 
-  rules = [];
+  var rules = [],
+      field = form[ spec.name ];
+
   buildRules();
-  field = form[ spec.name ];
 
   spec.field = function(){ return field; };
 
@@ -497,6 +493,3 @@ window.valkyr.constraint = function( form, spec ){
     }
   });
 })();
-
-window.validator = window.valkyr.validator;
-window.buildRule = window.valkyr.rule.build;

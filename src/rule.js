@@ -2,9 +2,9 @@
   function rule( spec ){
     spec.inheritanceRule = buildInheritanceRule( spec.inherits )
 
-    spec.setParams = function setParams( _ ){ return spec; }
+    spec.setParams = function setParams( _ ){ return spec; };
 
-    spec.getExtraInfo = function getExtraInfo( _ ){ return spec; }
+    spec.getExtraInfo = function getExtraInfo( _ ){ return spec; };
 
     spec.check = function check( fieldName, value ){
       var result = {
@@ -30,16 +30,16 @@
       return spec.inheritanceRule.check(
         fieldName, value
       ).isOk && spec.validator( value );
-    };
+    }
 
     return spec;
   } window.valkyr.rule = rule;
 
-  function build( spec ){
+  window.buildRule = rule.build = function build( spec ){
     var newRule = rule( spec );
     window.valkyr.customRules[ spec.name ] = newRule;
     return newRule;
-  } rule.build = build;
+  };
 
   function retrieve( ruleName ){
     var rule = window.valkyr.predefinedRules.find( ruleName )

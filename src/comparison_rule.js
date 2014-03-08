@@ -1,12 +1,12 @@
 window.valkyr.comparisonRule = function( spec ){
   var obj = window.valkyr.rule( spec );
 
-  function setParams( newParams ){
+  obj.setParams = function setParams( newParams ){
     obj.params = newParams;
     return obj;
-  } obj.setParams = setParams;
+  };
 
-  function check( fieldName, value ){
+  obj.check = function check( fieldName, value ){
     var result = {
       isOk: obj.validator( value, obj.comparedTo.value )
     };
@@ -16,12 +16,12 @@ window.valkyr.comparisonRule = function( spec ){
     }
 
     return result;
-  } obj.check = check;
+  };
 
-  function getExtraInfo( form ){
+  obj.getExtraInfo = function getExtraInfo( form ){
     obj.comparedTo = form[ obj.params ];
     return obj;
-  } obj.getExtraInfo = getExtraInfo;
+  };
 
   return obj;
 };
