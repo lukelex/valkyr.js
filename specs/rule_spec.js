@@ -104,7 +104,6 @@ describe("Rule", function(){
             isOk: true
           });
         });
-
       });
     });
   });
@@ -136,6 +135,28 @@ describe("Rule", function(){
     ).toEqual({
       isOk: false,
       message: "The something blablabla."
+    });
+  });
+
+  describe("translations", function(){
+    beforeEach(function(){
+      valkyr.translations = undefined;
+    });
+    afterEach(function(){
+      valkyr.translations = undefined;
+    });
+
+    it("should use the new translated message", function(){
+      valkyr.translations = { required: "%s felt kan ikke være udefineret." };
+
+      var requiredRule = valkyr.predefinedRules.find("required")
+
+      expect(
+        requiredRule.check("Navn", "")
+      ).toEqual({
+        isOk: false,
+        message: "Navn felt kan ikke være udefineret.",
+      });
     });
   });
 });
