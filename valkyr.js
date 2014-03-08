@@ -48,7 +48,6 @@ window.valkyr = {
       var langMessage = spec.message;
 
       if ( window.valkyr.translations ) {
-        console.warn(spec.name);
         langMessage = window.valkyr.translations[ spec.name ];
       }
 
