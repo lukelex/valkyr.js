@@ -154,3 +154,24 @@ buildRule({
 ```
 
 **You can inherit from any rule, either pre-defined by ValkyrJS or you**
+
+##Helping Valkyr.js
+###I found a bug!
+If you found a repeatable bug then file an issue on [issues page](https://github.com/lukelex/valkyr.js/issues), preferably with a working example or repo.
+
+##Development
+
+###Setup
+```shell
+npm install
+```
+
+###Testing
+```shell
+$ grunt test
+```
+
+###Packing
+```shell
+$ grunt pack
+```
