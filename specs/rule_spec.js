@@ -68,7 +68,6 @@ describe("Rule", function(){
     });
 
     describe("credit cards", function() {
-
       describe("VISA", function() {
         it("with a non-valid VISA number", function() {
           var visaRule = valkyr.rule.build({
@@ -149,7 +148,7 @@ describe("Rule", function(){
     it("should use the new translated message", function(){
       valkyr.translations = { required: "%s felt kan ikke være udefineret." };
 
-      var requiredRule = valkyr.predefinedRules.find("required")
+      var requiredRule = valkyr.findRule("required")
 
       expect(
         requiredRule.check("Navn", "")

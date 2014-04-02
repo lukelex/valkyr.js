@@ -51,8 +51,7 @@
   };
 
   function retrieve( ruleName ){
-    var rule = window.valkyr.predefinedRules.find( ruleName )
-            || window.valkyr.customRules[ ruleName ];
+    var rule = window.valkyr.findRule( ruleName );
 
     if ( !rule ) { throw "Rule " + ruleName + " does not exist!"; }
 

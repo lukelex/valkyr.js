@@ -2,7 +2,7 @@ describe("predefinedRules", function(){
   describe("numeric", function(){
     describe("integers", function(){
       it("with a negative number string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "-10")
@@ -12,7 +12,7 @@ describe("predefinedRules", function(){
       });
 
       it("with zero string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "0")
@@ -22,7 +22,7 @@ describe("predefinedRules", function(){
       });
 
       it("with positive number string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "5")
@@ -32,7 +32,7 @@ describe("predefinedRules", function(){
       });
 
       it("with negative number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", -40)
@@ -42,7 +42,7 @@ describe("predefinedRules", function(){
       });
 
       it("with zero number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", 0)
@@ -52,7 +52,7 @@ describe("predefinedRules", function(){
       });
 
       it("with a positive number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", 32)
@@ -62,7 +62,7 @@ describe("predefinedRules", function(){
       });
 
       it("with an octal number string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "040")
@@ -72,7 +72,7 @@ describe("predefinedRules", function(){
       });
 
       it("with an octal number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", 0144)
@@ -82,7 +82,7 @@ describe("predefinedRules", function(){
       });
 
       it("with an hexadecimal number string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "0xFF")
@@ -92,7 +92,7 @@ describe("predefinedRules", function(){
       });
 
       it("with an hexadecimal number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", 0xFFF)
@@ -104,7 +104,7 @@ describe("predefinedRules", function(){
 
     describe("floating points", function (){
       it("with a negative floating point string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "-1.6")
@@ -114,7 +114,7 @@ describe("predefinedRules", function(){
       });
 
       it("with a positive floating point string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "4.5")
@@ -124,7 +124,7 @@ describe("predefinedRules", function(){
       });
 
       it("with a negative floating point number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", -1.3)
@@ -134,7 +134,7 @@ describe("predefinedRules", function(){
       });
 
       it("with a positive floating point number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", 2112.333)
@@ -144,7 +144,7 @@ describe("predefinedRules", function(){
       });
 
       it("with exponential number", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", 3e8)
@@ -154,7 +154,7 @@ describe("predefinedRules", function(){
       });
 
       it("with exponential string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "3e8")
@@ -166,7 +166,7 @@ describe("predefinedRules", function(){
 
     describe("non-numeric things", function(){
       it("empty string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "")
@@ -177,7 +177,7 @@ describe("predefinedRules", function(){
       });
 
       it("whitespace string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "      ")
@@ -188,7 +188,7 @@ describe("predefinedRules", function(){
       });
 
       it("tab", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "\t\t\t")
@@ -199,7 +199,7 @@ describe("predefinedRules", function(){
       });
 
       it("alphanumeric string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "abcd12345")
@@ -210,7 +210,7 @@ describe("predefinedRules", function(){
       });
 
       it("non-numeric string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "thiago moreira rocha")
@@ -221,7 +221,7 @@ describe("predefinedRules", function(){
       });
 
       it("boolean true", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", true)
@@ -232,7 +232,7 @@ describe("predefinedRules", function(){
       });
 
       it("boolean false", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", false)
@@ -243,7 +243,7 @@ describe("predefinedRules", function(){
       });
 
       it("number with trailling non-numeric characters string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "7.2abcd")
@@ -254,7 +254,7 @@ describe("predefinedRules", function(){
       });
 
       it("with undefined", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", undefined)
@@ -265,7 +265,7 @@ describe("predefinedRules", function(){
       });
 
       it("with null", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", null)
@@ -276,7 +276,7 @@ describe("predefinedRules", function(){
       });
 
       it("empty string", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", "")
@@ -287,7 +287,7 @@ describe("predefinedRules", function(){
       });
 
       it("with NaN", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", NaN)
@@ -298,7 +298,7 @@ describe("predefinedRules", function(){
       });
 
       it("with infinity", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", Infinity)
@@ -309,7 +309,7 @@ describe("predefinedRules", function(){
       });
 
       it("with positive infinity", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", Number.POSITIVE_INFINITY)
@@ -320,7 +320,7 @@ describe("predefinedRules", function(){
       });
 
       it("with negative infinity", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", Number.NEGATIVE_INFINITY)
@@ -331,7 +331,7 @@ describe("predefinedRules", function(){
       });
 
       it("with a date", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", new Date(2014,05,02))
@@ -342,7 +342,7 @@ describe("predefinedRules", function(){
       });
 
       it("with an object", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", new Object())
@@ -353,7 +353,7 @@ describe("predefinedRules", function(){
       });
 
       it("with a function", function() {
-        var rule = valkyr.predefinedRules.find("numeric");
+        var rule = valkyr.findRule("numeric");
 
         expect(
           rule.check("age", function(){})
@@ -367,7 +367,7 @@ describe("predefinedRules", function(){
 
   describe("required", function(){
     it("with a value", function(){
-      var rule = valkyr.predefinedRules.find("required");
+      var rule = valkyr.findRule("required");
 
       expect(
         rule.check("username", "with some value")
@@ -377,7 +377,7 @@ describe("predefinedRules", function(){
     });
 
     it("with an empty value", function(){
-      var rule = valkyr.predefinedRules.find("required");
+      var rule = valkyr.findRule("required");
 
       expect(
         rule.check("username", "")
@@ -388,7 +388,7 @@ describe("predefinedRules", function(){
     });
 
     it("with an undefined value", function(){
-      var rule = valkyr.predefinedRules.find("required");
+      var rule = valkyr.findRule("required");
 
       expect(
         rule.check("username", undefined)
@@ -399,7 +399,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a null value", function(){
-      var rule = valkyr.predefinedRules.find("required");
+      var rule = valkyr.findRule("required");
 
       expect(
         rule.check("username", null)
@@ -412,7 +412,7 @@ describe("predefinedRules", function(){
 
   describe("email", function(){
     it("simple extension email", function(){
-      var rule = valkyr.predefinedRules.find("email");
+      var rule = valkyr.findRule("email");
 
       expect(
         rule.check("email", "valkyr@nordic.eu")
@@ -422,7 +422,7 @@ describe("predefinedRules", function(){
     });
 
     it("double extension email", function(){
-      var rule = valkyr.predefinedRules.find("email");
+      var rule = valkyr.findRule("email");
 
       expect(
         rule.check("email", "valkyr@nordic.eu.org")
@@ -432,7 +432,7 @@ describe("predefinedRules", function(){
     });
 
     it("no @ email", function(){
-      var rule = valkyr.predefinedRules.find("email");
+      var rule = valkyr.findRule("email");
 
       expect(
         rule.check("email", "valkyr_nordic.eu.org")
@@ -443,7 +443,7 @@ describe("predefinedRules", function(){
     });
 
     it("no extension email", function(){
-      var rule = valkyr.predefinedRules.find("email");
+      var rule = valkyr.findRule("email");
 
       expect(
         rule.check("email", "valkyr@nordic")
@@ -454,7 +454,7 @@ describe("predefinedRules", function(){
     });
 
     it("an empty email", function(){
-      var rule = valkyr.predefinedRules.find("email");
+      var rule = valkyr.findRule("email");
 
       expect(
         rule.check("email", "")
@@ -466,7 +466,7 @@ describe("predefinedRules", function(){
   });
 
   describe("url", function(){
-    var rule = valkyr.predefinedRules.find("url");
+    var rule = valkyr.findRule("url");
 
     it("valid url", function(){
       expect(
@@ -477,7 +477,7 @@ describe("predefinedRules", function(){
     });
 
     it("an empty url", function(){
-      var rule = valkyr.predefinedRules.find("url");
+      var rule = valkyr.findRule("url");
 
       expect(
         rule.check("youtube_link", "")
@@ -488,7 +488,7 @@ describe("predefinedRules", function(){
     });
 
     it("an invalid url", function(){
-      var rule = valkyr.predefinedRules.find("url");
+      var rule = valkyr.findRule("url");
 
       expect(
         rule.check("youtube_link", "ww.valkyr")
@@ -501,7 +501,7 @@ describe("predefinedRules", function(){
 
   describe("integer", function(){
     it("with an integer", function(){
-      var rule = valkyr.predefinedRules.find("integer");
+      var rule = valkyr.findRule("integer");
 
       expect(
         rule.check("age", "1")
@@ -511,7 +511,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a big integer", function(){
-      var rule = valkyr.predefinedRules.find("integer");
+      var rule = valkyr.findRule("integer");
 
       expect(
         rule.check("age", "189713")
@@ -521,7 +521,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a negative integer", function(){
-      var rule = valkyr.predefinedRules.find("integer");
+      var rule = valkyr.findRule("integer");
 
       expect(
         rule.check("age", "-8")
@@ -531,7 +531,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a big negative integer", function(){
-      var rule = valkyr.predefinedRules.find("integer");
+      var rule = valkyr.findRule("integer");
 
       expect(
         rule.check("age", "-88127")
@@ -541,7 +541,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a double", function(){
-      var rule = valkyr.predefinedRules.find("integer");
+      var rule = valkyr.findRule("integer");
 
       expect(
         rule.check("age", "1.0")
@@ -552,7 +552,7 @@ describe("predefinedRules", function(){
     });
 
     it("with an empty value", function(){
-      var rule = valkyr.predefinedRules.find("integer");
+      var rule = valkyr.findRule("integer");
 
       expect(
         rule.check("age", "")
@@ -565,7 +565,7 @@ describe("predefinedRules", function(){
 
   describe("decimal", function(){
     it("with a decimal", function(){
-      var rule = valkyr.predefinedRules.find("decimal");
+      var rule = valkyr.findRule("decimal");
 
       expect(
         rule.check("weight", "70.6")
@@ -575,7 +575,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a big decimal", function(){
-      var rule = valkyr.predefinedRules.find("decimal");
+      var rule = valkyr.findRule("decimal");
 
       expect(
         rule.check("weight", "189.713")
@@ -585,7 +585,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a negative decimal", function(){
-      var rule = valkyr.predefinedRules.find("decimal");
+      var rule = valkyr.findRule("decimal");
 
       expect(
         rule.check("weight", "-8.25")
@@ -595,7 +595,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a big negative decimal", function(){
-      var rule = valkyr.predefinedRules.find("decimal");
+      var rule = valkyr.findRule("decimal");
 
       expect(
         rule.check("weigth", "-881.27")
@@ -605,7 +605,7 @@ describe("predefinedRules", function(){
     });
 
     it("with an integer", function(){
-      var rule = valkyr.predefinedRules.find("decimal");
+      var rule = valkyr.findRule("decimal");
 
       expect(
         rule.check("weigth", "1")
@@ -616,7 +616,7 @@ describe("predefinedRules", function(){
     });
 
     it("with an empty value", function(){
-      var rule = valkyr.predefinedRules.find("decimal");
+      var rule = valkyr.findRule("decimal");
 
       expect(
         rule.check("weigth", "")
@@ -629,7 +629,7 @@ describe("predefinedRules", function(){
 
   describe("natural", function(){
     it("a positive number", function(){
-      var rule = valkyr.predefinedRules.find("natural");
+      var rule = valkyr.findRule("natural");
 
       expect(
         rule.check("age", "25")
@@ -639,7 +639,7 @@ describe("predefinedRules", function(){
     });
 
     it("a negative number", function(){
-      var rule = valkyr.predefinedRules.find("natural");
+      var rule = valkyr.findRule("natural");
 
       expect(
         rule.check("age", "-25")
@@ -650,7 +650,7 @@ describe("predefinedRules", function(){
     });
 
     it("an empty value", function(){
-      var rule = valkyr.predefinedRules.find("natural");
+      var rule = valkyr.findRule("natural");
 
       expect(
         rule.check("age", "")
@@ -663,7 +663,7 @@ describe("predefinedRules", function(){
 
   describe("alphabetical", function(){
     it("a correct word", function(){
-      var rule = valkyr.predefinedRules.find("alphabetical");
+      var rule = valkyr.findRule("alphabetical");
 
       expect(
         rule.check("username", "lukelex")
@@ -673,7 +673,7 @@ describe("predefinedRules", function(){
     });
 
     it("a number", function(){
-      var rule = valkyr.predefinedRules.find("alphabetical");
+      var rule = valkyr.findRule("alphabetical");
 
       expect(
         rule.check("username", "102839")
@@ -684,7 +684,7 @@ describe("predefinedRules", function(){
     });
 
     it("with spaces", function(){
-      var rule = valkyr.predefinedRules.find("alphabetical");
+      var rule = valkyr.findRule("alphabetical");
 
       expect(
         rule.check("username", "luke lex")
@@ -695,7 +695,7 @@ describe("predefinedRules", function(){
     });
 
     it("an empty value", function(){
-      var rule = valkyr.predefinedRules.find("alphabetical");
+      var rule = valkyr.findRule("alphabetical");
 
       expect(
         rule.check("username", "")
@@ -713,7 +713,7 @@ describe("predefinedRules", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
 
-      rule = valkyr.predefinedRules.find("equals[password]").getExtraInfo(form);
+      rule = valkyr.findRule("equals[password]").getExtraInfo(form);
 
       expect(
         rule.check("password_confirmation", "1029384756")
@@ -728,7 +728,7 @@ describe("predefinedRules", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"password\" value=\"1029384756\" />"
 
-      rule = valkyr.predefinedRules.find("equals[password]").getExtraInfo(form);
+      rule = valkyr.findRule("equals[password]").getExtraInfo(form);
 
       expect(
         rule.check("password_confirmation", "99999999")
@@ -741,7 +741,7 @@ describe("predefinedRules", function(){
 
   describe("credit-card", function() {
     it("with a non-valid credit card number", function() {
-      var rule = valkyr.predefinedRules.find("credit-card");
+      var rule = valkyr.findRule("credit-card");
 
       expect(
         rule.check("CC", "1")
@@ -752,7 +752,7 @@ describe("predefinedRules", function(){
     });
 
     it("with a valid credit card number", function() {
-      var rule = valkyr.predefinedRules.find("credit-card");
+      var rule = valkyr.findRule("credit-card");
 
       expect(
         rule.check("CC", "4984421209470251")
@@ -764,7 +764,7 @@ describe("predefinedRules", function(){
 
   describe("ip", function() {
     it("valid value", function() {
-      var rule = valkyr.predefinedRules.find("ip");
+      var rule = valkyr.findRule("ip");
 
       expect(
         rule.check("router-ip", "192.168.0.1")
@@ -774,7 +774,7 @@ describe("predefinedRules", function(){
     });
 
     it("invalid value", function() {
-      var rule = valkyr.predefinedRules.find("ip");
+      var rule = valkyr.findRule("ip");
 
       expect(
         rule.check("router-ip", "192.168")
@@ -785,7 +785,7 @@ describe("predefinedRules", function(){
     });
 
     it("oversized value", function() {
-      var rule = valkyr.predefinedRules.find("ip");
+      var rule = valkyr.findRule("ip");
 
       expect(
         rule.check("router-ip", "192.168.0.351")

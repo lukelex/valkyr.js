@@ -19,9 +19,7 @@ describe("validator", function(){
     });
 
     it("with an absent rule", function(){
-      var form;
-
-      form = document.createElement("form");
+      var form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
       expect(function(){

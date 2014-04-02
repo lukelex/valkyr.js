@@ -1,57 +1,34 @@
 (function(){
-  var rules = {};
+  var rule;
 
-  var predefinedRules = {
-    find: function( ruleReference ){
-      var ruleConfig, rule;
-
-      ruleConfig = parseRuleName( ruleReference );
-
-      if (rule = rules[ ruleConfig.name ] ) {
-        rule.setParams( ruleConfig.params );
-      }
-
-      return rule;
-    }
-  };
-
-  function parseRuleName( ruleConfig ){
-    var params = ruleConfig.match( /\[(.+?)\]$/ );
-    if ( params ) { params = params[ 1 ]; }
-
-    return {
-      name: ruleConfig.match( /^.+?(?=\[.+?\])/ ) || ruleConfig,
-      params: params
-    };
-  }
-
-  window.valkyr.predefinedRules = predefinedRules;
-
-  rules[ "minLength" ] = window.valkyr.parameterRule({
+  rule = window.valkyr.parameterRule({
     name: "minLength",
     message: "The %s field must be at least %s characters in length.",
     validator: function( value, length ){
       return value.length >= length;
     }
   });
+  window.valkyr.storeRule( "minLength", rule, "predefinedRules" );
 
-  rules[ "maxLength" ] = window.valkyr.parameterRule({
+  rule = window.valkyr.parameterRule({
     name: "maxLength",
     message: "The %s field must not exceed %s characters in length.",
     validator: function( value, length ){
       return value.length <= length;
     }
   });
+  window.valkyr.storeRule( "maxLength", rule, "predefinedRules" );
 
-  rules[ "exactLength" ] = window.valkyr.parameterRule({
+  rule = window.valkyr.parameterRule({
     name: "exactLength",
     message: "The %s field must be exactly %s characters in length.",
     validator: function( value, length ){
       return value.length === length;
     }
   });
+  window.valkyr.storeRule( "exactLength", rule, "predefinedRules" );
 
-  rules[ "required" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "required",
     message: "The %s field can't be empty.",
     validator: function( value ){
@@ -60,8 +37,9 @@
       return value.length > 0;
     }
   });
+  window.valkyr.storeRule( "required", rule, "predefinedRules" );
 
-  rules[ "email" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "emailFormat",
     inherits: "required",
     message: "The %s field must contain a valid email address.",
@@ -71,8 +49,9 @@
       );
     }
   });
+  window.valkyr.storeRule( "email", rule, "predefinedRules" );
 
-  rules[ "url" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "url",
     inherits: "required",
     message: "The %s field must contain a valid URL.",
@@ -82,16 +61,18 @@
       );
     }
   });
+  window.valkyr.storeRule( "url", rule, "predefinedRules" );
 
-  rules[ "numeric" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "number",
     message: "The %s field must be a number.",
     validator: function( value ){
       return !isNaN( parseFloat( value ) ) && isFinite( value );
     }
   });
+  window.valkyr.storeRule( "numeric", rule, "predefinedRules" );
 
-  rules[ "integer" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "integer",
     inherits: "numeric",
     message: "The %s field must contain an integer.",
@@ -99,8 +80,9 @@
       return !!value.match( /^\-?[0-9]+$/ );
     }
   });
+  window.valkyr.storeRule( "integer", rule, "predefinedRules" );
 
-  rules[ "decimal" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "decimal",
     inherits: "numeric",
     message: "The %s field must contain a decimal number.",
@@ -108,8 +90,9 @@
       return !!value.match( /^\-?[0-9]*\.[0-9]+$/ );
     }
   });
+  window.valkyr.storeRule( "decimal", rule, "predefinedRules" );
 
-  rules[ "natural" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "natural",
     inherits: "numeric",
     message: "The %s field must contain only positive numbers.",
@@ -117,8 +100,9 @@
       return !!value.match( /^[0-9]+$/i );
     }
   });
+  window.valkyr.storeRule( "natural", rule, "predefinedRules" );
 
-  rules[ "alphabetical" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "alphabetical",
     inherits: "required",
     message: "The %s field must only contain alphabetical characters.",
@@ -126,8 +110,9 @@
       return !!value.match( /^[a-z]+$/i );
     }
   });
+  window.valkyr.storeRule( "alphabetical", rule, "predefinedRules" );
 
-  rules[ "equals" ] = window.valkyr.comparisonRule({
+  rule = window.valkyr.comparisonRule({
     name: "equals",
     inherits: "required",
     message: "The %s field needs to be equal to %s field.",
@@ -135,8 +120,9 @@
       return value === comparedTo;
     }
   });
+  window.valkyr.storeRule( "equals", rule, "predefinedRules" );
 
-  rules[ "credit-card" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "creditCardNumber",
     inherits: "required",
     message: "The %s field doesn't have a valid credit-card number.",
@@ -156,8 +142,9 @@
       return sum % 10 === 0 && sum > 0;
     }
   });
+  window.valkyr.storeRule( "credit-card", rule, "predefinedRules" );
 
-  rules[ "ip" ] = window.valkyr.rule({
+  rule = window.valkyr.rule({
     name: "IP",
     inherits: "required",
     message: "The %s field must contain a valid IP.",
@@ -165,4 +152,5 @@
       return !!ip.match( /^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/i );
     }
   });
+  window.valkyr.storeRule( "ip", rule, "predefinedRules" );
 })();
