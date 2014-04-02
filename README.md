@@ -131,9 +131,22 @@ buildRule({
   }
 });
 
+buildComparisonRule({
+  name: "dateBefore",
+  message: "%s should be before %s"
+  validator: function(value, comparedTo){
+    var beginDate = new Date(value);
+    var endDate = new Date(comparedTo);
+    return beginDate.getTime() < endDate.getTime();
+  }
+});
+
 validator(form, [{
   ...
   rules: "negative"
+},{
+  ...
+  rules: "dateBefore[endDate]"
 }]);
 ```
 
