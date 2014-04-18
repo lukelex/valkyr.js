@@ -227,7 +227,7 @@ window.validator = window.valkyr.validator = function( form, spec ){
 
     form.onsubmit = function(event) {
       if ( isValid() ) {
-        return ( !!originalSubmit && originalSubmit( event ) );
+        !!originalSubmit && originalSubmit( event );
       } else {
         preventSubmission( event );
         onErrorCallback( spec.errors );
