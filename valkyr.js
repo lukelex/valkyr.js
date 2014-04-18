@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.3.0 | From: 02-04-2014
+// Version: 0.4.0 | From: 18-04-2014
 
 (function(){
   var customRules = {},
@@ -179,10 +179,16 @@ window.validator = window.valkyr.validator = function( form, spec ){
   setupSubmission();
 
   spec.validate = function validate( field ){
+    var validationResult;
+
     if ( field ) {
-      validateField( field );
+      validationResult = validateField( field );
     } else {
-      validateAllFields();
+      validationResult = validateAllFields();
+    }
+
+    if ( !validationResult ) {
+      onErrorCallback( spec.errors );
     }
   };
 
@@ -193,9 +199,7 @@ window.validator = window.valkyr.validator = function( form, spec ){
       }
     }
 
-    if ( originalSubmit ) {
-      originalSubmit();
-    }
+    if ( originalSubmit ) { originalSubmit(); }
   };
 
   spec.onError = function onError( callback ){
@@ -214,17 +218,8 @@ window.validator = window.valkyr.validator = function( form, spec ){
   }
 
   function isValid(){
-    var isValid = false;
-
     spec.validate();
-
-    isValid = Object.keys( spec.errors ).length === 0;
-
-    if ( !isValid ) {
-      onErrorCallback( spec.errors );
-    }
-
-    return isValid;
+    return Object.keys( spec.errors ).length === 0;
   } spec.isValid = isValid;
 
   function setupSubmission(){
@@ -235,6 +230,7 @@ window.validator = window.valkyr.validator = function( form, spec ){
         return ( !!originalSubmit && originalSubmit( event ) );
       } else {
         preventSubmission( event );
+        onErrorCallback( spec.errors );
       }
     };
   }
@@ -277,7 +273,7 @@ window.validator = window.valkyr.validator = function( form, spec ){
   function constraintFor( field ){
     var i = constraints.length;
     while ( i-- ) {
-      if ( constraints[ i ].field() == field ) {
+      if ( constraints[ i ].field() === field ) {
         return constraints[ i ];
       }
     }

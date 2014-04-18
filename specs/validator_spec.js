@@ -196,7 +196,7 @@ describe("validator", function(){
         }]
       ).onError(onError);
 
-      loginForm.isValid();
+      loginForm.validate();
 
       expect(onError).toHaveBeenCalled();
     });
