@@ -1,6 +1,6 @@
 (function(){
   function rule( spec ){
-    spec.inheritanceRule = buildInheritanceRule( spec.inherits )
+    spec.inheritanceRule = buildInheritanceRule( spec.inherits );
 
     spec.setParams = function setParams( _ ){ return spec; };
     spec.getExtraInfo = function getExtraInfo( _ ){ return spec; };

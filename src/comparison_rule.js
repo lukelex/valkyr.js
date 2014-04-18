@@ -27,9 +27,9 @@
     return obj;
   } window.valkyr.comparisonRule = comparisonRule;
 
-  valkyr.buildComparison = function buildComparison( spec ){
+  window.valkyr.buildComparison = function buildComparison( spec ){
     var newRule = comparisonRule( spec );
     window.valkyr.customRules[ spec.name ] = newRule;
     return newRule;
-  }; window.buildComparisonRule = valkyr.buildComparison;
+  }; window.buildComparisonRule = window.valkyr.buildComparison;
 })();

@@ -46,7 +46,7 @@
 
 (function(){
   function rule( spec ){
-    spec.inheritanceRule = buildInheritanceRule( spec.inherits )
+    spec.inheritanceRule = buildInheritanceRule( spec.inherits );
 
     spec.setParams = function setParams( _ ){ return spec; };
     spec.getExtraInfo = function getExtraInfo( _ ){ return spec; };
@@ -134,11 +134,11 @@
     return obj;
   } window.valkyr.comparisonRule = comparisonRule;
 
-  valkyr.buildComparison = function buildComparison( spec ){
+  window.valkyr.buildComparison = function buildComparison( spec ){
     var newRule = comparisonRule( spec );
     window.valkyr.customRules[ spec.name ] = newRule;
     return newRule;
-  }; window.buildComparisonRule = valkyr.buildComparison;
+  }; window.buildComparisonRule = window.valkyr.buildComparison;
 })();
 
 window.valkyr.parameterRule = function( spec ){
