@@ -5,7 +5,7 @@
 //            See https://github.com/lukelex/valkyr.js/blob/master/LICENSE
 // ==========================================================================
 
-// Version: 0.4.0 | From: 18-04-2014
+// Version: 0.3.1 | From: 19-04-2014
 
 (function(){
   var customRules = {},
