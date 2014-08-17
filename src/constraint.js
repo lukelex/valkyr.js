@@ -1,87 +1,91 @@
-window.valkyr.constraint = function( form, spec ){
-  checkForDuplicateRules();
+(function( valkyr, Rule ){
+  function Constraint( form, spec ){
+    checkForDuplicateRules();
 
-  var rules = [],
-      field = form[ spec.name ];
+    var rules = [],
+        field = form[ spec.name ];
 
-  buildRules();
+    buildRules();
 
-  spec.field = function(){ return field; };
+    spec.field = function(){ return field; };
 
-  spec.validate = function validate(){
-    var result = { name: spec.name, errors: [] },
-        i = rules.length,
-        verification;
+    spec.validate = function validate(){
+      var result = { name: spec.name, errors: [] },
+          i = rules.length,
+          verification;
 
-    while ( i-- ) {
-      verification = rules[ i ].check(
-        spec.as || spec.name, value()
-      );
+      while ( i-- ) {
+        verification = rules[ i ].check(
+          spec.as || spec.name, value()
+        );
 
-      if ( !verification.isOk ) {
-        result.errors.push( verification.message );
-      }
-    }
-
-    return result;
-  };
-
-  function value(){
-    if ( isCheckbox() ) {
-      return field.checked;
-    } else if ( isRadio() ) {
-      var i = field.length;
-      while( i-- ) {
-        if ( field[ i ].checked ) {
-          return field[ i ].value;
+        if ( !verification.isOk ) {
+          result.errors.push( verification.message );
         }
       }
-    }
 
-    return field.value;
-  }
+      return result;
+    };
 
-  function checkForDuplicateRules(){
-    var names = rulesNames(),
-        i = names.length,
-        valuesSoFar = {};
-
-    while ( i-- ) {
-      var value = names[ i ];
-      if ( Object.prototype.hasOwnProperty.call( valuesSoFar, value ) ) {
-        throw "Duplicate rule declaration!";
+    function value(){
+      if ( isCheckbox() ) {
+        return field.checked;
+      } else if ( isRadio() ) {
+        var i = field.length;
+        while( i-- ) {
+          if ( field[ i ].checked ) {
+            return field[ i ].value;
+          }
+        }
       }
-      valuesSoFar[ value ] = true;
+
+      return field.value;
     }
-  }
 
-  function buildRules(){
-    var names = rulesNames(),
-        i = names.length;
+    function checkForDuplicateRules(){
+      var names = rulesNames(),
+          i = names.length,
+          valuesSoFar = {};
 
-    while ( i-- ) {
-      rules.push(
-        window.valkyr.rule.retrieve(
-          names[ i ]
-        ).getExtraInfo( form )
-      );
+      while ( i-- ) {
+        var value = names[ i ];
+        if ( Object.prototype.hasOwnProperty.call( valuesSoFar, value ) ) {
+          throw "Duplicate rule declaration!";
+        }
+        valuesSoFar[ value ] = true;
+      }
     }
-  }
 
-  function rulesNames(){
-    return spec.rules.split( "|" );
-  }
+    function buildRules(){
+      var names = rulesNames(),
+          i = names.length;
 
-  function isCheckbox(){
-    return field.nodeName === "INPUT" && field.type === "checkbox";
-  }
-
-  function isRadio(){
-    if ( field instanceof window.NodeList ) {
-      return field[ 0 ].nodeName === "INPUT" && field[ 0 ].type === "radio";
+      while ( i-- ) {
+        rules.push(
+          Rule.retrieve(
+            names[ i ]
+          ).getExtraInfo( form )
+        );
+      }
     }
-    return false;
-  }
 
-  return spec;
-};
+    function rulesNames(){
+      return spec.rules.split( "|" );
+    }
+
+    function isCheckbox(){
+      return field.nodeName === "INPUT" && field.type === "checkbox";
+    }
+
+    function isRadio(){
+      if ( field instanceof window.NodeList ) {
+        return field[ 0 ].nodeName === "INPUT" && field[ 0 ].type === "radio";
+      }
+      return false;
+    }
+
+    return spec;
+  };
+
+  window.valkyr.Constraint = Constraint;
+})( window.valkyr, window.valkyr.Rule );

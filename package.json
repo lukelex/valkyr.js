@@ -22,11 +22,11 @@
   },
   "homepage": "https://github.com/lukelex/valkyr.js",
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-cli": "~0.1.11",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-jasmine": "~0.5.2",
-    "grunt-contrib-concat": "~0.3.0"
+    "grunt": "x",
+    "grunt-cli": "x",
+    "grunt-contrib-uglify": "x",
+    "grunt-contrib-jasmine": "x",
+    "grunt-contrib-concat": "x"
   },
   "banner": {
     "divider": "// ==========================================================================\n",

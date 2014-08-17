@@ -1,4 +1,4 @@
-(function(){
+(function( window ){
   var customRules = {},
       predefinedRules = {};
 
@@ -13,7 +13,7 @@
   }
 
   function storeRule( ruleName, rule, collectionName ){
-    var collection = eval(collectionName);
+    var collection = eval( collectionName );
     collection[ ruleName ] = rule;
   }
 
@@ -33,4 +33,4 @@
     customRules: customRules,
     parseRuleName: parseRuleName
   };
-})();
+})( window );

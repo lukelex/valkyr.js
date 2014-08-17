@@ -2,7 +2,7 @@ describe("Constraints", function(){
   describe("#initialize", function(){
     it("should not allow duplicate rules", function(){
       expect(function(){
-        valkyr.constraint("", {
+        new valkyr.Constraint("", {
           name: "username",
           rules: "required|required"
         });
@@ -14,7 +14,7 @@ describe("Constraints", function(){
       form.innerHTML = "<input name=\"username\"/>";
 
       expect(function(){
-        valkyr.constraint(form, {
+        new valkyr.Constraint(form, {
           name: "username",
           rules: "required|numeric|equals[username]"
         });
@@ -28,7 +28,7 @@ describe("Constraints", function(){
     form = document.createElement("form");
     form.innerHTML = "<input name=\"first_name\"/>";
 
-    constraint = valkyr.constraint(form, {
+    constraint = new valkyr.Constraint(form, {
       as: "First Name",
       name: "first_name",
       rules: "required"
@@ -49,7 +49,7 @@ describe("Constraints", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"terms\" type=\"checkbox\"/>";
 
-      singup = valkyr.constraint(form, {
+      singup = new valkyr.Constraint(form, {
         name: "terms",
         rules: "required"
       });
@@ -66,7 +66,7 @@ describe("Constraints", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"terms\" type=\"checkbox\" checked=\"checked\"/>";
 
-      singup = valkyr.constraint(form, {
+      singup = new valkyr.Constraint(form, {
         name: "terms",
         rules: "required"
       });
@@ -87,7 +87,7 @@ describe("Constraints", function(){
       "<input name=\"age_range\" type=\"radio\" value=\"0~12\"/>" +
       "<input name=\"age_range\" type=\"radio\" value=\"13~18\"/>";
 
-      singup = valkyr.constraint(form, {
+      singup = new valkyr.Constraint(form, {
         name: "age_range",
         rules: "required"
       });
@@ -106,7 +106,7 @@ describe("Constraints", function(){
       "<input name=\"age_range\" type=\"radio\" value=\"0~12\" checked=\"checked\"/>" +
       "<input name=\"age_range\" type=\"radio\" value=\"13~18\"/>";
 
-      singup = valkyr.constraint(form, {
+      singup = new valkyr.Constraint(form, {
         name: "age_range",
         rules: "required"
       });
@@ -129,7 +129,7 @@ describe("Constraints", function(){
       "<option value=\"female\">Female</option>" +
       "</select>";
 
-      singup = valkyr.constraint(form, {
+      singup = new valkyr.Constraint(form, {
         name: "gender",
         rules: "required"
       });
@@ -150,7 +150,7 @@ describe("Constraints", function(){
       "<option value=\"female\" selected=\"selected\">Female</option>" +
       "</select>";
 
-      singup = valkyr.constraint(form, {
+      singup = new valkyr.Constraint(form, {
         name: "gender",
         rules: "required"
       });

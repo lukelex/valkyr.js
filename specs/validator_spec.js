@@ -2,19 +2,19 @@ describe("validator", function(){
   describe("#initialize", function(){
     it("should throw if no form is passed", function(){
       expect(function(){
-        valkyr.validator();
+        new valkyr.Validator();
       }).toThrow("Missing form");
     });
 
     it("should throw if no constraints are passed", function(){
       expect(function(){
-        valkyr.validator("form");
+        new valkyr.Validator("form");
       }).toThrow("Missing constraints");
     });
 
     it("should throw if constraints is not an array", function(){
       expect(function(){
-        valkyr.validator("form", {});
+        new valkyr.Validator("form", {});
       }).toThrow("Constraints must be an array");
     });
 
@@ -23,7 +23,7 @@ describe("validator", function(){
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
       expect(function(){
-        valkyr.validator(form, [{
+        new valkyr.Validator(form, [{
           name: "username",
           rules: "fakeRules"
         }]);
@@ -38,7 +38,7 @@ describe("validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = valkyr.validator(form, [{
+      loginForm = new valkyr.Validator(form, [{
           name: "username",
           rules: "required"
         }, {
@@ -63,7 +63,7 @@ describe("validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = valkyr.validator(form, [{
+      loginForm = new valkyr.Validator(form, [{
           name: "username",
           rules: "required"
         }, {
@@ -87,7 +87,7 @@ describe("validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = valkyr.validator(form, [{
+      loginForm = new valkyr.Validator(form, [{
           name: "username",
           rules: "required"
         }, {
@@ -115,7 +115,7 @@ describe("validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = valkyr.validator(form, []);
+      loginForm = new valkyr.Validator(form, []);
 
       spyOn(loginForm, "validate");
 
@@ -128,9 +128,9 @@ describe("validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = valkyr.validator(form, []);
+      loginForm = new valkyr.Validator(form, []);
 
-      spyOn(loginForm, "validate").andCallFake(function(){
+      spyOn(loginForm, "validate").and.callFake(function(){
         this.errors = { username: ["some error"] };
       });
 
@@ -149,7 +149,7 @@ describe("validator", function(){
 
       form.onsubmit = previousSubmission;
 
-      loginForm = valkyr.validator(form, []);
+      loginForm = new valkyr.Validator(form, []);
       loginForm.submit();
 
       expect(previousSubmission).toHaveBeenCalled();
@@ -161,7 +161,7 @@ describe("validator", function(){
       form = document.createElement("form");
       form.innerHTML = "<input name=\"username\"/><input name=\"password\"></input>";
 
-      loginForm = valkyr.validator(form, []);
+      loginForm = new valkyr.Validator(form, []);
 
       expect(function(){
         loginForm.submit();
@@ -171,7 +171,7 @@ describe("validator", function(){
 
   describe("#submit", function(){
     it("should skip validations", function(){
-      var login = valkyr.validator("<form>", []);
+      var login = new valkyr.Validator("<form>", []);
 
       spyOn(login, "isValid");
 
@@ -190,7 +190,7 @@ describe("validator", function(){
       login = document.createElement("form");
       login.innerHTML = "<input name=\"username\"/>";
 
-      loginForm = valkyr.validator(login, [{
+      loginForm = new valkyr.Validator(login, [{
           name: "username",
           rules: "required"
         }]

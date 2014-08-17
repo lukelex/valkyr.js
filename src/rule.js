@@ -1,5 +1,5 @@
 (function(){
-  function rule( spec ){
+  function Rule( spec ){
     spec.inheritanceRule = buildInheritanceRule( spec.inherits );
 
     spec.setParams = function setParams( _ ){ return spec; };
@@ -34,27 +34,31 @@
     function errorMessageFor( fieldName ){
       var langMessage = spec.message;
 
-      if ( window.valkyr.translations ) {
-        langMessage = window.valkyr.translations[ spec.name ];
+      if ( valkyr.translations ) {
+        langMessage = valkyr.translations[ spec.name ];
       }
 
       return langMessage.replace( /\%s/, fieldName );
     }
 
     return spec;
-  } window.valkyr.rule = rule;
+  }
 
-  window.buildRule = rule.build = function build( spec ){
-    var newRule = rule( spec );
-    window.valkyr.customRules[ spec.name ] = newRule;
+  function build( spec ){
+    var newRule = new Rule( spec );
+    valkyr.customRules[ spec.name ] = newRule;
     return newRule;
   };
 
   function retrieve( ruleName ){
-    var rule = window.valkyr.findRule( ruleName );
+    var rule = valkyr.findRule( ruleName );
 
     if ( !rule ) { throw "Rule " + ruleName + " does not exist!"; }
 
     return rule;
-  } rule.retrieve = retrieve;
-})();
+  }
+
+  valkyr.Rule = Rule;
+  Rule.build = build;
+  Rule.retrieve = retrieve;
+})( window.valkyr );

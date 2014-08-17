@@ -1,7 +1,7 @@
 describe("Rule", function(){
   describe(".retrieve", function(){
     it("should return a predefined rule", function(){
-      var rule = valkyr.rule.retrieve("required");
+      var rule = valkyr.Rule.retrieve("required");
 
       expect(rule.constructor.name).toEqual("Object");
     });
@@ -9,7 +9,7 @@ describe("Rule", function(){
 
   describe("#check", function(){
     it("when not ok", function(){
-      var rule = valkyr.rule.retrieve("required");
+      var rule = valkyr.Rule.retrieve("required");
 
       expect(
         rule.check("username", undefined)
@@ -20,7 +20,7 @@ describe("Rule", function(){
     });
 
     it("when ok", function(){
-      var rule = valkyr.rule.retrieve("required");
+      var rule = valkyr.Rule.retrieve("required");
 
       expect(
         rule.check("username", "some user name")
@@ -32,7 +32,7 @@ describe("Rule", function(){
 
   describe("simple inheritance", function(){
     it("should have the same error when inheritance fails", function(){
-      var negativeNumberRule = valkyr.rule.build({
+      var negativeNumberRule = valkyr.Rule.build({
         name: "negative",
         message: "The %s field must be a negative number.",
         inherits: "numeric",
@@ -50,7 +50,7 @@ describe("Rule", function(){
     });
 
     it("should display its own error message when the inheritance rule passes", function(){
-      var negativeNumberRule = valkyr.rule.build({
+      var negativeNumberRule = valkyr.Rule.build({
         name: "negative",
         message: "The %s field must be a negative number.",
         inherits: "numeric",
@@ -70,7 +70,7 @@ describe("Rule", function(){
     describe("credit cards", function() {
       describe("VISA", function() {
         it("with a non-valid VISA number", function() {
-          var visaRule = valkyr.rule.build({
+          var visaRule = valkyr.Rule.build({
             name: "VISA",
             message: "The %s field does not have a valid VISA credit-card number.",
             inherits: "credit-card",
@@ -88,7 +88,7 @@ describe("Rule", function(){
         });
 
         it("with a valid VISA number", function() {
-          var visaRule = valkyr.rule.build({
+          var visaRule = valkyr.Rule.build({
             name: "VISA",
             message: "The %s field does not have a valid VISA credit-card number.",
             inherits: "credit-card",
@@ -108,7 +108,7 @@ describe("Rule", function(){
   });
 
   it("inheritance should handle the undefined case", function(){
-    valkyr.rule.build({
+    valkyr.Rule.build({
       name: "undefinedTest",
       message: "The %s field can't be undefined.",
       validator: function(value){
@@ -116,7 +116,7 @@ describe("Rule", function(){
       }
     });
 
-    var rule = valkyr.rule.build({
+    var rule = valkyr.Rule.build({
       name: "substr",
       inherits: "undefinedTest",
       message: "The %s blablabla.",
@@ -148,7 +148,7 @@ describe("Rule", function(){
     it("should use the new translated message", function(){
       valkyr.translations = { required: "%s felt kan ikke være udefineret." };
 
-      var requiredRule = valkyr.findRule("required")
+      var requiredRule = valkyr.findRule("required");
 
       expect(
         requiredRule.check("Navn", "")

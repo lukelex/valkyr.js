@@ -11,7 +11,7 @@ describe("comparisonRule", function(){
     var form = document.createElement("form");
     form.innerHTML = "<input name=\"beginDate\" value=\"1995-12-17T03:24:00\"/><input name=\"endDate\" value=\"1995-12-17T04:24:00\"/>";
 
-    valkyr.validator(form, [{
+    new valkyr.Validator(form, [{
       name: "beginDate",
       rules: "dateBefore[endDate]"
     }]).isValid();

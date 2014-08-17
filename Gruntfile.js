@@ -8,8 +8,7 @@ module.exports = function(grunt){
     'src/validator.js',
     'src/constraint.js',
     'src/custom_rule.js',
-    'src/predefined_rules.js',
-    'src/public.js'
+    'src/predefined_rules.js'
   ];
 
   grunt.initConfig({

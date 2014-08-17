@@ -1,6 +1,6 @@
-(function(){
-  function comparisonRule( spec ){
-    var obj = window.valkyr.rule( spec );
+(function( valkyr, Rule ){
+  function ComparisonRule( spec ){
+    var obj = new Rule( spec );
 
     obj.setParams = function setParams( newParams ){
       obj.params = newParams;
@@ -25,11 +25,14 @@
     };
 
     return obj;
-  } window.valkyr.comparisonRule = comparisonRule;
+  }
 
-  window.valkyr.buildComparison = function buildComparison( spec ){
-    var newRule = comparisonRule( spec );
-    window.valkyr.customRules[ spec.name ] = newRule;
+  function buildComparison( spec ){
+    var newRule = new ComparisonRule( spec );
+    valkyr.customRules[ spec.name ] = newRule;
     return newRule;
-  }; window.buildComparisonRule = window.valkyr.buildComparison;
-})();
+  };
+
+  valkyr.ComparisonRule = ComparisonRule;
+  valkyr.buildComparison = buildComparison;
+})( window.valkyr, window.valkyr.Rule );
