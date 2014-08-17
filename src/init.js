@@ -2,12 +2,16 @@
   var customRules = {},
       predefinedRules = {};
 
-  function findRule( ruleReference ){
-    var ruleConfig = parseRuleName( ruleReference ),
+  function findRule( ruleName ){
+    var ruleConfig = parseRuleName( ruleName ),
         rule = customRules[ ruleConfig.name ]
             || predefinedRules[ ruleConfig.name ];
 
-    if ( rule ) { rule.setParams( ruleConfig.params ); }
+    if ( rule ) {
+      rule.setParams( ruleConfig.params );
+    } else {
+      throw "Rule " + ruleName + " does not exist!";
+    }
 
     return rule;
   }

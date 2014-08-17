@@ -19,7 +19,7 @@
 
     function buildInheritanceRule( inherits ){
       if ( inherits ) {
-        return retrieve( inherits );
+        return valkyr.findRule( inherits );
       } else {
         return { check: function(){ return { isOk: true }; } };
       }
@@ -50,15 +50,6 @@
     return newRule;
   };
 
-  function retrieve( ruleName ){
-    var rule = valkyr.findRule( ruleName );
-
-    if ( !rule ) { throw "Rule " + ruleName + " does not exist!"; }
-
-    return rule;
-  }
-
   valkyr.Rule = Rule;
   Rule.build = build;
-  Rule.retrieve = retrieve;
 })( window.valkyr );

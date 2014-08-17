@@ -62,7 +62,7 @@
 
       while ( i-- ) {
         rules.push(
-          Rule.retrieve(
+          valkyr.findRule(
             names[ i ]
           ).getExtraInfo( form )
         );

@@ -1,7 +1,7 @@
 describe("Rule", function(){
   describe(".retrieve", function(){
     it("should return a predefined rule", function(){
-      var rule = valkyr.Rule.retrieve("required");
+      var rule = valkyr.findRule("required");
 
       expect(rule.constructor.name).toEqual("Object");
     });
@@ -9,7 +9,7 @@ describe("Rule", function(){
 
   describe("#check", function(){
     it("when not ok", function(){
-      var rule = valkyr.Rule.retrieve("required");
+      var rule = valkyr.findRule("required");
 
       expect(
         rule.check("username", undefined)
@@ -20,7 +20,7 @@ describe("Rule", function(){
     });
 
     it("when ok", function(){
-      var rule = valkyr.Rule.retrieve("required");
+      var rule = valkyr.findRule("required");
 
       expect(
         rule.check("username", "some user name")
